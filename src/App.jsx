@@ -1,35 +1,86 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0);
+import styled, { createGlobalStyle } from "styled-components";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
+
+import { Result, Button } from "antd";
+import Layout from "./fixedComponent/Layout";
+import Home from "./pages/Home";
+import ThesisGrid from "./pages/thesis/ThesisGrid";
+import ThesisDetail from "./pages/thesis/ThesisDetail";
+
+import ProjectGrid from "./pages/projects/ProjectGrid";
+import ProjectDetail from "./pages/Projects/ProjectDetail";
+import Contact from "./pages/Contact";
+import GlobalStyle from "./fixedComponent/GlobalStyle";
+
+const StyledResult = styled(Result)`
+  .ant-result-title {
+    color: black !important;
+  }
+  .ant-result-subtitle {
+    color: black !important;
+  }
+`;
+
+// Component for handling invalid paths
+const InvalidPath = () => {
+  const navigate = useNavigate();
+
+  const handleBackHome = () => {
+    navigate("/");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <StyledResult
+      status="404"
+      title="404 Not Found"
+      subTitle="Oops! The page you are looking for does not exist."
+      extra={
+        <Button
+          type="primary"
+          onClick={handleBackHome}
+          style={{ background: "black" }}
+        >
+          Back Home
+        </Button>
+      }
+    />
   );
-}
+};
+
+//routes
+const routes = [
+  {
+    element: (
+      <>
+        <Layout />
+      </>
+    ),
+    children: [
+      { index: true, path: "/", element: <Home /> },
+      { path: "/contact-us", element: <Contact /> },
+      { path: "/projects", element: <ProjectGrid /> },
+      { path: "/projects/:projectId", element: <ProjectDetail /> },
+      { path: "/thesis", element: <ThesisGrid /> },
+      { path: "/thesis/:thesisId", element: <ThesisDetail /> },
+    ],
+  },
+];
+
+const router = createBrowserRouter(routes);
+
+const App = () => (
+  <>
+    {/* <PageUnderConstruction /> */}
+    <GlobalStyle />
+
+    <RouterProvider router={router} />
+  </>
+);
 
 export default App;
