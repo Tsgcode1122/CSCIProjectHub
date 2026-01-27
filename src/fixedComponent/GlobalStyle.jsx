@@ -1,10 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { media } from "../theme/Breakpoints";
+import { Colors } from "../theme/Colors";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: 'Philosopher', sans-serif;
-  
+font-family: "Inter", sans-serif;
+  background: ${Colors.softBlue} ;
     margin: 0;
     padding: 0;
   }
@@ -13,7 +14,8 @@ const GlobalStyle = createGlobalStyle`
   h1 {
     font-size: 1.8rem;
     line-height: 2.2rem;
-    @media ${media.mobileS} { font-size: 2rem; line-height: 2.4rem; }
+    @media ${media.mobileXS} { font-size: 1.5rem; line-height: 2rem; }
+    @media ${media.mobileS} { font-size: 1.9rem; line-height: 2.4rem; }
     @media ${media.tablet} { font-size: 2.4rem; line-height: 2.8rem; }
     @media ${media.laptop} { font-size: 2.6rem; line-height: 3rem; }
     @media ${media.desktop} { font-size: 3rem; line-height: 3.4rem; }
@@ -66,8 +68,9 @@ const GlobalStyle = createGlobalStyle`
 
   /* Paragraph */
   p {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    /* font-size: 0.875rem; */
+    line-height: 1.55rem;
+    @media ${media.mobileXS} { font-size: 0.9rem; line-height: 1.5rem; }
     @media ${media.mobileS} { font-size: 1rem; line-height: 1.5rem; }
     @media ${media.tablet} { font-size: 1.125rem; line-height: 1.75rem; }
     @media ${media.laptop} { font-size: 1.25rem; line-height: 1.8rem; }

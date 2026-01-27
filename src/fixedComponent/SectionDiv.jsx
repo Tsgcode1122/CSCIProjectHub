@@ -8,47 +8,47 @@ const SectionContainer = styled.div`
   padding: 2rem 1.5rem;
   margin: 0 auto;
 
-  /* Extra small screens (e.g., iPhone 6, 320px) */
+  /* Extra small screens  */
   @media ${media.mobileXS} {
     padding: 2rem 0.8rem;
   }
 
-  /* Small phones (480px and below) */
+  /* Small phones (480px and above) */
   @media ${media.mobileS} {
     padding: 2rem 1rem;
   }
 
-  /* Medium phones (576px and below) */
+  /* Medium phones (576px and above) */
   @media ${media.mobileM} {
     padding: 2rem 1.5rem;
   }
 
-  /* Large phones (679px and below) */
+  /* Large phones (679px and above) */
   @media ${media.mobileL} {
-    padding: 2rem 2rem;
+    padding: 2rem 3rem;
   }
 
-  /* Tablets (768px and below) */
+  /* Tablets (768px and above) */
   @media ${media.tablet} {
-    padding: 2rem 2rem;
-  }
-
-  /* Small laptops (1024px and below) */
-  @media ${media.laptop} {
-    max-width: 1150px;
     padding: 2rem 4rem;
   }
 
-  /* Desktops (1440px and below) */
+  /* Small laptops (1024px and above) */
+  @media ${media.laptop} {
+    max-width: 1200px;
+    padding: 2rem 4rem;
+  }
+
+  /* Desktops (1440px and above) */
   @media ${media.desktop} {
     max-width: 1400px;
-    padding: 2rem 0rem;
+    padding: 2rem 6rem;
   }
 
   /* Extra large desktops / 4K screens (1920px) */
   @media ${media.desktopXL} {
     max-width: 1600px;
-    padding: 2rem 0rem;
+    padding: 2rem 8rem;
   }
 `;
 

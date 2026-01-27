@@ -4,9 +4,11 @@ export const Colors = {
   etsuGold: "#FFB81C", // ETSU Gold
   white: "#FFFFFF",
   black: "#000000",
+  lightBlack: "rgba(0, 0, 0, 0.677)",
   darkGray: "#333333",
   lightGray: "#F5F5F5",
-  softBlue: "#edf4fa",
+  softBlue: "#f3f7fb",
+  brightBlue: "#003F87",
 };
 
 // Shadows for cards, modals, etc.

@@ -17,6 +17,7 @@ import ProjectGrid from "./pages/projects/ProjectGrid";
 import ProjectDetail from "./pages/Projects/ProjectDetail";
 import Contact from "./pages/Contact";
 import GlobalStyle from "./fixedComponent/GlobalStyle";
+import About from "./pages/About";
 
 const StyledResult = styled(Result)`
   .ant-result-title {
@@ -63,11 +64,13 @@ const routes = [
     ),
     children: [
       { index: true, path: "/", element: <Home /> },
-      { path: "/contact-us", element: <Contact /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/about", element: <About /> },
       { path: "/projects", element: <ProjectGrid /> },
       { path: "/projects/:projectId", element: <ProjectDetail /> },
-      { path: "/thesis", element: <ThesisGrid /> },
+      { path: "/theses", element: <ThesisGrid /> },
       { path: "/thesis/:thesisId", element: <ThesisDetail /> },
+      { path: "*", element: <InvalidPath /> },
     ],
   },
 ];
