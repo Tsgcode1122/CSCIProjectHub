@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
-import { Colors, Shadows } from "../theme/Colors"; // adjust path
+import { Colors, Shadows } from "../theme/Colors";
 import { media } from "../theme/Breakpoints";
 
 const Button = styled.button`
@@ -22,7 +22,7 @@ const Button = styled.button`
   letter-spacing: 0.02em;
 
   border: none;
-  border-radius: 10px; /* subtle cut edge */
+  border-radius: 10px;
   box-shadow: ${Shadows.medium};
 
   transition:

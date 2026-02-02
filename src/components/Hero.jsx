@@ -36,6 +36,9 @@ const HeroText = styled.div`
   max-width: 1100px;
   padding-top: 1.5rem;
   padding-bottom: 2rem;
+  @media ${media.tablet} {
+    padding-top: 4.5rem;
+  }
 `;
 
 const Title = styled.h1`

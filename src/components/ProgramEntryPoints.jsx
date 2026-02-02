@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Colors, Shadows } from "../theme/Colors";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import SectionHeader from "../fixedComponent/SectionHeader";
+import { FiArrowUpRight } from "react-icons/fi";
 
 const ProgramEntryPoints = () => {
   const navigate = useNavigate();
@@ -23,14 +24,17 @@ const ProgramEntryPoints = () => {
   return (
     <SectionDiv>
       <Wrapper>
-        <SectionHeader
+        {/* <SectionHeader
           title="Browse by Program"
           subtitle="Scroll to explore projects and thesis work by area of study."
-        />
+        /> */}
 
         <ScrollRow>
           {programs.map((program) => (
             <Card key={program.key} onClick={() => handleNavigate(program.key)}>
+              <Arrow>
+                <FiArrowUpRight />
+              </Arrow>
               <Icon>{program.icon}</Icon>
               <Label>{program.label}</Label>
             </Card>
@@ -46,6 +50,30 @@ export default ProgramEntryPoints;
 const Wrapper = styled.div`
   display: grid;
   gap: 1.2rem;
+`;
+const Arrow = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(4, 30, 66, 0.06);
+  color: ${Colors.etsuBlue};
+
+  font-size: 1rem;
+
+  opacity: 0.6;
+  transform: translateY(2px);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
 `;
 
 const ScrollRow = styled.div`
@@ -71,8 +99,9 @@ const ScrollRow = styled.div`
     justify-content: center;
   }
 `;
-
 const Card = styled.button`
+  position: relative; /* REQUIRED for arrow positioning */
+
   flex: 0 0 auto;
   min-width: 160px;
 
@@ -95,13 +124,19 @@ const Card = styled.button`
     border-color 160ms ease;
 
   &:hover {
-    transform: translateX(-0.1px);
+    transform: translateX(0.02px);
     box-shadow: ${Shadows.medium};
     border-color: rgba(4, 30, 66, 0.28);
   }
 
+  &:hover ${Arrow} {
+    opacity: 1;
+    transform: translateX(0.02);
+    background: rgba(255, 184, 28, 0.25);
+  }
+
   &:active {
-    transform: translateY(0);
+    transform: translateX(0.02);
   }
 `;
 
@@ -109,7 +144,7 @@ const Icon = styled.div`
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(255, 184, 28, 0.25);
+  background: rgba(4, 30, 66, 0.06);
   color: ${Colors.etsuBlue};
 
   display: grid;

@@ -41,7 +41,7 @@ const SectionContainer = styled.div`
 
   /* Desktops (1440px and above) */
   @media ${media.desktop} {
-    max-width: 1400px;
+    max-width: 1200px;
     padding: 2rem 6rem;
   }
 

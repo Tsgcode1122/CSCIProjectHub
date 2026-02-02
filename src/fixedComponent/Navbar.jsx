@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence, color } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
 import { IoIosArrowDropright } from "react-icons/io";
-import etsuLogo from "../images/logo.png";
+import etsuLogo from "../images/etsuE.png";
 import { Colors, Gradients, Shadows } from "../theme/Colors";
 import { breakpoints, media } from "../theme/Breakpoints";
 import { Col } from "antd";
@@ -15,28 +15,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  // Hide/Show Navbar on Scroll Logic
-  const controlNavbar = useCallback(() => {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY && window.scrollY > 80) {
-        // If scrolling down...
-        setIsOpen(false); // Close mobile menu when scrolling down
-        setIsVisible(false);
-      } else {
-        // If scrolling up...
-        setIsVisible(true);
-      }
-      setLastScrollY(window.scrollY);
-    }
-  }, [lastScrollY]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", controlNavbar);
-    return () => {
-      window.removeEventListener("scroll", controlNavbar);
-    };
-  }, [controlNavbar]);
 
   const navLinks = [
     { label: "Home", to: "/" },
@@ -51,10 +29,10 @@ const Navbar = () => {
       <NavContainer>
         <Wrapper>
           <LogoContainer to="/">
-            <LogoImage src={etsuLogo} alt="ETSU Computing Logo" />
+            <LogoBox src={etsuLogo}></LogoBox>
             <LogoText>
               <h1>ETSU</h1>
-              <p>Project Repository</p>
+              <p>Project Hub</p>
             </LogoText>
           </LogoContainer>
 
@@ -115,7 +93,7 @@ const NavContainer = styled(motion.header)`
   top: 0;
   left: 0;
   width: 100%;
-  background: ${Colors.white};
+  background: #eae9e9;
   /* box-shadow: ${Shadows.light}; */
   z-index: 1000;
   border-bottom: 1.5px solid ${Colors.lightGray};
@@ -139,6 +117,9 @@ const Wrapper = styled.div`
   @media ${media.mobileL} {
     padding: 0 1rem;
   }
+  @media ${media.desktopXL} {
+    max-width: 1400px;
+  }
 `;
 
 const LogoContainer = styled(NavLink)`
@@ -148,9 +129,16 @@ const LogoContainer = styled(NavLink)`
   text-decoration: none;
 `;
 
-const LogoImage = styled.img`
-  height: 40px;
-  width: auto;
+const LogoBox = styled.img`
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: ${Colors.etsuGold};
+  color: ${Colors.etsuBlue};
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 1.6rem;
 `;
 
 const LogoText = styled.div`

@@ -1,5 +1,5 @@
 export const breakpoints = {
-  mobileXS: "320px", // Extra small phones (e.g., iPhone 6)
+  mobileXS: "320px", // Extra small phones
   mobileS: "480px", // Small phones
   mobileM: "576px", // Medium phones
   mobileL: "679px", // Large phones
@@ -7,10 +7,10 @@ export const breakpoints = {
   laptop: "1024px", // Small laptops
   laptopL: "1200px", // Large laptops
   desktop: "1440px", // Desktops
-  desktopXL: "1920px", // Extra large screens (Full HD / 4K)
+  desktopXL: "1920px", // Extra large screens
 };
 
-// media query helpers
+// media query
 export const media = {
   mobileXS: `(max-width: ${breakpoints.mobileXS})`,
   mobileS: `(min-width: 321px) and (max-width: ${breakpoints.mobileS})`,

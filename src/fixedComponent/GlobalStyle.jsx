@@ -52,18 +52,18 @@ font-family: "Inter", sans-serif;
     @media ${media.tablet} { font-size: 1.6rem; line-height: 2rem; }
     @media ${media.laptop} { font-size: 1.8rem; line-height: 2.2rem; }
     @media ${media.desktop} { font-size: 2rem; line-height: 2.4rem; }
-    @media ${media.desktopXL} { font-size: 2.2rem; line-height: 2.6rem; }
+    @media ${media.desktopXL} { font-size: 2rem; line-height: 2.6rem; }
   }
 
   /* H5 */
   h5 {
     font-size: 1rem;
     line-height: 1.4rem;
-    @media ${media.mobileS} { font-size: 1.2rem; line-height: 1.6rem; }
-    @media ${media.tablet} { font-size: 1.4rem; line-height: 1.8rem; }
-    @media ${media.laptop} { font-size: 1.6rem; line-height: 2rem; }
-    @media ${media.desktop} { font-size: 1.8rem; line-height: 2.2rem; }
-    @media ${media.desktopXL} { font-size: 2rem; line-height: 2.4rem; }
+    @media ${media.mobileS} { font-size: 1.2rem; line-height: 1.4rem; }
+    @media ${media.tablet} { font-size: 1.4rem; line-height: 1.6rem; }
+    @media ${media.laptop} { font-size: 1.5rem; line-height: 1.8rem; }
+    @media ${media.desktop} { font-size: 1.6rem; line-height: 2rem; }
+    @media ${media.desktopXL} { font-size: 1.8rem; line-height: 2.4rem; }
   }
 
   /* Paragraph */
@@ -72,8 +72,8 @@ font-family: "Inter", sans-serif;
     line-height: 1.55rem;
     @media ${media.mobileXS} { font-size: 0.9rem; line-height: 1.5rem; }
     @media ${media.mobileS} { font-size: 1rem; line-height: 1.5rem; }
-    @media ${media.tablet} { font-size: 1.125rem; line-height: 1.75rem; }
-    @media ${media.laptop} { font-size: 1.25rem; line-height: 1.8rem; }
+    @media ${media.tablet} { font-size: 1.05rem; line-height: 1.3rem; }
+    @media ${media.laptop} { font-size: 1.15rem; line-height: 1.7rem; }
     @media ${media.desktopXL} { font-size: 1.375rem; line-height: 2rem; }
   }
 
