@@ -3,15 +3,16 @@
     "id": "proj-001",
     "title": "Campus Navigation Accessibility Map",
     "department": "Information Technology",
-    "year": 2024,
+    "year": 2025,
     "projectStatus": "Accepting Members",
     "acceptingMembers": true,
     "memberCount": 3,
     "duration": { "start": "2024-01", "end": "2024-05" },
     "facultyAdvisor": "Dr. Melissa Carter",
     "tags": ["Accessibility", "Web", "Maps", "UX"],
-    "thumbnail": "/images/projects/campus-access-map.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "An accessible campus map with routing, landmarks, and ADA-friendly navigation tips for students and visitors."
+
   },
   {
     "id": "proj-002",
@@ -24,7 +25,7 @@
     "duration": { "start": "2023-08", "end": "2023-12" },
     "facultyAdvisor": "Dr. James Holloway",
     "tags": ["Security", "Email", "ML", "Threat Detection"],
-    "thumbnail": "/images/projects/phishing-addon.png",
+      "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A lightweight email client add-on that flags suspicious content using heuristics and ML-based scoring."
   },
   {
@@ -38,7 +39,7 @@
     "duration": { "start": "2024-09", "end": "2025-05" },
     "facultyAdvisor": "Dr. Priya Nair",
     "tags": ["Scheduling", "CRUD", "Full-stack", "Admin"],
-    "thumbnail": "/images/projects/lab-booking.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A role-based booking platform to reserve lab equipment, reduce conflicts, and generate usage analytics."
   },
   {
@@ -52,21 +53,21 @@
     "duration": { "start": "2022-01", "end": "2022-05" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["React", "UI", "Search", "Showcase"],
-    "thumbnail": "/images/projects/portfolio-hub.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A searchable catalog of student capstone projects with tags, previews, and case-study detail pages."
   },
   {
     "id": "proj-005",
     "title": "IoT Air Quality Dashboard",
     "department": "Data Science",
-    "year": 2024,
+    "year": 2020,
     "projectStatus": "Accepting Members",
     "acceptingMembers": true,
     "memberCount": 3,
     "duration": { "start": "2024-02", "end": "2024-06" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["IoT", "Data Viz", "Time Series", "Dashboard"],
-    "thumbnail": "/images/projects/air-quality.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A dashboard for air-quality sensor streams with alerts, trends, and exportable reports."
   },
   {
@@ -80,7 +81,7 @@
     "duration": { "start": "2023-09", "end": "2024-05" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["Predictive", "ML", "Education", "Analytics"],
-    "thumbnail": "/images/projects/early-warning.png",
+        "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A predictive model to identify at-risk students using attendance, grades, and engagement signals."
   },
   {
@@ -94,7 +95,7 @@
     "duration": { "start": "2024-10", "end": "2025-04" },
     "facultyAdvisor": "Dr. James Holloway",
     "tags": ["Encryption", "Auth", "Security", "Backend"],
-    "thumbnail": "/images/projects/secure-share.png",
+        "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A secure sharing service using expiring tokens, access logs, and encryption at rest."
   },
   {
@@ -108,21 +109,21 @@
     "duration": { "start": "2022-08", "end": "2022-12" },
     "facultyAdvisor": "Dr. Priya Nair",
     "tags": ["Recommender", "Web", "UX", "API"],
-    "thumbnail": "/images/projects/dining-recommender.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A preference-based recommender that suggests meals using dietary filters, ratings, and availability."
   },
   {
     "id": "proj-009",
     "title": "Network Traffic Visual Analyzer",
     "department": "Cybersecurity",
-    "year": 2021,
+    "year": 2019,
     "projectStatus": "Completed",
     "acceptingMembers": false,
     "memberCount": 2,
     "duration": { "start": "2021-01", "end": "2021-05" },
     "facultyAdvisor": "Dr. Aiden Wells",
     "tags": ["Networking", "Visualization", "Security", "Packets"],
-    "thumbnail": "/images/projects/traffic-analyzer.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A tool to visualize traffic flows, detect anomalies, and summarize network activity for quick triage."
   },
   {
@@ -136,7 +137,7 @@
     "duration": { "start": "2024-03", "end": "2024-08" },
     "facultyAdvisor": "Dr. Sarah Kingston",
     "tags": ["Real-time", "Web", "Sensors", "UX"],
-    "thumbnail": "/images/projects/library-seats.png",
+       "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Real-time seat availability using lightweight inputs and a map-style view for busy study periods."
   },
   {
@@ -150,21 +151,21 @@
     "duration": { "start": "2023-01", "end": "2023-05" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["Graph", "Visualization", "React", "Planning"],
-    "thumbnail": "/images/projects/prereq-graph.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "An interactive graph to explore prerequisites and plan course paths with what-if scenarios."
   },
   {
     "id": "proj-012",
     "title": "Resume Parser + Skill Matcher",
     "department": "Information Systems",
-    "year": 2024,
+    "year": 2018,
     "projectStatus": "Ongoing",
     "acceptingMembers": true,
     "memberCount": 5,
     "duration": { "start": "2024-09", "end": "2025-03" },
     "facultyAdvisor": "Dr. Priya Nair",
     "tags": ["NLP", "Career", "Parsing", "Matching"],
-    "thumbnail": "/images/projects/resume-parser.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Extracts resume content and matches skills to internships using configurable keyword and NLP logic."
   },
   {
@@ -178,7 +179,7 @@
     "duration": { "start": "2022-01", "end": "2022-05" },
     "facultyAdvisor": "Dr. Sarah Kingston",
     "tags": ["Tickets", "QR", "Full-stack", "Events"],
-    "thumbnail": "/images/projects/ticketing.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A ticketing platform with QR check-in, attendee lists, and event analytics for organizers."
   },
   {
@@ -192,7 +193,7 @@
     "duration": { "start": "2023-08", "end": "2023-12" },
     "facultyAdvisor": "Dr. Aiden Wells",
     "tags": ["Encryption", "Vault", "Auth", "Security"],
-    "thumbnail": "/images/projects/password-manager.png",
+     "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A secure vault with encrypted storage, password generation, and optional MFA support."
   },
   {
@@ -206,7 +207,7 @@
     "duration": { "start": "2024-11", "end": "2025-04" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["AI", "Chat", "Learning", "LLM"],
-    "thumbnail": "/images/projects/study-buddy.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A study assistant that summarizes notes, quizzes users, and guides topic review with guardrails."
   },
   {
@@ -220,7 +221,7 @@
     "duration": { "start": "2021-08", "end": "2021-12" },
     "facultyAdvisor": "Dr. Priya Nair",
     "tags": ["CRM", "Productivity", "Web", "Tracking"],
-    "thumbnail": "/images/projects/internship-crm.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A lightweight CRM to track applications, interviews, notes, and reminders across job searches."
   },
   {
@@ -234,7 +235,7 @@
     "duration": { "start": "2024-08", "end": "2025-01" },
     "facultyAdvisor": "Dr. James Holloway",
     "tags": ["Privacy", "Compliance", "NLP", "Web"],
-    "thumbnail": "/images/projects/policy-scanner.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Scans privacy pages to extract key clauses and highlight missing or risky disclosures."
   },
   {
@@ -248,7 +249,7 @@
     "duration": { "start": "2022-09", "end": "2023-01" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["Analytics", "Dashboard", "Data Viz", "Pipelines"],
-    "thumbnail": "/images/projects/sports-analytics.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "An end-to-end dashboard with pipelines that visualize team/player performance over seasons."
   },
   {
@@ -262,7 +263,7 @@
     "duration": { "start": "2023-10", "end": "2024-04" },
     "facultyAdvisor": "Dr. Sarah Kingston",
     "tags": ["Automation", "Classification", "IT", "Workflow"],
-    "thumbnail": "/images/projects/ticket-triage.png",
+        "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Automatically categorizes helpdesk tickets and suggests routing based on historical resolution data."
   },
   {
@@ -276,7 +277,7 @@
     "duration": { "start": "2024-01", "end": "2024-05" },
     "facultyAdvisor": "Dr. Melissa Carter",
     "tags": ["Matching", "Community", "Web", "Scheduling"],
-    "thumbnail": "/images/projects/study-group.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Matches students into study groups by course, availability, and preferences with messaging support."
   },
   {
@@ -290,7 +291,7 @@
     "duration": { "start": "2022-01", "end": "2022-05" },
     "facultyAdvisor": "Dr. Aiden Wells",
     "tags": ["QR", "Security", "Geofence", "Auth"],
-    "thumbnail": "/images/projects/secure-attendance.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A QR attendance system that reduces spoofing using location verification and short-lived tokens."
   },
   {
@@ -304,7 +305,7 @@
     "duration": { "start": "2024-09", "end": "2025-05" },
     "facultyAdvisor": "Dr. James Holloway",
     "tags": ["Labs", "Virtualization", "Security", "Platform"],
-    "thumbnail": "/images/projects/cyber-sandbox.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A portal to launch isolated lab environments and track lab progress for cybersecurity courses."
   },
   {
@@ -318,7 +319,7 @@
     "duration": { "start": "2023-01", "end": "2023-04" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["NLP", "Extraction", "Research", "Automation"],
-    "thumbnail": "/images/projects/paper-metadata.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Extracts title, authors, keywords, and references from PDFs to support repository organization."
   },
   {
@@ -332,7 +333,7 @@
     "duration": { "start": "2024-03", "end": "2024-09" },
     "facultyAdvisor": "Dr. Priya Nair",
     "tags": ["Inventory", "Admin", "CRUD", "Reporting"],
-    "thumbnail": "/images/projects/asset-inventory.png",
+     "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Tracks departmental assets, checkouts, maintenance logs, and generates printable reports."
   },
   {
@@ -346,7 +347,7 @@
     "duration": { "start": "2021-02", "end": "2021-05" },
     "facultyAdvisor": "Dr. Sarah Kingston",
     "tags": ["Voting", "Events", "Security", "Web"],
-    "thumbnail": "/images/projects/demo-day-voting.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A secure voting platform for demo day with rate limiting, audit logs, and role-based admin views."
   },
   {
@@ -360,7 +361,7 @@
     "duration": { "start": "2024-09", "end": "2025-02" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["MLOps", "Registry", "Versioning", "API"],
-    "thumbnail": "/images/projects/model-registry.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A simple model registry to track versions, metrics, and deployment status with an API-first approach."
   },
   {
@@ -374,7 +375,7 @@
     "duration": { "start": "2024-01", "end": "2024-06" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["Prediction", "Time Series", "Transit", "UX"],
-    "thumbnail": "/images/projects/shuttle-eta.png",
+       "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Predicts shuttle arrival times using historical routes and live signals, with an easy ETA display."
   },
   {
@@ -388,7 +389,7 @@
     "duration": { "start": "2023-02", "end": "2023-06" },
     "facultyAdvisor": "Dr. Aiden Wells",
     "tags": ["API", "Security", "Rate Limiting", "Auth"],
-    "thumbnail": "/images/projects/api-gateway.png",
+     "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A gateway that enforces auth, quotas, and logging to protect downstream services from abuse."
   },
   {
@@ -402,7 +403,7 @@
     "duration": { "start": "2023-09", "end": "2024-03" },
     "facultyAdvisor": "Dr. Melissa Carter",
     "tags": ["Sentiment", "Dashboard", "NLP", "Analytics"],
-    "thumbnail": "/images/projects/feedback-sentiment.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Analyzes course feedback comments and visualizes sentiment and themes over time for instructors."
   },
   {
@@ -416,7 +417,7 @@
     "duration": { "start": "2024-10", "end": "2025-03" },
     "facultyAdvisor": "Dr. Sarah Kingston",
     "tags": ["Cloud", "Monitoring", "Alerts", "Dashboards"],
-    "thumbnail": "/images/projects/cloud-cost.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "Tracks cloud spend, sets alert thresholds, and highlights cost anomalies with simple visual summaries."
   },
   {
@@ -430,7 +431,7 @@
     "duration": { "start": "2022-08", "end": "2022-12" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["Computer Vision", "Prototype", "Ethics", "Detection"],
-    "thumbnail": "/images/projects/cv-attendance.png",
+    "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A prototype attendance system using vision-based detection with privacy-focused constraints and consent."
   },
   {
@@ -444,7 +445,7 @@
     "duration": { "start": "2021-01", "end": "2021-06" },
     "facultyAdvisor": "Dr. Olivia Grant",
     "tags": ["Open Data", "KPIs", "Dashboard", "Civic"],
-    "thumbnail": "/images/projects/city-kpis.png",
+      "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A public dashboard showcasing city KPIs with downloadable datasets and simple explanatory visuals."
   },
   {
@@ -458,7 +459,7 @@
     "duration": { "start": "2024-02", "end": "2024-07" },
     "facultyAdvisor": "Dr. Melissa Carter",
     "tags": ["Search", "Profiles", "Matching", "Collaboration"],
-    "thumbnail": "/images/projects/collab-finder.png",
+     "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A finder tool that matches faculty research interests and suggests collaboration opportunities and keywords."
   },
   {
@@ -472,7 +473,7 @@
     "duration": { "start": "2024-01", "end": "2024-04" },
     "facultyAdvisor": "Dr. Aiden Wells",
     "tags": ["Security", "Auth", "Education", "Simulation"],
-    "thumbnail": "/images/projects/reset-simulator.png",
+     "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "An educational simulator demonstrating secure reset flows, token lifetime, and common vulnerabilities."
   },
   {
@@ -486,7 +487,7 @@
     "duration": { "start": "2024-09", "end": "2025-05" },
     "facultyAdvisor": "Dr. Ethan Brooks",
     "tags": ["Repository", "React", "Search", "Filters"],
-    "thumbnail": "/images/projects/project-hub.png",
+       "thumbnail": "src/images/thumbnail.png",
     "shortDescription": "A prototype repository for student and faculty projects with filters, listings, and detail pages."
   }
 ]
