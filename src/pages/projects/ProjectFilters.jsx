@@ -283,24 +283,6 @@ const MoreBtn = styled.button`
   }
 `;
 
-const LessBtn = styled(MoreBtn)`
-  margin-top: 0.6rem;
-`;
-
-const YearSelect = styled.select`
-  width: 100%;
-  padding: 0.75rem 0.9rem;
-  border-radius: 12px;
-  border: 1px solid rgba(4, 30, 66, 0.18);
-  outline: none;
-  background: ${Colors.white};
-  margin-top: 0.2rem;
-
-  &:focus {
-    border-color: ${Colors.etsuGold};
-    box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25);
-  }
-`;
 const YearActions = styled.div`
   display: flex;
   gap: 0.75rem;

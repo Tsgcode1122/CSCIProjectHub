@@ -141,56 +141,54 @@ const ProjectGrid = () => {
                     key={p.id}
                     onClick={() => handleOpenProject(p.id)}
                   >
-                    <Thumb>
-                      <img
-                        src={p.thumbnail || "/images/projects/placeholder.png"}
-                        alt={p.title}
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "/images/projects/placeholder.png";
-                        }}
-                      />
-                    </Thumb>
+                    <TitleRow>
+                      <CardTitle>{p.title}</CardTitle>{" "}
+                      <StatusBadge $status={p.projectStatus}>
+                        {p.projectStatus}
+                      </StatusBadge>
+                    </TitleRow>
 
                     <CardContent>
+                      <Thumb>
+                        <img
+                          src={
+                            p.thumbnail || "/images/projects/placeholder.png"
+                          }
+                          alt={p.title}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "/images/projects/placeholder.png";
+                          }}
+                        />
+                      </Thumb>
                       <TopRow>
-                        <TitleRow>
-                          <CardTitle>{p.title}</CardTitle>
-                          <StatusBadge $active={p.acceptingMembers}>
-                            {p.projectStatus ||
-                              (p.acceptingMembers ? "Accepting Members" : "—")}
-                          </StatusBadge>
-                        </TitleRow>
+                        <Tags>
+                          {(p.tags || []).slice(0, 4).map((tag) => (
+                            <Tag key={tag}>{tag}</Tag>
+                          ))}
+                        </Tags>
+                        <MiniDesc>{p.shortDescription}</MiniDesc>
 
-                        <CornerIcon aria-hidden="true">
-                          <FiArrowUpRight />
-                        </CornerIcon>
+                        <MetaRow>
+                          <MetaItem>
+                            <FiUsers />
+                            <span>{p.memberCount ?? 0} members</span>
+                          </MetaItem>
+                          <MetaItem>
+                            <FiCalendar />
+                            <span>
+                              {p.duration?.start || "—"} –{" "}
+                              {p.duration?.end || "—"}
+                            </span>
+                          </MetaItem>
+                          <MetaRight>
+                            {" "}
+                            <CornerIcon aria-hidden="true">
+                              <FiArrowUpRight />
+                            </CornerIcon>
+                          </MetaRight>
+                        </MetaRow>
                       </TopRow>
-
-                      <Tags>
-                        {(p.tags || []).slice(0, 4).map((tag) => (
-                          <Tag key={tag}>{tag}</Tag>
-                        ))}
-                      </Tags>
-
-                      <MiniDesc>{p.shortDescription}</MiniDesc>
-
-                      <MetaRow>
-                        <MetaItem>
-                          <FiUsers />
-                          <span>{p.memberCount ?? 0} members</span>
-                        </MetaItem>
-                        <MetaItem>
-                          <FiCalendar />
-                          <span>
-                            {p.duration?.start || "—"} –{" "}
-                            {p.duration?.end || "—"}
-                          </span>
-                        </MetaItem>
-                        <MetaRight>
-                          <small>{p.department}</small>
-                        </MetaRight>
-                      </MetaRow>
                     </CardContent>
                   </ProjectCard>
                 ))}
@@ -260,7 +258,7 @@ const SearchInput = styled.input`
   outline: none;
   background: transparent;
   color: ${Colors.black};
-  font-weight: 600;
+  /* font-weight: 200; */
 
   &::placeholder {
     color: rgba(3, 3, 3, 0.626);
@@ -305,16 +303,15 @@ const ProjectCard = styled.button`
   border: none;
   text-align: left;
   cursor: pointer;
-
-  display: grid;
-  grid-template-columns: 110px 1fr;
+  position: relative;
   gap: 1rem;
 
   padding: 1rem;
   background: ${Colors.white};
   border-radius: 16px;
-  border: 1px solid rgba(4, 30, 66, 0.12);
-  box-shadow: ${Shadows.light};
+  border: 1px solid rgba(132, 172, 227, 0.306);
+  /* border: 1px solid rgba(4, 30, 66, 0.12); */
+  /* box-shadow: ${Shadows.light}; */
 
   transition:
     transform 160ms ease,
@@ -323,8 +320,8 @@ const ProjectCard = styled.button`
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: ${Shadows.medium};
-    border-color: rgba(4, 30, 66, 0.22);
+    box-shadow: ${Shadows.light};
+    border-color: rgba(177, 178, 179, 0.22);
   }
 
   @media ${media.mobileS} {
@@ -354,12 +351,13 @@ const Thumb = styled.div`
 `;
 
 const CardContent = styled.div`
-  min-width: 0;
+  /* min-width: 0; */
+
+  display: grid;
+  grid-template-columns: 110px 1fr;
 `;
 
 const TopRow = styled.div`
-  display: flex;
-  justify-content: space-between;
   gap: 0.8rem;
 `;
 
@@ -369,31 +367,60 @@ const TitleRow = styled.div`
   min-width: 0;
 `;
 
-const CardTitle = styled.h4`
+const CardTitle = styled.h5`
   margin: 0;
-  color: ${Colors.etsuBlue};
+  color: ${Colors.brightBlue};
   font-weight: 700;
   line-height: 1.35rem;
 
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 `;
 
 const StatusBadge = styled.span`
   width: fit-content;
   padding: 0.35rem 0.6rem;
-  border-radius: 999px;
+  right: 1rem;
+  border-radius: 9px;
   font-weight: 700;
   font-size: 0.78rem;
+  position: absolute;
 
-  background: ${({ $active }) =>
-    $active ? "rgba(255, 184, 28, 0.22)" : "rgba(4, 30, 66, 0.08)"};
-  color: ${({ $active }) =>
-    $active ? Colors.etsuBlue : "rgba(4, 30, 66, 0.85)"};
+  background: ${({ $status }) => {
+    switch ($status) {
+      case "Accepting Members":
+        return "#ffc72d7b";
+      case "Ongoing":
+      default:
+        return "rgba(4, 30, 66, 0.08)";
+    }
+  }};
+
+  color: ${({ $status }) => {
+    switch ($status) {
+      case "Completed":
+        return "#003b7f";
+      case "Ongoing":
+        return "rgba(4, 30, 66, 0.85)";
+      case "Accepting Members":
+        return Colors.etsuBlue;
+      default:
+        return "rgba(4, 30, 66, 0.85)";
+    }
+  }};
+
   border: 1px solid
-    ${({ $active }) =>
-      $active ? "rgba(255, 184, 28, 0.45)" : "rgba(4, 30, 66, 0.12)"};
+    ${({ $status }) => {
+      switch ($status) {
+        case "Completed":
+          return "rgba(4, 30, 66, 0.12)";
+        case "Accepting Members":
+          return "rgba(255, 184, 28, 0.45)";
+        default:
+          return "rgba(4, 30, 66, 0.12)";
+      }
+    }};
 `;
 
 const CornerIcon = styled.div`
@@ -410,12 +437,12 @@ const Tags = styled.div`
 `;
 
 const Tag = styled.span`
-  padding: 0.28rem 0.55rem;
-  border-radius: 999px;
-  background: rgba(4, 30, 66, 0.06);
+  padding: 0.2rem 0.5rem;
+  border-radius: 9px;
+  background: #e8f1f8;
   border: 1px solid rgba(4, 30, 66, 0.1);
-  color: rgba(4, 30, 66, 0.9);
-  font-weight: 700;
+  color: #003f87ca;
+  font-weight: 300;
   font-size: 0.78rem;
 `;
 
