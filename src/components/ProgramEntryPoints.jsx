@@ -5,6 +5,7 @@ import { Colors, Shadows } from "../theme/Colors";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import SectionHeader from "../fixedComponent/SectionHeader";
 import { FiArrowUpRight } from "react-icons/fi";
+import { media } from "../theme/Breakpoints";
 
 const ProgramEntryPoints = () => {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ const ScrollRow = styled.div`
   }
   justify-content: flex-start;
 
-  @media (min-width: 1002px) {
+  @media (min-width: 1080px) {
     justify-content: center;
   }
 `;
@@ -157,4 +158,20 @@ const Label = styled.small`
   font-weight: 600;
   text-align: center;
   line-height: 1.15rem;
+  @media ${media.mobileXS} {
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+  }
+  @media ${media.mobileS} {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  @media ${media.tablet} {
+    font-size: 1.05rem;
+    line-height: 1.3rem;
+  }
+  @media ${media.laptop} {
+    font-size: 1.15rem;
+    line-height: 1.7rem;
+  }
 `;
