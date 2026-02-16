@@ -1,0 +1,3169 @@
+[
+ {
+  "project_code": "CS-AI-2026-001",
+  "title": "AI-Based Early Academic Performance Prediction System",
+  "overview": "This project focuses on designing and implementing an artificial intelligence system that predicts student academic performance early in a semester. The system analyzes historical academic records, course enrollment patterns, attendance data, and learning management system engagement metrics to identify students who may be at risk of underperforming. By leveraging supervised machine learning models, the platform generates risk scores and performance forecasts that can be used by faculty and academic advisors to intervene proactively. The project also emphasizes responsible data usage by incorporating privacy-preserving techniques, role-based access control, and transparency in prediction outputs. The overall goal is to support data-driven academic decision-making, improve student retention, and enhance personalized academic support within the Department of Computing.",
+  "key_features": [
+    "Machine learning models for academic performance prediction",
+    "Advisor dashboard with risk visualization",
+    "Early warning alerts for at-risk students",
+    "Secure role-based access to student data",
+    "Data preprocessing and feature engineering pipeline"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Inconsistent and incomplete academic data across different courses",
+      "solution": "Implemented data normalization and feature selection techniques to improve model reliability"
+    },
+    {
+      "challenge": "Ensuring ethical use of predictive analytics in education",
+      "solution": "Included explainability features and restricted access to sensitive prediction outputs"
+    }
+  ],
+  "team_members": [
+    "Alex Johnson",
+    "Maria Gonzalez",
+    "Samuel Okafor",
+    "Emily Carter"
+  ],
+  "supervisor": "Dr. Ahmad Al Doulat",
+  "timeline_start": "2026-01-15T00:00:00.000Z",
+  "timeline_end": "2026-05-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/ai-academic-prediction",
+  "sourcecode_link": "https://github.com/etsu-computing/ai-academic-prediction",
+  "tech_stack": [
+    "Python",
+    "Scikit-learn",
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Docker"
+  ],
+  "achievements": [
+    "Achieved over 85% prediction accuracy during validation",
+    "Demonstrated effective early warning capabilities in pilot testing",
+    "Presented findings at the ETSU Computing Research Showcase"
+  ],
+  "status": "Active",
+  "department": "Computer Science",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Education Technology",
+    "Data Analytics"
+  ],
+  "thumbnail_url": "/images/projects/ai-academic-prediction.png",
+  "short_description": "An AI-driven system that predicts student academic performance early in the semester using historical records and engagement data, enabling faculty and advisors to provide timely, data-informed academic support.",
+  "duration_start": "Jan 2026",
+  "duration_end": "May 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:00:00.000Z",
+  "updated_at": "2026-02-05T17:00:00.000Z"
+}
+,
+
+
+{
+  "project_code": "CYB-NET-2026-002",
+  "title": "Real-Time Network Intrusion Detection and Alerting Dashboard",
+  "overview": "This project designs and implements a real-time network intrusion detection and alerting solution tailored for departmental lab environments and small campus networks. The system ingests network traffic logs and flow data, extracts security-relevant features, and applies anomaly detection and signature-based checks to identify suspicious activity such as port scanning, brute-force authentication attempts, and unusual outbound connections. A web-based dashboard provides security analysts and faculty supervisors with a live view of alerts, severity scoring, traffic summaries, and investigation context, including the affected host, timestamps, and correlated events. The platform prioritizes practical deployment by supporting containerized services, configurable detection rules, and a lightweight data pipeline that can run on modest hardware. The goal is to improve visibility into network threats, shorten incident response time, and provide a hands-on cybersecurity learning tool for students.",
+  "key_features": [
+    "Real-time traffic ingestion and feature extraction pipeline",
+    "Anomaly detection with configurable alert thresholds",
+    "Rule-based detection for common attack patterns",
+    "Web dashboard for alert triage and incident context",
+    "Severity scoring and alert history for investigations"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "High volume network events causing alert noise and analyst fatigue",
+      "solution": "Implemented aggregation, deduplication, and severity scoring to reduce noisy alerts"
+    },
+    {
+      "challenge": "Balancing detection accuracy with low-latency processing requirements",
+      "solution": "Used lightweight feature engineering and streaming-based processing with batching"
+    }
+  ],
+  "team_members": [
+    "Jordan Smith",
+    "Amina Yusuf",
+    "Ethan Walker"
+  ],
+  "supervisor": "Dr. Ghaith Husari",
+  "timeline_start": "2026-01-22T00:00:00.000Z",
+  "timeline_end": "2026-05-20T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/network-ids-dashboard",
+  "sourcecode_link": "https://github.com/etsu-computing/network-ids-dashboard",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Python",
+    "MongoDB",
+    "Docker"
+  ],
+  "achievements": [
+    "Detected simulated intrusion scenarios with high confidence during lab testing",
+    "Reduced time-to-triage by consolidating alerts into a single dashboard view",
+    "Deployed successfully in a sandbox lab environment for student training"
+  ],
+  "status": "Active",
+  "department": "Cybersecurity",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 3,
+  "tags": [
+    "Cybersecurity",
+    "Network Security",
+    "Anomaly Detection",
+    "Monitoring"
+  ],
+  "thumbnail_url": "/images/projects/network-ids-dashboard.png",
+  "short_description": "A real-time intrusion detection and alerting platform that monitors network traffic, identifies suspicious patterns, and provides a live dashboard for incident triage, investigation context, and security analytics.",
+  "duration_start": "Jan 2026",
+  "duration_end": "May 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:05:00.000Z",
+  "updated_at": "2026-02-05T17:05:00.000Z"
+},
+{
+  "project_code": "DS-ANL-2026-003",
+  "title": "Data-Driven Enrollment Trend Analysis and Forecasting System",
+  "overview": "This project develops a data analytics platform focused on analyzing historical enrollment data to identify trends and forecast future enrollment patterns across academic programs. The system aggregates multi-year enrollment records, demographic attributes, course demand indicators, and retention statistics to generate insights that support academic planning and resource allocation. Using time-series analysis and predictive modeling techniques, the platform provides forecasts for enrollment growth or decline, highlights seasonal patterns, and identifies factors influencing student enrollment decisions. Interactive visualizations allow department administrators and faculty to explore trends by program, year, and student cohort. The project aims to demonstrate how data science techniques can support strategic decision-making in higher education while providing students with practical experience in data cleaning, modeling, and visualization.",
+  "key_features": [
+    "Multi-year enrollment data aggregation and preprocessing",
+    "Time-series forecasting models for enrollment prediction",
+    "Interactive dashboards with trend visualizations",
+    "Cohort-based analysis by program and demographics",
+    "Exportable reports for academic planning"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Inconsistent data formats across historical enrollment datasets",
+      "solution": "Built a standardized data ingestion and cleaning pipeline to normalize records"
+    },
+    {
+      "challenge": "Capturing external factors influencing enrollment trends",
+      "solution": "Incorporated proxy indicators such as course demand and retention rates into models"
+    }
+  ],
+  "team_members": [
+    "Liam Thompson",
+    "Sophia Martinez",
+    "Noah Kim",
+    "Adewale Ogun"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2026-02-01T00:00:00.000Z",
+  "timeline_end": "2026-06-05T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/enrollment-forecasting",
+  "sourcecode_link": "https://github.com/etsu-computing/enrollment-forecasting",
+  "tech_stack": [
+    "Python",
+    "Pandas",
+    "Scikit-learn",
+    "React",
+    "D3.js",
+    "MongoDB"
+  ],
+  "achievements": [
+    "Generated enrollment forecasts with strong alignment to historical outcomes",
+    "Delivered actionable insights for program-level academic planning",
+    "Showcased analytical dashboards during the ETSU Data Science Symposium"
+  ],
+  "status": "Active",
+  "department": "Data Science",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Data Science",
+    "Analytics",
+    "Forecasting",
+    "Higher Education"
+  ],
+  "thumbnail_url": "/images/projects/enrollment-forecasting.png",
+  "short_description": "A data analytics and forecasting platform that examines historical enrollment trends and predicts future patterns, helping academic departments make informed decisions about program planning and resource allocation.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:10:00.000Z",
+  "updated_at": "2026-02-05T17:10:00.000Z"
+},
+{
+  "project_code": "IS-BPM-2026-004",
+  "title": "Digital Workflow Automation for Academic Administrative Processes",
+  "overview": "This project focuses on designing and implementing an information systems solution that streamlines and automates common academic administrative workflows such as course approvals, student petitions, and faculty requests. The system replaces manual, paper-based processes with a centralized digital platform that supports form submission, approval routing, audit trails, and status tracking. Business process modeling techniques are used to map existing workflows, identify bottlenecks, and redesign processes for efficiency and transparency. The platform provides role-based dashboards for students, faculty, and administrators, enabling each group to view relevant tasks, deadlines, and approval statuses. The project demonstrates how information systems principles can be applied to improve organizational efficiency, data accuracy, and user experience within higher education administrative operations.",
+  "key_features": [
+    "Configurable digital forms and approval workflows",
+    "Role-based dashboards for students, faculty, and administrators",
+    "Automated notifications and reminders",
+    "Audit trail and workflow status tracking",
+    "Process analytics for identifying bottlenecks"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Capturing diverse workflow requirements across departments",
+      "solution": "Conducted stakeholder interviews and modeled processes using BPMN diagrams"
+    },
+    {
+      "challenge": "Ensuring system flexibility for future workflow changes",
+      "solution": "Designed a modular workflow engine with configurable rules and stages"
+    }
+  ],
+  "team_members": [
+    "Hannah Wilson",
+    "Michael Brown",
+    "Ibrahim Sule",
+    "Jessica Nguyen"
+  ],
+  "supervisor": "Dr. T. Janel Paulk",
+  "timeline_start": "2026-01-18T00:00:00.000Z",
+  "timeline_end": "2026-05-18T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-workflow-automation",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-workflow-automation",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Camunda BPM",
+    "Docker"
+  ],
+  "achievements": [
+    "Reduced average approval turnaround time by over 40% in pilot workflows",
+    "Improved visibility into administrative process status for stakeholders",
+    "Adopted for testing by multiple academic offices"
+  ],
+  "status": "Active",
+  "department": "Information Systems",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Information Systems",
+    "Business Process Management",
+    "Workflow Automation",
+    "Enterprise Systems"
+  ],
+  "thumbnail_url": "/images/projects/academic-workflow-automation.png",
+  "short_description": "An information systems platform that digitizes and automates academic administrative workflows, providing role-based dashboards, approval tracking, and process analytics to improve efficiency and transparency across departments.",
+  "duration_start": "Jan 2026",
+  "duration_end": "May 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:15:00.000Z",
+  "updated_at": "2026-02-05T17:15:00.000Z"
+},
+
+{
+  "project_code": "IT-OPS-2026-005",
+  "title": "Centralized IT Asset Management and Lifecycle Tracking System",
+  "overview": "This project involves the design and development of a centralized IT asset management system to help organizations track, manage, and maintain hardware and software assets throughout their lifecycle. The platform records asset acquisition details, assignment history, maintenance schedules, warranty information, and decommissioning status. By consolidating asset data into a single system, IT staff can gain better visibility into inventory usage, reduce asset loss, and improve budgeting and replacement planning. The system includes role-based access for IT administrators, technicians, and department managers, as well as reporting tools that provide insights into asset utilization, aging equipment, and maintenance costs. The project emphasizes practical IT operations management and demonstrates how well-designed systems can improve efficiency and accountability in technology environments.",
+  "key_features": [
+    "Centralized inventory of hardware and software assets",
+    "Asset lifecycle tracking from procurement to retirement",
+    "Maintenance scheduling and warranty tracking",
+    "Role-based access for IT staff and managers",
+    "Reporting and analytics for asset utilization"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Maintaining accurate and up-to-date asset records across departments",
+      "solution": "Implemented asset assignment tracking and mandatory update workflows for changes"
+    },
+    {
+      "challenge": "Handling a wide variety of asset types with different attributes",
+      "solution": "Designed a flexible data model supporting customizable asset fields"
+    }
+  ],
+  "team_members": [
+    "Brian Matthews",
+    "Oluchi Nwoye",
+    "Carlos Ramirez",
+    "Zoe Peterson"
+  ],
+  "supervisor": "William Kinser",
+  "timeline_start": "2026-01-25T00:00:00.000Z",
+  "timeline_end": "2026-05-25T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/it-asset-management",
+  "sourcecode_link": "https://github.com/etsu-computing/it-asset-management",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "REST APIs",
+    "Docker"
+  ],
+  "achievements": [
+    "Improved asset visibility and tracking accuracy during pilot deployment",
+    "Reduced time spent on manual inventory audits",
+    "Provided actionable insights for IT budgeting and replacement planning"
+  ],
+  "status": "Active",
+  "department": "Information Technology",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Information Technology",
+    "IT Operations",
+    "Asset Management",
+    "Systems Administration"
+  ],
+  "thumbnail_url": "/images/projects/it-asset-management.png",
+  "short_description": "A centralized IT asset management system that tracks hardware and software assets across their entire lifecycle, helping IT teams improve inventory visibility, maintenance planning, and operational efficiency.",
+  "duration_start": "Jan 2026",
+  "duration_end": "May 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:20:00.000Z",
+  "updated_at": "2026-02-05T17:20:00.000Z"
+},
+{
+  "project_code": "CS-SE-2026-006",
+  "title": "Scalable Microservices-Based Student Project Repository Platform",
+  "overview": "This project focuses on building a scalable, microservices-based web platform for managing and showcasing student and faculty projects within the Department of Computing. The system is designed to support project submission, review, discovery, and long-term archival across multiple academic years and departments. By adopting a microservices architecture, the platform separates concerns such as authentication, project metadata management, search and filtering, and media storage, enabling independent scaling and easier maintenance. The project also incorporates role-based access for students, faculty supervisors, and administrators, along with moderation workflows for approving and publishing projects. Emphasis is placed on performance optimization, API design, and maintainability to ensure the platform can grow alongside increasing project volume and user traffic.",
+  "key_features": [
+    "Microservices-based backend architecture",
+    "Project submission and approval workflows",
+    "Advanced search and filtering across projects",
+    "Role-based access for students, faculty, and administrators",
+    "Scalable API design for long-term platform growth"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Designing services that remain loosely coupled while sharing common data",
+      "solution": "Defined clear service boundaries and used API contracts with shared schemas"
+    },
+    {
+      "challenge": "Ensuring reliable communication between distributed services",
+      "solution": "Implemented RESTful APIs with centralized logging and health monitoring"
+    }
+  ],
+  "team_members": [
+    "Nathan Brooks",
+    "Isabella Romero",
+    "Tunde Adebayo",
+    "Grace Liu"
+  ],
+  "supervisor": "Dr. Douglas Battleson",
+  "timeline_start": "2026-02-05T00:00:00.000Z",
+  "timeline_end": "2026-06-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/project-repository-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/project-repository-platform",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Docker",
+    "Nginx"
+  ],
+  "achievements": [
+    "Successfully deployed independent services for core platform features",
+    "Demonstrated improved scalability over monolithic prototype",
+    "Adopted as a reference architecture for future departmental projects"
+  ],
+  "status": "Active",
+  "department": "Computer Science",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Software Engineering",
+    "Microservices",
+    "Web Development",
+    "System Architecture"
+  ],
+  "thumbnail_url": "/images/projects/project-repository-platform.png",
+  "short_description": "A scalable, microservices-based platform for submitting, managing, and discovering student and faculty projects, designed to support long-term growth, role-based access, and advanced project search capabilities.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:25:00.000Z",
+  "updated_at": "2026-02-05T17:25:00.000Z"
+},
+{
+  "project_code": "CYB-GRC-2026-007",
+  "title": "Security Posture Assessment and Compliance Monitoring Platform",
+  "overview": "This project develops a cybersecurity governance, risk, and compliance (GRC) platform that helps organizations continuously assess their security posture against established frameworks such as NIST and CIS Controls. The system collects configuration data, vulnerability scan results, and policy attestations to generate compliance scores and risk summaries. A rules engine maps technical findings to control requirements and highlights gaps that require remediation. The platform includes dashboards for tracking compliance over time, assigning remediation tasks, and producing audit-ready reports. Emphasis is placed on practical applicability, enabling students to understand how technical security findings translate into organizational risk and compliance decisions.",
+  "key_features": [
+    "Continuous security posture assessment mapped to frameworks",
+    "Automated compliance scoring and gap analysis",
+    "Risk dashboards with trend tracking",
+    "Remediation task assignment and status tracking",
+    "Audit-ready reporting and exports"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Mapping diverse technical findings to multiple compliance frameworks",
+      "solution": "Built a flexible rules engine that links findings to framework controls via metadata"
+    },
+    {
+      "challenge": "Keeping assessments current without excessive scanning overhead",
+      "solution": "Implemented scheduled, incremental data collection and caching strategies"
+    }
+  ],
+  "team_members": [
+    "Aaliyah Moore",
+    "Victor Chen",
+    "Oluwaseun Adebola"
+  ],
+  "supervisor": "Dr. Jeff Roach",
+  "timeline_start": "2026-02-10T00:00:00.000Z",
+  "timeline_end": "2026-06-15T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/security-grc-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/security-grc-platform",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Python",
+    "MongoDB",
+    "Docker"
+  ],
+  "achievements": [
+    "Generated actionable compliance insights aligned to NIST controls",
+    "Reduced manual compliance review effort in simulated audits",
+    "Demonstrated end-to-end GRC workflow during capstone review"
+  ],
+  "status": "Active",
+  "department": "Cybersecurity",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 3,
+  "tags": [
+    "Cybersecurity",
+    "GRC",
+    "Compliance",
+    "Risk Management"
+  ],
+  "thumbnail_url": "/images/projects/security-grc-platform.png",
+  "short_description": "A cybersecurity GRC platform that continuously assesses security posture against compliance frameworks, highlights risk gaps, and produces audit-ready reports to support governance and risk management.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:30:00.000Z",
+  "updated_at": "2026-02-05T17:30:00.000Z"
+},
+
+{
+  "project_code": "DS-ML-2026-008",
+  "title": "Predictive Maintenance Analytics for Campus Computing Infrastructure",
+  "overview": "This project applies data science and machine learning techniques to predict maintenance needs for campus computing infrastructure such as servers, lab machines, and network equipment. The system collects historical maintenance records, system performance metrics, error logs, and usage patterns to identify early warning signs of hardware degradation or failure. By training predictive models on this data, the platform estimates the probability of component failure within a given time window and recommends proactive maintenance actions. Interactive dashboards allow IT staff and administrators to visualize risk levels, prioritize maintenance tasks, and optimize resource allocation. The project demonstrates how data-driven approaches can reduce downtime, extend equipment lifespan, and improve reliability of critical computing resources.",
+  "key_features": [
+    "Data ingestion from system logs and maintenance records",
+    "Machine learning models for failure prediction",
+    "Risk scoring and maintenance prioritization",
+    "Interactive dashboards for infrastructure monitoring",
+    "Historical trend analysis and reporting"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Limited labeled failure data for rare hardware faults",
+      "solution": "Used anomaly detection and semi-supervised learning to identify early failure patterns"
+    },
+    {
+      "challenge": "Integrating heterogeneous data sources with varying formats",
+      "solution": "Built a unified data pipeline with schema normalization and feature engineering"
+    }
+  ],
+  "team_members": [
+    "Daniel Okoye",
+    "Priyanka Shah",
+    "Lucas Martin",
+    "Amira Hassan"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2026-02-12T00:00:00.000Z",
+  "timeline_end": "2026-06-20T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/predictive-maintenance-analytics",
+  "sourcecode_link": "https://github.com/etsu-computing/predictive-maintenance-analytics",
+  "tech_stack": [
+    "Python",
+    "Pandas",
+    "Scikit-learn",
+    "React",
+    "MongoDB",
+    "Docker"
+  ],
+  "achievements": [
+    "Identified high-risk systems prior to simulated failures",
+    "Demonstrated potential reduction in unplanned downtime",
+    "Presented predictive analytics results to IT stakeholders"
+  ],
+  "status": "Active",
+  "department": "Data Science",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Data Science",
+    "Machine Learning",
+    "Predictive Analytics",
+    "IT Infrastructure"
+  ],
+  "thumbnail_url": "/images/projects/predictive-maintenance-analytics.png",
+  "short_description": "A data science platform that predicts maintenance needs for campus computing infrastructure using machine learning models trained on system logs, performance metrics, and historical maintenance data.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:35:00.000Z",
+  "updated_at": "2026-02-05T17:35:00.000Z"
+},
+{
+  "project_code": "IS-BI-2026-009",
+  "title": "Enterprise Business Intelligence Dashboard for Academic Decision Support",
+  "overview": "This project delivers an enterprise-grade business intelligence (BI) dashboard designed to support academic and administrative decision-making within the Department of Computing. The system integrates data from multiple sources—including enrollment trends, course performance metrics, graduation outcomes, and faculty workload—to provide a unified, interactive view of key indicators. Data pipelines are built to ensure accuracy, timeliness, and traceability, while the visualization layer emphasizes clarity and drill-down analysis. The platform enables stakeholders to explore trends by year, department, and program, supporting evidence-based planning, resource allocation, and continuous improvement initiatives.",
+  "key_features": [
+    "Integrated data pipelines from academic and administrative sources",
+    "Interactive dashboards with drill-down and filtering",
+    "KPI tracking for enrollment, retention, and outcomes",
+    "Role-based access for administrators and faculty",
+    "Exportable reports for meetings and accreditation reviews"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Reconciling inconsistent data definitions across sources",
+      "solution": "Established a standardized data model and validation rules"
+    },
+    {
+      "challenge": "Designing dashboards usable by non-technical stakeholders",
+      "solution": "Applied user-centered design principles and iterative feedback cycles"
+    }
+  ],
+  "team_members": [
+    "Emily Carter",
+    "Samuel Nguyen",
+    "Adewale Ogun",
+    "Maria Torres"
+  ],
+  "supervisor": "Dr. Chelsie Dubay",
+  "timeline_start": "2026-02-15T00:00:00.000Z",
+  "timeline_end": "2026-06-25T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-bi-dashboard",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-bi-dashboard",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "ETL Pipelines",
+    "Charting Libraries"
+  ],
+  "achievements": [
+    "Enabled cross-department visibility into academic performance metrics",
+    "Reduced manual reporting effort for administrative staff",
+    "Supported data-informed planning discussions during pilot reviews"
+  ],
+  "status": "Active",
+  "department": "Information Systems",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Business Intelligence",
+    "Data Visualization",
+    "Decision Support",
+    "Analytics"
+  ],
+  "thumbnail_url": "/images/projects/academic-bi-dashboard.png",
+  "short_description": "An enterprise business intelligence dashboard that integrates academic data to support evidence-based decision-making through interactive analytics and clear visualizations.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:40:00.000Z",
+  "updated_at": "2026-02-05T17:40:00.000Z"
+},
+
+{
+  "project_code": "IT-NET-2026-010",
+  "title": "Intelligent Network Monitoring and Performance Visualization System",
+  "overview": "This project focuses on the design and implementation of an intelligent network monitoring system aimed at improving visibility, reliability, and performance within enterprise and campus networks. The platform collects real-time and historical data from network devices such as switches, routers, and firewalls, including metrics like latency, packet loss, bandwidth utilization, and error rates. By visualizing this data through interactive dashboards and alerts, network administrators can quickly identify bottlenecks, detect abnormal behavior, and respond to outages before they impact users. The system also incorporates basic anomaly detection to highlight unusual traffic patterns and supports configurable thresholds for proactive alerting. This project emphasizes practical networking concepts, systems integration, and operational monitoring.",
+  "key_features": [
+    "Real-time and historical network performance monitoring",
+    "Interactive dashboards for traffic and device health visualization",
+    "Configurable alerts for performance thresholds",
+    "Anomaly detection for unusual traffic patterns",
+    "Device-level and network-wide performance summaries"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Handling high-frequency network data without performance degradation",
+      "solution": "Implemented data aggregation and time-based sampling strategies"
+    },
+    {
+      "challenge": "Presenting complex network metrics in an understandable format",
+      "solution": "Designed layered visualizations with clear summaries and drill-down views"
+    }
+  ],
+  "team_members": [
+    "Jordan Phillips",
+    "Fatima Ali",
+    "Michael Osei"
+  ],
+  "supervisor": "Ryan Haas",
+  "timeline_start": "2026-02-18T00:00:00.000Z",
+  "timeline_end": "2026-06-28T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/network-monitoring-visualization",
+  "sourcecode_link": "https://github.com/etsu-computing/network-monitoring-visualization",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "SNMP",
+    "MongoDB",
+    "Charting Libraries"
+  ],
+  "achievements": [
+    "Enabled faster identification of network performance issues",
+    "Improved visibility into bandwidth usage trends",
+    "Demonstrated proactive alerting during simulated outages"
+  ],
+  "status": "Active",
+  "department": "Information Technology",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 3,
+  "tags": [
+    "Networking",
+    "Network Monitoring",
+    "IT Operations",
+    "Performance Analysis"
+  ],
+  "thumbnail_url": "/images/projects/network-monitoring-visualization.png",
+  "short_description": "An intelligent network monitoring and visualization system that provides real-time insights into network performance, helping administrators detect issues early and maintain reliable connectivity.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:45:00.000Z",
+  "updated_at": "2026-02-05T17:45:00.000Z"
+},
+{
+  "project_code": "CS-AI-2026-011",
+  "title": "AI-Powered Academic Advising and Degree Planning Assistant",
+  "overview": "This project explores the use of artificial intelligence to support academic advising and degree planning for students in computing-related programs. The system analyzes program requirements, completed coursework, academic policies, and student preferences to generate personalized degree plans and course recommendations. Using rule-based logic combined with machine learning techniques, the assistant can identify potential scheduling conflicts, prerequisite issues, and graduation risks early. The platform also provides advisors with summarized student progress reports and scenario-based planning tools to support more informed advising sessions. The project demonstrates how AI can augment, rather than replace, human advisors by improving efficiency, consistency, and student engagement.",
+  "key_features": [
+    "Personalized degree planning and course recommendations",
+    "Automated prerequisite and policy compliance checks",
+    "Early alerts for graduation risks and scheduling conflicts",
+    "Advisor dashboards with student progress summaries",
+    "Scenario-based planning for alternative academic paths"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Encoding complex and changing degree requirements into the system",
+      "solution": "Developed a modular rules engine that can be updated without retraining models"
+    },
+    {
+      "challenge": "Balancing automation with advisor oversight",
+      "solution": "Designed workflows that require advisor review before final recommendations"
+    }
+  ],
+  "team_members": [
+    "Hannah Williams",
+    "Abdul Rahman",
+    "Kevin O'Brien",
+    "Sofia Martinez"
+  ],
+  "supervisor": "Dr. Ahmad Al Doulat",
+  "timeline_start": "2026-02-20T00:00:00.000Z",
+  "timeline_end": "2026-06-30T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/ai-academic-advising",
+  "sourcecode_link": "https://github.com/etsu-computing/ai-academic-advising",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Python",
+    "Machine Learning",
+    "MongoDB"
+  ],
+  "achievements": [
+    "Generated accurate degree plans aligned with program requirements",
+    "Improved advisor efficiency during simulated advising sessions",
+    "Received positive feedback from student usability testing"
+  ],
+  "status": "Active",
+  "department": "Computer Science",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Artificial Intelligence",
+    "Academic Advising",
+    "Decision Support",
+    "Education Technology"
+  ],
+  "thumbnail_url": "/images/projects/ai-academic-advising.png",
+  "short_description": "An AI-powered academic advising assistant that helps students and advisors create personalized degree plans, identify graduation risks, and explore alternative academic paths using intelligent recommendations.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jun 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:50:00.000Z",
+  "updated_at": "2026-02-05T17:50:00.000Z"
+},
+{
+  "project_code": "CYB-DF-2026-012",
+  "title": "Digital Forensics Case Management and Evidence Tracking System",
+  "overview": "This project focuses on building a digital forensics case management platform designed to support cybersecurity investigations in academic and enterprise environments. The system allows investigators to create cases, document investigation steps, upload and catalog digital evidence, and maintain strict chain-of-custody records. Evidence items are timestamped, hashed, and linked to specific cases to ensure integrity and accountability throughout the investigation lifecycle. The platform also supports report generation for legal or academic review and includes role-based permissions to restrict access to sensitive case data. Through this project, students gain hands-on experience with forensic workflows, evidence handling principles, and secure system design.",
+  "key_features": [
+    "Case creation and investigation workflow tracking",
+    "Digital evidence upload with hashing and timestamps",
+    "Chain-of-custody logging for all evidence actions",
+    "Role-based access control for investigators and reviewers",
+    "Automated case report generation"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Ensuring evidence integrity throughout the investigation process",
+      "solution": "Implemented cryptographic hashing and immutable audit logs for evidence actions"
+    },
+    {
+      "challenge": "Managing sensitive data with strict access requirements",
+      "solution": "Applied fine-grained role-based permissions and secure storage practices"
+    }
+  ],
+  "team_members": [
+    "Marcus Allen",
+    "Noura El-Sayed",
+    "Devin Parker"
+  ],
+  "supervisor": "Dr. Mohammad Khan",
+  "timeline_start": "2026-02-22T00:00:00.000Z",
+  "timeline_end": "2026-07-02T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/digital-forensics-case-management",
+  "sourcecode_link": "https://github.com/etsu-computing/digital-forensics-case-management",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Cryptography Libraries",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Demonstrated secure chain-of-custody handling during mock investigations",
+    "Produced audit-ready forensic reports",
+    "Used as a teaching tool in cybersecurity forensics coursework"
+  ],
+  "status": "Active",
+  "department": "Cybersecurity",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": false,
+  "member_count": 3,
+  "tags": [
+    "Digital Forensics",
+    "Cybersecurity",
+    "Incident Response",
+    "Evidence Management"
+  ],
+  "thumbnail_url": "/images/projects/digital-forensics-case-management.png",
+  "short_description": "A digital forensics case management system that securely tracks investigations and evidence while maintaining strict chain-of-custody records for academic and cybersecurity use cases.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jul 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:55:00.000Z",
+  "updated_at": "2026-02-05T17:55:00.000Z"
+},
+{
+  "project_code": "CYB-DF-2026-012",
+  "title": "Digital Forensics Case Management and Evidence Tracking System",
+  "overview": "This project focuses on building a digital forensics case management platform designed to support cybersecurity investigations in academic and enterprise environments. The system allows investigators to create cases, document investigation steps, upload and catalog digital evidence, and maintain strict chain-of-custody records. Evidence items are timestamped, hashed, and linked to specific cases to ensure integrity and accountability throughout the investigation lifecycle. The platform also supports report generation for legal or academic review and includes role-based permissions to restrict access to sensitive case data. Through this project, students gain hands-on experience with forensic workflows, evidence handling principles, and secure system design.",
+  "key_features": [
+    "Case creation and investigation workflow tracking",
+    "Digital evidence upload with hashing and timestamps",
+    "Chain-of-custody logging for all evidence actions",
+    "Role-based access control for investigators and reviewers",
+    "Automated case report generation"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Ensuring evidence integrity throughout the investigation process",
+      "solution": "Implemented cryptographic hashing and immutable audit logs for evidence actions"
+    },
+    {
+      "challenge": "Managing sensitive data with strict access requirements",
+      "solution": "Applied fine-grained role-based permissions and secure storage practices"
+    }
+  ],
+  "team_members": [
+    "Marcus Allen",
+    "Noura El-Sayed",
+    "Devin Parker"
+  ],
+  "supervisor": "Dr. Mohammad Khan",
+  "timeline_start": "2026-02-22T00:00:00.000Z",
+  "timeline_end": "2026-07-02T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/digital-forensics-case-management",
+  "sourcecode_link": "https://github.com/etsu-computing/digital-forensics-case-management",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Cryptography Libraries",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Demonstrated secure chain-of-custody handling during mock investigations",
+    "Produced audit-ready forensic reports",
+    "Used as a teaching tool in cybersecurity forensics coursework"
+  ],
+  "status": "Active",
+  "department": "Cybersecurity",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": false,
+  "member_count": 3,
+  "tags": [
+    "Digital Forensics",
+    "Cybersecurity",
+    "Incident Response",
+    "Evidence Management"
+  ],
+  "thumbnail_url": "/images/projects/digital-forensics-case-management.png",
+  "short_description": "A digital forensics case management system that securely tracks investigations and evidence while maintaining strict chain-of-custody records for academic and cybersecurity use cases.",
+  "duration_start": "Feb 2026",
+  "duration_end": "Jul 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T17:55:00.000Z",
+  "updated_at": "2026-02-05T17:55:00.000Z"
+},
+{
+  "project_code": "IS-ERP-2026-014",
+  "title": "Lightweight ERP System for Departmental Resource Planning",
+  "overview": "This project involves the design and implementation of a lightweight Enterprise Resource Planning (ERP) system tailored specifically for academic departments within the university. The platform focuses on managing core departmental operations such as course scheduling, faculty workload planning, equipment reservations, and budget tracking. Unlike full-scale commercial ERP systems, this solution emphasizes simplicity, usability, and adaptability to academic workflows. The system integrates multiple functional modules into a unified interface, allowing department administrators and faculty leaders to make informed planning decisions based on real-time data. This project demonstrates how information systems principles can be applied to streamline organizational processes and improve operational transparency.",
+  "key_features": [
+    "Course and schedule planning module",
+    "Faculty workload and assignment tracking",
+    "Departmental resource and equipment reservations",
+    "Basic budgeting and expense tracking",
+    "Unified dashboard for administrative oversight"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Avoiding feature overload while meeting diverse departmental needs",
+      "solution": "Conducted stakeholder interviews and prioritized high-impact core features"
+    },
+    {
+      "challenge": "Ensuring data consistency across multiple functional modules",
+      "solution": "Implemented a centralized data model with shared services"
+    }
+  ],
+  "team_members": [
+    "Jonathan Reed",
+    "Fatou Diop",
+    "Miguel Alvarez",
+    "Sarah Thompson"
+  ],
+  "supervisor": "Dr. T. Janel Paulk",
+  "timeline_start": "2026-03-01T00:00:00.000Z",
+  "timeline_end": "2026-07-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/departmental-erp-system",
+  "sourcecode_link": "https://github.com/etsu-computing/departmental-erp-system",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "REST APIs",
+    "Role-Based Access Control"
+  ],
+  "achievements": [
+    "Streamlined departmental planning workflows",
+    "Reduced reliance on spreadsheets for administrative tasks",
+    "Demonstrated successful integration of multiple operational modules"
+  ],
+  "status": "Active",
+  "department": "Information Systems",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Enterprise Systems",
+    "ERP",
+    "Resource Planning",
+    "Information Systems"
+  ],
+  "thumbnail_url": "/images/projects/departmental-erp-system.png",
+  "short_description": "A lightweight ERP system designed for academic departments to manage scheduling, faculty workload, resources, and budgeting through a unified and user-friendly platform.",
+  "duration_start": "Mar 2026",
+  "duration_end": "Jul 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T18:05:00.000Z",
+  "updated_at": "2026-02-05T18:05:00.000Z"
+},
+{
+  "project_code": "IT-SEC-2026-015",
+  "title": "Secure Access Management System for Academic IT Services",
+  "overview": "This project focuses on designing and implementing a secure access management system tailored for academic IT services within the Department of Computing. The platform centralizes authentication and authorization for applications such as project repositories, lab systems, and administrative tools. It supports role-based access control for students, faculty, advisors, and administrators, ensuring users can only access resources appropriate to their roles. The system also includes auditing and logging features to track access events and support security reviews. Emphasis is placed on usability, security best practices, and integration with existing campus identity systems, demonstrating how access management improves both security posture and operational efficiency.",
+  "key_features": [
+    "Centralized authentication and authorization",
+    "Role-based access control for academic users",
+    "Audit logs for access and permission changes",
+    "Integration-ready architecture for campus systems",
+    "Secure session and credential handling"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Balancing strong security controls with ease of use",
+      "solution": "Implemented role-based policies with clear permission boundaries and simple user flows"
+    },
+    {
+      "challenge": "Ensuring auditability without excessive logging overhead",
+      "solution": "Designed configurable logging levels and retention policies"
+    }
+  ],
+  "team_members": [
+    "Noah Johnson",
+    "Aisha Bello",
+    "Evan Price",
+    "Khadija Sule"
+  ],
+  "supervisor": "Ken Loveday",
+  "timeline_start": "2026-03-05T00:00:00.000Z",
+  "timeline_end": "2026-07-15T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/secure-access-management",
+  "sourcecode_link": "https://github.com/etsu-computing/secure-access-management",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "JWT",
+    "MongoDB",
+    "Security Libraries"
+  ],
+  "achievements": [
+    "Improved access control consistency across academic systems",
+    "Provided detailed audit trails for security reviews",
+    "Demonstrated secure authentication workflows during evaluation"
+  ],
+  "status": "Active",
+  "department": "Information Technology",
+  "year": 2026,
+  "project_status": "In Progress",
+  "accepting_members": true,
+  "member_count": 4,
+  "tags": [
+    "Access Management",
+    "Security",
+    "Authentication",
+    "IT Systems"
+  ],
+  "thumbnail_url": "/images/projects/secure-access-management.png",
+  "short_description": "A secure access management system that centralizes authentication and role-based authorization for academic IT services, improving security, auditability, and user experience.",
+  "duration_start": "Mar 2026",
+  "duration_end": "Jul 2026",
+  "created_by": "system_seed",
+  "created_at": "2026-02-05T18:10:00.000Z",
+  "updated_at": "2026-02-05T18:10:00.000Z"
+},
+{
+  "project_code": "CS-WEB-2019-016",
+  "title": "Web-Based Capstone Project Management and Collaboration Portal",
+  "overview": "This project involves the development of a web-based portal designed to support the management and collaboration needs of capstone project teams within the Department of Computing. The platform provides structured workflows for project proposal submission, milestone tracking, document sharing, and faculty feedback. Students can manage tasks, upload deliverables, and communicate progress updates, while faculty advisors can review submissions, provide comments, and monitor team performance over time. The system is designed to improve transparency, accountability, and coordination throughout the capstone lifecycle. This project emphasizes full-stack web development, user-centered design, and the application of software engineering best practices in an academic setting.",
+  "key_features": [
+    "Project proposal and milestone management",
+    "Team collaboration and document sharing",
+    "Faculty review and feedback workflows",
+    "Progress tracking and status indicators",
+    "Role-based access for students and advisors"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Coordinating project activities across multiple teams and advisors",
+      "solution": "Implemented structured milestones and role-based dashboards to clarify responsibilities"
+    },
+    {
+      "challenge": "Ensuring usability for both technical and non-technical users",
+      "solution": "Conducted usability testing and iterated on interface design based on feedback"
+    }
+  ],
+  "team_members": [
+    "Andrew Collins",
+    "Bola Adeyemi",
+    "Rachel Kim",
+    "Thomas Nguyen"
+  ],
+  "supervisor": "Dr. Stephen Hendrix",
+  "timeline_start": "2019-01-20T00:00:00.000Z",
+  "timeline_end": "2019-05-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/capstone-collaboration-portal",
+  "sourcecode_link": "https://github.com/etsu-computing/capstone-collaboration-portal",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Improved communication between student teams and faculty advisors",
+    "Standardized capstone project workflows across multiple courses",
+    "Successfully used by several capstone teams during pilot semester"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2019,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Web Development",
+    "Capstone Projects",
+    "Collaboration Tools",
+    "Software Engineering"
+  ],
+  "thumbnail_url": "/images/projects/capstone-collaboration-portal.png",
+  "short_description": "A web-based portal that supports capstone project management and collaboration by enabling proposal submission, milestone tracking, document sharing, and structured faculty feedback.",
+  "duration_start": "Jan 2019",
+  "duration_end": "May 2019",
+  "created_by": "system_seed",
+  "created_at": "2019-05-15T14:30:00.000Z",
+  "updated_at": "2019-05-15T14:30:00.000Z"
+},
+
+{
+  "project_code": "CYB-AUTH-2021-017",
+  "title": "Phishing Simulation and Security Awareness Training Platform",
+  "overview": "This project develops a cybersecurity training platform that helps organizations measure and improve user awareness against phishing attacks. The system allows administrators to design and launch simulated phishing campaigns to target groups of users with realistic email scenarios. It tracks key engagement metrics such as email opens, link clicks, credential submission attempts, and report rates. After each campaign, users receive just-in-time training content tailored to the scenario they encountered, reinforcing best practices for identifying suspicious messages. The platform also provides analytics dashboards for security teams to monitor risk trends by department and evaluate training effectiveness over time. The goal of this project is to reduce human-centered security vulnerabilities by combining measurable simulations with targeted education.",
+  "key_features": [
+    "Configurable phishing simulation campaigns and templates",
+    "User targeting groups and scheduled campaign launches",
+    "Metrics tracking (opens, clicks, reports, submissions)",
+    "Just-in-time training modules after simulations",
+    "Analytics dashboard for risk and progress reporting"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Making simulated emails realistic without increasing harm or confusion",
+      "solution": "Used clear internal labeling for administrators and safe landing pages for users with immediate education"
+    },
+    {
+      "challenge": "Tracking engagement accurately while respecting privacy",
+      "solution": "Implemented anonymized reporting options and role-based access for campaign results"
+    }
+  ],
+  "team_members": [
+    "Jasmine Patel",
+    "Emeka Nwosu",
+    "Caleb Johnson"
+  ],
+  "supervisor": "Dr. Mohammad Khan",
+  "timeline_start": "2021-02-01T00:00:00.000Z",
+  "timeline_end": "2021-06-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/phishing-awareness-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/phishing-awareness-platform",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Email Services"
+  ],
+  "achievements": [
+    "Improved phishing awareness scores in simulated training scenarios",
+    "Delivered actionable risk analytics for administrators",
+    "Successfully ran multi-group campaigns during pilot testing"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2021,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 3,
+  "tags": [
+    "Cybersecurity",
+    "Phishing",
+    "Security Awareness",
+    "Training"
+  ],
+  "thumbnail_url": "/images/projects/phishing-awareness-platform.png",
+  "short_description": "A phishing simulation and security awareness platform that runs realistic training campaigns, tracks user engagement metrics, and delivers targeted education to help reduce human-centered security risks.",
+  "duration_start": "Feb 2021",
+  "duration_end": "Jun 2021",
+  "created_by": "system_seed",
+  "created_at": "2021-06-20T10:15:00.000Z",
+  "updated_at": "2021-06-20T10:15:00.000Z"
+},
+{
+  "project_code": "DS-NLP-2023-018",
+  "title": "Natural Language Processing System for Analyzing Student Feedback",
+  "overview": "This project applies natural language processing (NLP) techniques to analyze large volumes of student feedback collected through course evaluations, surveys, and open-ended questionnaires. The system ingests textual responses and performs tasks such as sentiment analysis, topic modeling, and keyword extraction to uncover common themes and trends across courses and academic years. Faculty and administrators can use the resulting insights to better understand student experiences, identify areas for improvement, and track changes in sentiment over time. The project emphasizes practical NLP workflows, data preprocessing, model evaluation, and the ethical handling of sensitive educational data.",
+  "key_features": [
+    "Text preprocessing and cleaning pipelines",
+    "Sentiment analysis of student feedback",
+    "Topic modeling to identify recurring themes",
+    "Trend analysis across courses and academic years",
+    "Dashboards for visualizing insights and summaries"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Handling noisy and unstructured student-written text",
+      "solution": "Implemented robust preprocessing steps including tokenization, lemmatization, and stop-word removal"
+    },
+    {
+      "challenge": "Interpreting model outputs in a way meaningful to educators",
+      "solution": "Mapped NLP results to clear visual summaries and human-readable themes"
+    }
+  ],
+  "team_members": [
+    "Olivia Brown",
+    "Yusuf Abdullahi",
+    "Chen Wei",
+    "Lauren Mitchell"
+  ],
+  "supervisor": "Dr. Christel Young",
+  "timeline_start": "2023-01-18T00:00:00.000Z",
+  "timeline_end": "2023-05-08T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/student-feedback-nlp",
+  "sourcecode_link": "https://github.com/etsu-computing/student-feedback-nlp",
+  "tech_stack": [
+    "Python",
+    "NLTK",
+    "Scikit-learn",
+    "React",
+    "MongoDB"
+  ],
+  "achievements": [
+    "Identified recurring themes across thousands of feedback responses",
+    "Provided actionable insights for course improvement discussions",
+    "Demonstrated ethical handling of sensitive student data"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2023,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Natural Language Processing",
+    "Data Science",
+    "Text Analytics",
+    "Education Analytics"
+  ],
+  "thumbnail_url": "/images/projects/student-feedback-nlp.png",
+  "short_description": "An NLP-based analytics system that processes student feedback to extract sentiment, key themes, and trends, helping faculty and administrators make data-informed improvements.",
+  "duration_start": "Jan 2023",
+  "duration_end": "May 2023",
+  "created_by": "system_seed",
+  "created_at": "2023-05-12T09:40:00.000Z",
+  "updated_at": "2023-05-12T09:40:00.000Z"
+},
+
+{
+  "project_code": "IT-CLOUD-2018-019",
+  "title": "Cloud-Based Virtual Lab Environment for Computing Courses",
+  "overview": "This project delivers a cloud-based virtual lab environment designed to support hands-on learning in computing courses without requiring students to install complex software locally. The platform provisions isolated virtual lab instances on demand, preconfigured with course-specific tools, datasets, and development environments. Instructors can define lab templates, control access windows, and monitor usage, while students can launch labs from a web interface and resume work across sessions. By leveraging cloud infrastructure, the system improves accessibility, reduces setup time, and ensures consistency across learning environments. The project highlights practical cloud computing concepts, virtualization, and scalable system design for educational use cases.",
+  "key_features": [
+    "On-demand provisioning of virtual lab environments",
+    "Preconfigured lab templates for different courses",
+    "Web-based access with session persistence",
+    "Instructor controls for access windows and monitoring",
+    "Scalable cloud infrastructure for concurrent users"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Managing cost while supporting multiple simultaneous lab sessions",
+      "solution": "Implemented automatic shutdown policies and resource quotas per user"
+    },
+    {
+      "challenge": "Ensuring consistent lab environments across courses and semesters",
+      "solution": "Used versioned lab templates and automated provisioning scripts"
+    }
+  ],
+  "team_members": [
+    "Michael Turner",
+    "Amina Sule",
+    "Joshua Bennett",
+    "Hiroshi Tanaka"
+  ],
+  "supervisor": "W. Henry Bailey",
+  "timeline_start": "2018-01-22T00:00:00.000Z",
+  "timeline_end": "2018-05-05T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/cloud-virtual-labs",
+  "sourcecode_link": "https://github.com/etsu-computing/cloud-virtual-labs",
+  "tech_stack": [
+    "Cloud Computing",
+    "Virtualization",
+    "Linux",
+    "Web Interfaces",
+    "Automation Scripts"
+  ],
+  "achievements": [
+    "Reduced student setup time for lab-based courses",
+    "Improved consistency of lab environments across sections",
+    "Supported multiple courses during pilot deployment"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Cloud Computing",
+    "Virtual Labs",
+    "IT Infrastructure",
+    "Educational Technology"
+  ],
+  "thumbnail_url": "/images/projects/cloud-virtual-labs.png",
+  "short_description": "A cloud-based virtual lab platform that provides on-demand, preconfigured computing environments for students, improving accessibility and consistency in hands-on coursework.",
+  "duration_start": "Jan 2018",
+  "duration_end": "May 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-05-12T11:10:00.000Z",
+  "updated_at": "2018-05-12T11:10:00.000Z"
+},
+
+{
+  "project_code": "IS-SEC-2022-020",
+  "title": "Role-Based Access and Audit System for Academic Information Systems",
+  "overview": "This project focuses on enhancing security and accountability within academic information systems by implementing a role-based access control (RBAC) and auditing platform. The system manages user permissions for applications handling sensitive academic data such as student records, course registrations, and internal reports. It ensures that users can only access data and actions appropriate to their roles, such as student, faculty, advisor, or administrator. In addition, the platform records detailed audit logs of access events and changes, enabling administrators to review activity, investigate incidents, and demonstrate compliance with institutional policies. The project highlights the importance of governance, security controls, and transparency in information systems used in educational environments.",
+  "key_features": [
+    "Role-based access control for academic applications",
+    "Centralized permission management",
+    "Detailed audit logging of user actions",
+    "Searchable and filterable audit reports",
+    "Administrative dashboards for access reviews"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Designing roles flexible enough to support diverse academic workflows",
+      "solution": "Implemented hierarchical roles with configurable permission sets"
+    },
+    {
+      "challenge": "Capturing meaningful audit data without overwhelming administrators",
+      "solution": "Provided filtered views and summary reports for audit logs"
+    }
+  ],
+  "team_members": [
+    "Lauren Brooks",
+    "Ibrahim Musa",
+    "Carlos Mendez",
+    "Sophia Lin"
+  ],
+  "supervisor": "Dr. Shehenaz Shaik",
+  "timeline_start": "2022-01-24T00:00:00.000Z",
+  "timeline_end": "2022-05-12T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-access-audit-system",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-access-audit-system",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "RBAC",
+    "Audit Logging"
+  ],
+  "achievements": [
+    "Improved access control consistency across academic systems",
+    "Enabled transparent review of data access activities",
+    "Used as a reference model for secure academic applications"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2022,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Information Security",
+    "Access Control",
+    "Audit Logging",
+    "Governance"
+  ],
+  "thumbnail_url": "/images/projects/academic-access-audit-system.png",
+  "short_description": "A role-based access and audit platform that secures academic information systems while providing transparent, searchable logs of user activity for compliance and governance.",
+  "duration_start": "Jan 2022",
+  "duration_end": "May 2022",
+  "created_by": "system_seed",
+  "created_at": "2022-05-18T13:20:00.000Z",
+  "updated_at": "2022-05-18T13:20:00.000Z"
+},
+
+
+{
+  "project_code": "CS-DB-2024-021",
+  "title": "High-Performance Database Optimization for Research Data Workloads",
+  "overview": "This project investigates database optimization strategies for handling large-scale research datasets generated by computing and data-driven projects. The system evaluates query performance, indexing strategies, and data modeling techniques to improve response times and scalability under heavy analytical workloads. A test platform was built to simulate real research use cases, including complex joins, aggregations, and time-based queries. The project compares relational and document-based approaches, analyzes trade-offs, and provides recommendations for selecting appropriate database architectures in academic research environments. Emphasis is placed on performance tuning, monitoring, and evidence-based optimization decisions.",
+  "key_features": [
+    "Benchmarking of database query performance",
+    "Indexing and query optimization strategies",
+    "Comparison of relational and document databases",
+    "Monitoring dashboards for performance metrics",
+    "Reusable test datasets and workloads"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Balancing query performance with schema flexibility",
+      "solution": "Evaluated hybrid modeling approaches and optimized indexes per workload type"
+    },
+    {
+      "challenge": "Reproducing realistic research data access patterns",
+      "solution": "Generated synthetic workloads based on actual research query logs"
+    }
+  ],
+  "team_members": [
+    "Aaron Wallace",
+    "Nneka Okafor",
+    "Victor Alvarez"
+  ],
+  "supervisor": "Dr. Douglas Battleson",
+  "timeline_start": "2024-01-29T00:00:00.000Z",
+  "timeline_end": "2024-05-15T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/database-optimization-research",
+  "sourcecode_link": "https://github.com/etsu-computing/database-optimization-research",
+  "tech_stack": [
+    "PostgreSQL",
+    "MongoDB",
+    "Query Profiling Tools",
+    "React",
+    "Node.js"
+  ],
+  "achievements": [
+    "Reduced average query latency under heavy workloads",
+    "Produced clear guidelines for database selection in research projects",
+    "Demonstrated measurable performance improvements through indexing"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2024,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 3,
+  "tags": [
+    "Databases",
+    "Performance Optimization",
+    "Research Computing",
+    "Data Management"
+  ],
+  "thumbnail_url": "/images/projects/database-optimization-research.png",
+  "short_description": "A research-focused project that evaluates and optimizes database performance for large analytical workloads, providing practical guidance on indexing, query tuning, and database architecture choices.",
+  "duration_start": "Jan 2024",
+  "duration_end": "May 2024",
+  "created_by": "system_seed",
+  "created_at": "2024-05-20T12:10:00.000Z",
+  "updated_at": "2024-05-20T12:10:00.000Z"
+},
+
+{
+  "project_code": "CYB-NET-2020-022",
+  "title": "Network Intrusion Detection and Traffic Analysis System",
+  "overview": "This project focuses on designing and implementing a network intrusion detection and traffic analysis system to identify malicious activity and policy violations within enterprise and campus networks. The platform captures network traffic metadata and applies rule-based detection techniques alongside statistical analysis to flag suspicious patterns such as port scanning, brute-force attempts, and abnormal traffic spikes. Administrators can review alerts, inspect traffic summaries, and analyze trends over time to better understand network behavior and potential threats. The project emphasizes hands-on cybersecurity skills, including network monitoring, intrusion detection concepts, and secure system deployment.",
+  "key_features": [
+    "Real-time network traffic monitoring",
+    "Rule-based intrusion detection alerts",
+    "Traffic analysis and trend visualization",
+    "Configurable alert thresholds",
+    "Historical traffic and incident reporting"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Reducing false positives while maintaining effective detection",
+      "solution": "Tuned detection rules using baseline traffic patterns and threshold adjustments"
+    },
+    {
+      "challenge": "Handling high volumes of network traffic data efficiently",
+      "solution": "Implemented traffic aggregation and sampling techniques"
+    }
+  ],
+  "team_members": [
+    "Kevin Marshall",
+    "Zainab Sule",
+    "Peter Hoffman",
+    "Nora Iglesias"
+  ],
+  "supervisor": "Dr. Jeff Roach",
+  "timeline_start": "2020-01-27T00:00:00.000Z",
+  "timeline_end": "2020-05-08T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/network-intrusion-detection",
+  "sourcecode_link": "https://github.com/etsu-computing/network-intrusion-detection",
+  "tech_stack": [
+    "Python",
+    "Network Monitoring Tools",
+    "Packet Analysis",
+    "React",
+    "MongoDB"
+  ],
+  "achievements": [
+    "Successfully detected simulated intrusion attempts",
+    "Provided actionable network security insights",
+    "Used as a teaching aid in cybersecurity networking courses"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2020,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Network Security",
+    "Intrusion Detection",
+    "Traffic Analysis",
+    "Cybersecurity"
+  ],
+  "thumbnail_url": "/images/projects/network-intrusion-detection.png",
+  "short_description": "A network intrusion detection and traffic analysis system that monitors network activity, detects suspicious behavior, and provides actionable security insights for administrators.",
+  "duration_start": "Jan 2020",
+  "duration_end": "May 2020",
+  "created_by": "system_seed",
+  "created_at": "2020-05-14T10:35:00.000Z",
+  "updated_at": "2020-05-14T10:35:00.000Z"
+},
+{
+  "project_code": "DS-TIME-2025-023",
+  "title": "Time-Series Analysis Platform for Campus Energy Consumption",
+  "overview": "This project applies time-series analysis techniques to study and forecast energy consumption patterns across campus buildings. The system ingests historical energy usage data from smart meters and facility management systems, cleans and normalizes the data, and applies statistical and machine learning models to identify trends, seasonal effects, and anomalies. Forecasting results help facilities planners anticipate peak demand periods, evaluate energy efficiency initiatives, and support sustainability planning. Interactive dashboards allow users to explore consumption patterns by building, time period, and energy type, demonstrating how data science can inform operational and environmental decision-making.",
+  "key_features": [
+    "Time-series data ingestion and preprocessing",
+    "Trend, seasonality, and anomaly detection",
+    "Energy consumption forecasting models",
+    "Interactive dashboards by building and time range",
+    "Exportable reports for sustainability planning"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Handling missing or inconsistent sensor data",
+      "solution": "Applied interpolation and smoothing techniques to maintain data continuity"
+    },
+    {
+      "challenge": "Selecting appropriate forecasting models for different usage patterns",
+      "solution": "Compared multiple time-series models and validated performance using backtesting"
+    }
+  ],
+  "team_members": [
+    "Chinedu Okorie",
+    "Laura Simmons",
+    "Min-Jae Park",
+    "Hassan Abisoye"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2025-01-22T00:00:00.000Z",
+  "timeline_end": "2025-05-12T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/energy-time-series-analysis",
+  "sourcecode_link": "https://github.com/etsu-computing/energy-time-series-analysis",
+  "tech_stack": [
+    "Python",
+    "Pandas",
+    "Statsmodels",
+    "Scikit-learn",
+    "React"
+  ],
+  "achievements": [
+    "Accurately forecasted peak energy demand periods",
+    "Identified seasonal consumption patterns across campus buildings",
+    "Supported data-driven sustainability discussions"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2025,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Time-Series Analysis",
+    "Energy Analytics",
+    "Sustainability",
+    "Data Science"
+  ],
+  "thumbnail_url": "/images/projects/energy-time-series-analysis.png",
+  "short_description": "A time-series analytics platform that analyzes and forecasts campus energy consumption, helping planners understand trends, predict demand, and support sustainability initiatives.",
+  "duration_start": "Jan 2025",
+  "duration_end": "May 2025",
+  "created_by": "system_seed",
+  "created_at": "2025-05-18T11:45:00.000Z",
+  "updated_at": "2025-05-18T11:45:00.000Z"
+},
+{
+  "project_code": "IT-SYS-2017-024",
+  "title": "Automated System Monitoring and Alerting Platform for Academic Labs",
+  "overview": "This project involves the development of an automated system monitoring and alerting platform designed to support the reliability and availability of academic computer labs. The system continuously monitors key system metrics such as CPU usage, memory consumption, disk health, and service uptime across multiple lab machines. When predefined thresholds are exceeded or services become unavailable, the platform generates alerts for IT staff via dashboards and notifications. Historical monitoring data is retained to support trend analysis, capacity planning, and post-incident reviews. The project demonstrates practical system administration concepts and highlights the importance of proactive monitoring in maintaining stable computing environments.",
+  "key_features": [
+    "Real-time monitoring of system health metrics",
+    "Configurable alert thresholds and notifications",
+    "Centralized dashboard for lab system status",
+    "Historical data retention for trend analysis",
+    "Support for multiple lab environments"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Monitoring a large number of systems without excessive overhead",
+      "solution": "Used lightweight agents and centralized data aggregation to minimize impact"
+    },
+    {
+      "challenge": "Avoiding alert fatigue for IT staff",
+      "solution": "Implemented severity levels and alert suppression rules"
+    }
+  ],
+  "team_members": [
+    "Robert Jenkins",
+    "Ayo Ogun",
+    "Melissa Grant",
+    "Ivan Petrov"
+  ],
+  "supervisor": "David Tarnoff",
+  "timeline_start": "2017-01-23T00:00:00.000Z",
+  "timeline_end": "2017-05-04T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/system-monitoring-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/system-monitoring-platform",
+  "tech_stack": [
+    "Linux",
+    "Monitoring Agents",
+    "Node.js",
+    "MongoDB",
+    "Dashboard Tools"
+  ],
+  "achievements": [
+    "Improved response time to lab system outages",
+    "Provided historical insight into system performance issues",
+    "Adopted as a reference project for system administration coursework"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2017,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "System Administration",
+    "Monitoring",
+    "IT Operations",
+    "Infrastructure"
+  ],
+  "thumbnail_url": "/images/projects/system-monitoring-platform.png",
+  "short_description": "An automated monitoring and alerting platform that tracks system health across academic computer labs, enabling proactive issue detection and improved operational reliability.",
+  "duration_start": "Jan 2017",
+  "duration_end": "May 2017",
+  "created_by": "system_seed",
+  "created_at": "2017-05-10T09:20:00.000Z",
+  "updated_at": "2017-05-10T09:20:00.000Z"
+},
+{
+  "project_code": "CS-AR-2020-025",
+  "title": "Augmented Reality Learning Application for Computer Science Concepts",
+  "overview": "This project explores the use of augmented reality (AR) to enhance the teaching and learning of abstract computer science concepts such as data structures, algorithms, and system architecture. The application overlays interactive 3D visualizations onto the physical environment, allowing students to explore concepts like trees, graphs, memory allocation, and process scheduling in an intuitive and engaging way. Users can manipulate virtual objects, step through algorithm executions, and observe changes in real time. The project demonstrates how immersive technologies can improve comprehension, engagement, and retention in computing education.",
+  "key_features": [
+    "Interactive AR visualizations of computer science concepts",
+    "Step-by-step algorithm execution in 3D space",
+    "User interaction with virtual data structures",
+    "Cross-platform support for mobile devices",
+    "Educational modules aligned with course topics"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Representing abstract concepts clearly in a 3D environment",
+      "solution": "Worked closely with instructors to design intuitive visual metaphors"
+    },
+    {
+      "challenge": "Ensuring performance on a range of mobile devices",
+      "solution": "Optimized 3D assets and used level-of-detail techniques"
+    }
+  ],
+  "team_members": [
+    "Daniel Foster",
+    "Aisha Mohammed",
+    "Carlos Ibanez",
+    "Yvonne Li"
+  ],
+  "supervisor": "Dr. Ghaith Husari",
+  "timeline_start": "2020-01-21T00:00:00.000Z",
+  "timeline_end": "2020-05-06T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/ar-cs-learning",
+  "sourcecode_link": "https://github.com/etsu-computing/ar-cs-learning",
+  "tech_stack": [
+    "Unity",
+    "AR Frameworks",
+    "C#",
+    "Mobile Development",
+    "Educational Design"
+  ],
+  "achievements": [
+    "Improved student engagement in pilot classroom sessions",
+    "Received positive feedback on concept clarity and interactivity",
+    "Demonstrated potential for AR in computing education"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2020,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Augmented Reality",
+    "Computer Science Education",
+    "Interactive Learning",
+    "Educational Technology"
+  ],
+  "thumbnail_url": "/images/projects/ar-cs-learning.png",
+  "short_description": "An augmented reality learning application that visualizes computer science concepts in 3D, helping students better understand algorithms and data structures through interactive exploration.",
+  "duration_start": "Jan 2020",
+  "duration_end": "May 2020",
+  "created_by": "system_seed",
+  "created_at": "2020-05-12T10:50:00.000Z",
+  "updated_at": "2020-05-12T10:50:00.000Z"
+},
+
+{
+  "project_code": "IS-HCI-2018-026",
+  "title": "User-Centered Redesign of Academic Advising Information Systems",
+  "overview": "This project applies human–computer interaction (HCI) principles to redesign an existing academic advising information system used by students and faculty. The goal of the project was to improve usability, accessibility, and overall user satisfaction by addressing pain points identified in the legacy system. The team conducted user interviews, usability testing, and task analysis to understand how students and advisors interact with the system during course planning and advising sessions. Based on these findings, the project delivered a redesigned interface with simplified navigation, clearer information hierarchy, and improved feedback mechanisms. This work demonstrates how user-centered design can significantly enhance the effectiveness of information systems in academic environments.",
+  "key_features": [
+    "User research through interviews and usability testing",
+    "Redesigned navigation and information architecture",
+    "Improved accessibility and visual clarity",
+    "Task-focused workflows for advising sessions",
+    "Prototype testing and iterative refinement"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Understanding diverse user needs across students and advisors",
+      "solution": "Conducted persona development and scenario-based usability testing"
+    },
+    {
+      "challenge": "Balancing new design ideas with existing system constraints",
+      "solution": "Delivered a modular redesign that could be incrementally adopted"
+    }
+  ],
+  "team_members": [
+    "Natalie Price",
+    "Olamide Akinwale",
+    "Sean O'Rourke",
+    "Priya Deshpande"
+  ],
+  "supervisor": "Dr. Chelsie Dubay",
+  "timeline_start": "2018-01-19T00:00:00.000Z",
+  "timeline_end": "2018-05-03T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/advising-system-redesign",
+  "sourcecode_link": "https://github.com/etsu-computing/advising-system-redesign",
+  "tech_stack": [
+    "UI/UX Design",
+    "User Research",
+    "Prototyping Tools",
+    "Front-End Frameworks"
+  ],
+  "achievements": [
+    "Significantly improved usability scores during testing",
+    "Reduced task completion time for common advising workflows",
+    "Provided design recommendations adopted by stakeholders"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Human-Computer Interaction",
+    "User Experience",
+    "Academic Systems",
+    "Information Architecture"
+  ],
+  "thumbnail_url": "/images/projects/advising-system-redesign.png",
+  "short_description": "A user-centered redesign of an academic advising information system that improves usability, accessibility, and efficiency through research-driven interface and workflow improvements.",
+  "duration_start": "Jan 2018",
+  "duration_end": "May 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-05-09T14:05:00.000Z",
+  "updated_at": "2018-05-09T14:05:00.000Z"
+},
+{
+  "project_code": "IT-WEB-2021-028",
+  "title": "Responsive Departmental Website Modernization and CMS Integration",
+  "overview": "This project focuses on modernizing an outdated departmental website by redesigning it with a responsive, mobile-first approach and integrating a content management system (CMS) to simplify ongoing updates. The platform improves information architecture, accessibility, and performance while enabling non-technical staff to manage content such as announcements, faculty profiles, research highlights, and course information. The project emphasizes usability, accessibility standards (WCAG), and maintainable front-end architecture, demonstrating how thoughtful web design and CMS integration can significantly enhance communication and engagement for academic departments.",
+  "key_features": [
+    "Responsive, mobile-first website redesign",
+    "Improved information architecture and navigation",
+    "CMS integration for easy content updates",
+    "Accessibility improvements aligned with WCAG guidelines",
+    "Performance optimization for faster load times"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Balancing design flexibility with ease of content management",
+      "solution": "Selected and configured a CMS with structured content models and reusable templates"
+    },
+    {
+      "challenge": "Ensuring accessibility across diverse content types",
+      "solution": "Applied consistent accessibility checks and semantic HTML throughout the site"
+    }
+  ],
+  "team_members": [
+    "Alex Morgan",
+    "Fatima Hassan",
+    "Brian Osei",
+    "Lily Chen"
+  ],
+  "supervisor": "Benjamin Burton",
+  "timeline_start": "2021-01-25T00:00:00.000Z",
+  "timeline_end": "2021-05-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/department-website-modernization",
+  "sourcecode_link": "https://github.com/etsu-computing/department-website-modernization",
+  "tech_stack": [
+    "React",
+    "Styled Components",
+    "CMS",
+    "Accessibility Tools",
+    "Performance Auditing"
+  ],
+  "achievements": [
+    "Improved mobile usability and accessibility compliance",
+    "Reduced time required for routine content updates",
+    "Positive feedback from faculty and administrative staff"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2021,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Web Development",
+    "CMS",
+    "Accessibility",
+    "Responsive Design"
+  ],
+  "thumbnail_url": "/images/projects/department-website-modernization.png",
+  "short_description": "A responsive redesign of a departmental website with CMS integration, improving accessibility, usability, and ease of content management for academic staff.",
+  "duration_start": "Jan 2021",
+  "duration_end": "May 2021",
+  "created_by": "system_seed",
+  "created_at": "2021-05-15T12:00:00.000Z",
+  "updated_at": "2021-05-15T12:00:00.000Z"
+},
+{
+  "project_code": "DS-REC-2019-029",
+  "title": "Personalized Course Recommendation System Using Student Performance Data",
+  "overview": "This project develops a data-driven recommendation system that assists students in selecting courses aligned with their academic performance, interests, and degree progress. The system analyzes historical course outcomes, prerequisite structures, and student performance patterns to generate personalized course suggestions. By leveraging collaborative filtering and content-based recommendation techniques, the platform identifies courses where students are likely to succeed while also encouraging timely degree completion. Advisors can use the system to support academic planning discussions, while students gain clearer insight into course options and potential academic pathways. The project demonstrates applied data science techniques in an educational context, with a focus on interpretability and ethical use of student data.",
+  "key_features": [
+    "Personalized course recommendations based on performance data",
+    "Analysis of prerequisite and degree requirement structures",
+    "Advisor dashboards for reviewing recommendation rationale",
+    "Student-facing views explaining suggested courses",
+    "Evaluation metrics to assess recommendation effectiveness"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Avoiding biased recommendations based on limited historical data",
+      "solution": "Combined collaborative filtering with content-based methods and enforced diversity constraints"
+    },
+    {
+      "challenge": "Making recommendations understandable to students and advisors",
+      "solution": "Provided explanation layers showing factors influencing each recommendation"
+    }
+  ],
+  "team_members": [
+    "Sophia Reynolds",
+    "Ibrahim Lawal",
+    "Markus Vogel",
+    "Tanya Brooks"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2019-01-23T00:00:00.000Z",
+  "timeline_end": "2019-05-07T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/course-recommendation-system",
+  "sourcecode_link": "https://github.com/etsu-computing/course-recommendation-system",
+  "tech_stack": [
+    "Python",
+    "Pandas",
+    "Scikit-learn",
+    "React",
+    "MongoDB"
+  ],
+  "achievements": [
+    "Improved course planning confidence among pilot student group",
+    "Provided advisors with data-backed planning support",
+    "Demonstrated responsible use of academic performance data"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2019,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Recommendation Systems",
+    "Education Analytics",
+    "Data Science",
+    "Student Success"
+  ],
+  "thumbnail_url": "/images/projects/course-recommendation-system.png",
+  "short_description": "A personalized course recommendation system that analyzes student performance and degree requirements to suggest courses that support academic success and timely graduation.",
+  "duration_start": "Jan 2019",
+  "duration_end": "May 2019",
+  "created_by": "system_seed",
+  "created_at": "2019-05-12T15:00:00.000Z",
+  "updated_at": "2019-05-12T15:00:00.000Z"
+},
+
+{
+  "project_code": "IS-DOC-2022-030",
+  "title": "Digital Document Management System for Academic Departments",
+  "overview": "This project involves the design and implementation of a digital document management system tailored for academic departments to securely store, organize, and retrieve important documents. The system supports version control, metadata tagging, and role-based access to ensure documents such as syllabi, accreditation materials, meeting minutes, and policy files are easily accessible while remaining secure. Advanced search capabilities allow users to quickly locate documents by keyword, date, department, or document type. The platform also tracks document history and changes to support accountability and compliance requirements. This project demonstrates core information systems concepts including data governance, usability, and secure information management.",
+  "key_features": [
+    "Centralized document storage and organization",
+    "Version control and document history tracking",
+    "Metadata tagging and advanced search",
+    "Role-based access for faculty and administrators",
+    "Secure document sharing and auditing"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Preventing unauthorized access to sensitive documents",
+      "solution": "Implemented role-based permissions and secure authentication workflows"
+    },
+    {
+      "challenge": "Managing document versions without user confusion",
+      "solution": "Designed clear version labeling and change history views"
+    }
+  ],
+  "team_members": [
+    "Vanessa Ortiz",
+    "Abdul Kareem",
+    "Matthew Lewis",
+    "Nora Schmidt"
+  ],
+  "supervisor": "Dr. T. Janel Paulk",
+  "timeline_start": "2022-01-26T00:00:00.000Z",
+  "timeline_end": "2022-05-11T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/document-management-system",
+  "sourcecode_link": "https://github.com/etsu-computing/document-management-system",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "File Storage",
+    "Role-Based Access Control"
+  ],
+  "achievements": [
+    "Improved organization and retrieval of departmental documents",
+    "Reduced reliance on email-based document sharing",
+    "Supported compliance and accreditation preparation workflows"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2022,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Document Management",
+    "Information Systems",
+    "Data Governance",
+    "Academic Administration"
+  ],
+  "thumbnail_url": "/images/projects/document-management-system.png",
+  "short_description": "A secure digital document management system that enables academic departments to store, organize, and retrieve important files with version control, search, and role-based access.",
+  "duration_start": "Jan 2022",
+  "duration_end": "May 2022",
+  "created_by": "system_seed",
+  "created_at": "2022-05-16T11:30:00.000Z",
+  "updated_at": "2022-05-16T11:30:00.000Z"
+},
+{
+  "project_code": "CYB-IR-2018-031",
+  "title": "Incident Response Simulation and Training Platform",
+  "overview": "This project delivers a hands-on incident response (IR) simulation platform designed to train students in practical cybersecurity response workflows. The system presents realistic attack scenarios—such as ransomware outbreaks, data exfiltration, and insider threats—and guides users through structured response phases including detection, containment, eradication, recovery, and post-incident review. Participants make decisions in real time, document actions taken, and receive feedback on effectiveness and adherence to best practices. Faculty can configure scenarios, track participant progress, and assess learning outcomes. The project emphasizes experiential learning, teamwork, and the application of established incident response frameworks.",
+  "key_features": [
+    "Configurable incident response simulation scenarios",
+    "Step-by-step IR workflow guidance and documentation",
+    "Real-time decision tracking and scoring",
+    "Instructor dashboards for scenario management",
+    "Post-incident reports and learning feedback"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Designing realistic scenarios without overwhelming participants",
+      "solution": "Introduced progressive scenario complexity and contextual hints"
+    },
+    {
+      "challenge": "Objectively evaluating participant decisions",
+      "solution": "Implemented rubric-based scoring aligned with IR frameworks"
+    }
+  ],
+  "team_members": [
+    "Kareem Hassan",
+    "Linda Morales",
+    "Stephen Wright",
+    "Ayo Balogun"
+  ],
+  "supervisor": "Dr. Jeff Roach",
+  "timeline_start": "2018-01-24T00:00:00.000Z",
+  "timeline_end": "2018-05-09T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/incident-response-simulator",
+  "sourcecode_link": "https://github.com/etsu-computing/incident-response-simulator",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Simulation Engines",
+    "MongoDB",
+    "Security Frameworks"
+  ],
+  "achievements": [
+    "Improved student preparedness for real-world incident response",
+    "Adopted as a lab component in cybersecurity coursework",
+    "Provided measurable assessment of IR decision-making skills"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Incident Response",
+    "Cybersecurity Training",
+    "Simulation",
+    "Security Operations"
+  ],
+  "thumbnail_url": "/images/projects/incident-response-simulator.png",
+  "short_description": "A simulation-based training platform that immerses students in realistic cybersecurity incident response scenarios, strengthening practical decision-making and response skills.",
+  "duration_start": "Jan 2018",
+  "duration_end": "May 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-05-14T13:10:00.000Z",
+  "updated_at": "2018-05-14T13:10:00.000Z"
+},
+{
+  "project_code": "CS-OS-2021-032",
+  "title": "Operating System Scheduling Simulator for Performance Analysis",
+  "overview": "This project focuses on building an interactive operating system scheduling simulator that allows students to explore and compare different CPU scheduling algorithms under varying workloads. The platform supports common scheduling strategies such as First-Come First-Served (FCFS), Shortest Job First (SJF), Priority Scheduling, and Round Robin. Users can configure process arrival times, burst durations, and priorities, then observe how each algorithm affects metrics such as waiting time, turnaround time, and CPU utilization. Visual timelines and charts help illustrate scheduling behavior, making abstract OS concepts more concrete. The project emphasizes systems programming concepts, algorithm analysis, and educational visualization.",
+  "key_features": [
+    "Simulation of multiple CPU scheduling algorithms",
+    "Configurable process workloads and parameters",
+    "Visual timelines and performance charts",
+    "Comparison of scheduling metrics across algorithms",
+    "Educational interface for systems learning"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Clearly visualizing complex scheduling behavior",
+      "solution": "Designed step-by-step timeline animations with synchronized metric updates"
+    },
+    {
+      "challenge": "Ensuring accuracy of performance calculations",
+      "solution": "Validated results against textbook examples and test cases"
+    }
+  ],
+  "team_members": [
+    "Patrick O'Neill",
+    "Zara Mahmoud",
+    "Elijah Turner",
+    "Ngozi Okeke"
+  ],
+  "supervisor": "Dr. Douglas Battleson",
+  "timeline_start": "2021-01-27T00:00:00.000Z",
+  "timeline_end": "2021-05-13T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/os-scheduling-simulator",
+  "sourcecode_link": "https://github.com/etsu-computing/os-scheduling-simulator",
+  "tech_stack": [
+    "JavaScript",
+    "React",
+    "Algorithm Visualization",
+    "Charting Libraries"
+  ],
+  "achievements": [
+    "Improved student understanding of OS scheduling concepts",
+    "Used as a supplemental learning tool in operating systems courses",
+    "Demonstrated clear comparisons of algorithm performance"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2021,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Operating Systems",
+    "Scheduling Algorithms",
+    "Simulation",
+    "Computer Science Education"
+  ],
+  "thumbnail_url": "/images/projects/os-scheduling-simulator.png",
+  "short_description": "An interactive operating system scheduling simulator that visualizes CPU scheduling algorithms and compares their performance metrics to support systems education.",
+  "duration_start": "Jan 2021",
+  "duration_end": "May 2021",
+  "created_by": "system_seed",
+  "created_at": "2021-05-18T14:40:00.000Z",
+  "updated_at": "2021-05-18T14:40:00.000Z"
+},
+{
+  "project_code": "DS-GEO-2020-033",
+  "title": "Geospatial Data Analytics Platform for Urban Planning Insights",
+  "overview": "This project develops a geospatial data analytics platform that leverages geographic information system (GIS) data to support urban planning and infrastructure analysis. The system integrates spatial datasets such as population density, land use, transportation networks, and public services, enabling users to explore spatial relationships and patterns through interactive maps and visualizations. Analytical tools allow planners and researchers to identify underserved areas, assess infrastructure accessibility, and evaluate the potential impact of development initiatives. The project demonstrates how data science techniques combined with geospatial analysis can inform evidence-based planning and policy decisions.",
+  "key_features": [
+    "Integration of multiple geospatial datasets",
+    "Interactive map-based visualizations",
+    "Spatial analysis tools for accessibility and coverage",
+    "Filtering and comparison by region and time",
+    "Exportable insights for planning reports"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Handling large geospatial datasets efficiently",
+      "solution": "Implemented spatial indexing and optimized data queries"
+    },
+    {
+      "challenge": "Presenting complex spatial data to non-technical users",
+      "solution": "Designed intuitive map layers and guided analysis workflows"
+    }
+  ],
+  "team_members": [
+    "Samuel Adekunle",
+    "Priya Nair",
+    "Lucas Fernandez",
+    "Amina Yusuf"
+  ],
+  "supervisor": "Dr. Biju Bajracharya",
+  "timeline_start": "2020-01-28T00:00:00.000Z",
+  "timeline_end": "2020-05-15T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/geospatial-analytics-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/geospatial-analytics-platform",
+  "tech_stack": [
+    "Python",
+    "GIS Libraries",
+    "PostGIS",
+    "React",
+    "Map Visualization Tools"
+  ],
+  "achievements": [
+    "Enabled spatial insights for simulated urban planning scenarios",
+    "Demonstrated effective integration of GIS and data analytics",
+    "Used as a reference project for geospatial data courses"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2020,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Geospatial Analytics",
+    "GIS",
+    "Urban Planning",
+    "Data Science"
+  ],
+  "thumbnail_url": "/images/projects/geospatial-analytics-platform.png",
+  "short_description": "A geospatial analytics platform that combines GIS data and data science techniques to support urban planning and infrastructure decision-making through interactive maps and spatial analysis.",
+  "duration_start": "Jan 2020",
+  "duration_end": "May 2020",
+  "created_by": "system_seed",
+  "created_at": "2020-05-20T13:35:00.000Z",
+  "updated_at": "2020-05-20T13:35:00.000Z"
+},
+
+
+{
+  "project_code": "IT-AUTO-2023-034",
+  "title": "IT Service Automation Platform for Helpdesk and Support Operations",
+  "overview": "This project focuses on automating common IT helpdesk and support workflows to improve response times and reduce manual effort in academic IT environments. The platform streamlines ticket intake, categorization, assignment, and resolution tracking by integrating automation rules and self-service options. Users can submit requests through a web interface, while IT staff benefit from automated routing, status updates, and performance metrics. The system also includes a knowledge base that suggests solutions to users before tickets are escalated, helping to resolve routine issues faster. This project highlights how automation can enhance service quality, operational efficiency, and user satisfaction in IT support operations.",
+  "key_features": [
+    "Automated ticket intake and categorization",
+    "Rule-based assignment and escalation workflows",
+    "Self-service knowledge base for common issues",
+    "Real-time ticket status tracking",
+    "Analytics and reporting on support performance"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Accurately categorizing diverse support requests",
+      "solution": "Implemented keyword-based classification with manual override options"
+    },
+    {
+      "challenge": "Encouraging users to adopt self-service features",
+      "solution": "Integrated contextual help suggestions during ticket submission"
+    }
+  ],
+  "team_members": [
+    "Brandon Lewis",
+    "Huda Suleiman",
+    "Jason Kim",
+    "Monique Carter"
+  ],
+  "supervisor": "William Rochelle",
+  "timeline_start": "2023-01-24T00:00:00.000Z",
+  "timeline_end": "2023-05-12T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/it-service-automation",
+  "sourcecode_link": "https://github.com/etsu-computing/it-service-automation",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Workflow Automation",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Reduced average helpdesk response times during pilot use",
+    "Improved visibility into support workload and trends",
+    "Demonstrated effective automation of routine IT tasks"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2023,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "IT Automation",
+    "Helpdesk Systems",
+    "Service Management",
+    "IT Operations"
+  ],
+  "thumbnail_url": "/images/projects/it-service-automation.png",
+  "short_description": "An IT service automation platform that streamlines helpdesk workflows, improves response times, and enhances support efficiency through automated ticket handling and self-service tools.",
+  "duration_start": "Jan 2023",
+  "duration_end": "May 2023",
+  "created_by": "system_seed",
+  "created_at": "2023-05-18T12:25:00.000Z",
+  "updated_at": "2023-05-18T12:25:00.000Z"
+},
+
+{
+  "project_code": "CS-SEC-2019-035",
+  "title": "Secure Code Analysis and Vulnerability Detection Platform",
+  "overview": "This project focuses on building a secure code analysis platform that helps identify common software vulnerabilities during the development lifecycle. The system analyzes source code repositories to detect issues such as insecure input handling, improper authentication logic, and misconfigured security controls. By combining static analysis techniques with rule-based detection, the platform provides developers with actionable feedback before applications are deployed. Results are presented through a clear dashboard that highlights risk severity, affected files, and recommended remediation steps. The project emphasizes secure software engineering practices and demonstrates how early vulnerability detection can reduce long-term security risk.",
+  "key_features": [
+    "Static source code analysis for security vulnerabilities",
+    "Rule-based detection of common coding flaws",
+    "Severity scoring and prioritization of findings",
+    "Developer-friendly dashboards and reports",
+    "Guidance for secure remediation practices"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Reducing false positives in automated code analysis",
+      "solution": "Refined detection rules and added contextual checks to improve accuracy"
+    },
+    {
+      "challenge": "Making security findings understandable to student developers",
+      "solution": "Included clear explanations and examples for each detected issue"
+    }
+  ],
+  "team_members": [
+    "Eric Thompson",
+    "Zainab Musa",
+    "Lucas Moreno",
+    "Anita Patel"
+  ],
+  "supervisor": "Dr. Ahmad Al Doulat",
+  "timeline_start": "2019-01-28T00:00:00.000Z",
+  "timeline_end": "2019-05-09T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/secure-code-analysis",
+  "sourcecode_link": "https://github.com/etsu-computing/secure-code-analysis",
+  "tech_stack": [
+    "JavaScript",
+    "Node.js",
+    "Static Analysis Tools",
+    "React",
+    "Security Libraries"
+  ],
+  "achievements": [
+    "Detected security flaws in sample student applications",
+    "Improved awareness of secure coding practices",
+    "Used as a learning aid in secure software courses"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2019,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Secure Coding",
+    "Software Security",
+    "Static Analysis",
+    "Computer Science"
+  ],
+  "thumbnail_url": "/images/projects/secure-code-analysis.png",
+  "short_description": "A secure code analysis platform that scans source code for common vulnerabilities and provides actionable feedback to help developers adopt safer coding practices.",
+  "duration_start": "Jan 2019",
+  "duration_end": "May 2019",
+  "created_by": "system_seed",
+  "created_at": "2019-05-14T13:55:00.000Z",
+  "updated_at": "2019-05-14T13:55:00.000Z"
+},
+
+{
+  "project_code": "IS-KM-2020-036",
+  "title": "Knowledge Management Portal for Research Labs and Faculty Collaboration",
+  "overview": "This project builds a knowledge management portal designed to help research labs and faculty teams capture, organize, and reuse institutional knowledge across semesters and project cycles. The platform addresses a common problem in academic environments: valuable knowledge gets lost when students graduate, teams change, or documentation is scattered across emails and personal drives. The system provides structured spaces for labs and faculty groups to store project artifacts, meeting notes, research protocols, onboarding guides, and reusable templates. Content is organized using metadata tags, versioning, and role-based access so that teams can securely share information while keeping sensitive work protected. The portal also supports advanced search, linking related resources, and “knowledge handoff” summaries that help new members quickly understand context. The project highlights information systems best practices in governance, collaboration workflows, and long-term knowledge retention.",
+  "key_features": [
+    "Structured knowledge base for labs and faculty teams",
+    "Metadata tagging, versioning, and content organization",
+    "Role-based access control and secure sharing",
+    "Advanced search with filters and relevance ranking",
+    "Onboarding and knowledge-handoff pages for continuity"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Keeping documentation consistent across different research groups and workflows",
+      "solution": "Introduced reusable templates, required metadata fields, and guided content creation flows"
+    },
+    {
+      "challenge": "Helping users find the right information quickly as the repository grows",
+      "solution": "Implemented structured tagging, indexed search fields, and a related-content linking model"
+    }
+  ],
+  "team_members": [
+    "Ariana Mitchell",
+    "Samuel Ojo",
+    "Derek Lawson",
+    "Hassan Abisoye"
+  ],
+  "supervisor": "Dr. T. Janel Paulk",
+  "timeline_start": "2020-02-03T00:00:00.000Z",
+  "timeline_end": "2020-06-12T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/knowledge-management-portal",
+  "sourcecode_link": "https://github.com/etsu-computing/knowledge-management-portal",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Search Indexing"
+  ],
+  "achievements": [
+    "Improved continuity for research labs by reducing onboarding time for new members",
+    "Centralized scattered documentation into a searchable and organized portal",
+    "Provided structured workflows for long-term academic knowledge retention"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2020,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Knowledge Management",
+    "Collaboration",
+    "Information Systems",
+    "Documentation"
+  ],
+  "thumbnail_url": "/images/projects/knowledge-management-portal.png",
+  "short_description": "A knowledge management portal that helps research labs and faculty teams capture, organize, and reuse documentation, protocols, and project artifacts with secure access, versioning, and powerful search for long-term continuity.",
+  "duration_start": "Feb 2020",
+  "duration_end": "Jun 2020",
+  "created_by": "system_seed",
+  "created_at": "2020-06-18T12:05:00.000Z",
+  "updated_at": "2020-06-18T12:05:00.000Z"
+},
+
+
+{
+  "project_code": "CYB-NET-2021-037",
+  "title": "Network Intrusion Detection and Monitoring System for Academic Environments",
+  "overview": "This project designs and implements a network intrusion detection and monitoring system tailored for academic and research network environments. The system focuses on identifying suspicious traffic patterns, unauthorized access attempts, and anomalous behavior that could indicate security threats. By collecting and analyzing network logs and packet metadata, the platform applies rule-based detection and behavioral thresholds to flag potential intrusions in near real time. A centralized dashboard allows administrators and students to visualize alerts, traffic trends, and risk levels across different network segments. The project emphasizes practical cybersecurity skills, including network security monitoring, incident awareness, and defensive strategy development in a controlled academic context.",
+  "key_features": [
+    "Real-time monitoring of network traffic and events",
+    "Rule-based intrusion detection and alerting",
+    "Visualization of network activity and security alerts",
+    "Configurable thresholds for anomaly detection",
+    "Centralized dashboard for security awareness"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Distinguishing normal academic network activity from malicious behavior",
+      "solution": "Defined baseline traffic patterns and tuned detection rules using historical data"
+    },
+    {
+      "challenge": "Presenting security alerts without overwhelming users",
+      "solution": "Introduced severity levels and grouped related alerts into incidents"
+    }
+  ],
+  "team_members": [
+    "Michael Turner",
+    "Aisha Bello",
+    "Connor Williams",
+    "Ryan Haas"
+  ],
+  "supervisor": "Dr. Jeff Roach",
+  "timeline_start": "2021-01-25T00:00:00.000Z",
+  "timeline_end": "2021-05-14T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/network-intrusion-monitoring",
+  "sourcecode_link": "https://github.com/etsu-computing/network-intrusion-monitoring",
+  "tech_stack": [
+    "Python",
+    "Network Monitoring Tools",
+    "Log Analysis",
+    "React",
+    "Cybersecurity Frameworks"
+  ],
+  "achievements": [
+    "Demonstrated effective detection of simulated intrusion scenarios",
+    "Improved understanding of network security monitoring concepts",
+    "Used as a reference project for cybersecurity coursework"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2021,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Network Security",
+    "Intrusion Detection",
+    "Cybersecurity",
+    "Monitoring Systems"
+  ],
+  "thumbnail_url": "/images/projects/network-intrusion-monitoring.png",
+  "short_description": "A network intrusion detection and monitoring system that analyzes traffic patterns and logs to identify suspicious activity and improve security awareness in academic network environments.",
+  "duration_start": "Jan 2021",
+  "duration_end": "May 2021",
+  "created_by": "system_seed",
+  "created_at": "2021-05-20T11:40:00.000Z",
+  "updated_at": "2021-05-20T11:40:00.000Z"
+},
+{
+  "project_code": "CS-AI-2018-038",
+  "title": "Intelligent Academic Recommendation System for Student Course Planning",
+  "overview": "This project develops an intelligent recommendation system designed to assist students with academic course planning and decision-making. The system analyzes historical enrollment data, degree requirements, prerequisite structures, and student performance trends to recommend optimal course sequences tailored to individual academic goals. By incorporating rule-based logic alongside basic machine learning techniques, the platform adapts recommendations based on a student’s progress, interests, and workload preferences. The project demonstrates how artificial intelligence can be applied responsibly in educational settings to improve advising efficiency and student outcomes while maintaining transparency and explainability.",
+  "key_features": [
+    "Personalized course recommendations based on academic history",
+    "Prerequisite and degree requirement validation",
+    "Adaptive suggestions based on workload and performance",
+    "Explainable recommendation logic for transparency",
+    "Advisor-facing insights for academic planning support"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Balancing recommendation accuracy with transparency",
+      "solution": "Combined rule-based logic with lightweight machine learning and clear explanations"
+    },
+    {
+      "challenge": "Handling incomplete or inconsistent student data",
+      "solution": "Implemented fallback rules and confidence thresholds for recommendations"
+    }
+  ],
+  "team_members": [
+    "Olivia Hart",
+    "Daniel Ruiz",
+    "Fatima Hassan",
+    "Jacob Gillenwater"
+  ],
+  "supervisor": "Dr. Stephen Hendrix",
+  "timeline_start": "2018-01-22T00:00:00.000Z",
+  "timeline_end": "2018-05-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-recommendation-system",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-recommendation-system",
+  "tech_stack": [
+    "Python",
+    "Machine Learning",
+    "Rule-Based Systems",
+    "React",
+    "Data Analysis"
+  ],
+  "achievements": [
+    "Improved sample advising scenarios through personalized recommendations",
+    "Demonstrated ethical and explainable AI use in education",
+    "Referenced in academic advising technology discussions"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Artificial Intelligence",
+    "Educational Technology",
+    "Recommendation Systems",
+    "Computer Science"
+  ],
+  "thumbnail_url": "/images/projects/academic-recommendation-system.png",
+  "short_description": "An intelligent academic recommendation system that helps students plan course sequences using explainable AI and rule-based logic to support informed academic decision-making.",
+  "duration_start": "Jan 2018",
+  "duration_end": "May 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-05-15T12:10:00.000Z",
+  "updated_at": "2018-05-15T12:10:00.000Z"
+},
+
+{
+  "project_code": "IT-CLOUD-2022-039",
+  "title": "Cloud-Based Infrastructure Monitoring and Cost Optimization System",
+  "overview": "This project focuses on designing a cloud-based infrastructure monitoring and cost optimization system aimed at helping organizations better understand and manage their cloud resource usage. The platform collects metrics from virtual machines, storage services, and network components to provide real-time visibility into system performance and operational costs. Users can view dashboards that highlight underutilized resources, usage spikes, and cost trends over time. The system also generates recommendations for cost optimization, such as rightsizing instances or scheduling non-critical workloads during off-peak hours. This project demonstrates practical information technology skills related to cloud management, monitoring, and cost-aware system design.",
+  "key_features": [
+    "Real-time monitoring of cloud infrastructure metrics",
+    "Cost tracking and usage visualization",
+    "Identification of underutilized or overprovisioned resources",
+    "Automated cost-optimization recommendations",
+    "Historical reporting and trend analysis"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Aggregating metrics from multiple cloud services",
+      "solution": "Implemented a unified data collection layer with normalized metrics"
+    },
+    {
+      "challenge": "Presenting cost data in an actionable way",
+      "solution": "Designed dashboards that pair cost insights with concrete optimization suggestions"
+    }
+  ],
+  "team_members": [
+    "Nathan Brooks",
+    "Emily Chen",
+    "Omar Farouk",
+    "William Kinser"
+  ],
+  "supervisor": "Ken Loveday",
+  "timeline_start": "2022-02-01T00:00:00.000Z",
+  "timeline_end": "2022-06-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/cloud-cost-optimization",
+  "sourcecode_link": "https://github.com/etsu-computing/cloud-cost-optimization",
+  "tech_stack": [
+    "Cloud Platforms",
+    "Monitoring Tools",
+    "Node.js",
+    "React",
+    "Data Visualization"
+  ],
+  "achievements": [
+    "Identified cost-saving opportunities in simulated cloud environments",
+    "Improved visibility into cloud usage patterns",
+    "Demonstrated practical cloud management and optimization techniques"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2022,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Cloud Computing",
+    "Infrastructure Monitoring",
+    "Cost Optimization",
+    "Information Technology"
+  ],
+  "thumbnail_url": "/images/projects/cloud-cost-optimization.png",
+  "short_description": "A cloud infrastructure monitoring and cost optimization system that provides real-time insights into resource usage and helps identify opportunities to reduce operational cloud costs.",
+  "duration_start": "Feb 2022",
+  "duration_end": "Jun 2022",
+  "created_by": "system_seed",
+  "created_at": "2022-06-18T11:30:00.000Z",
+  "updated_at": "2022-06-18T11:30:00.000Z"
+},
+{
+  "project_code": "DS-ML-2017-040",
+  "title": "Predictive Analytics System for Student Retention and Success",
+  "overview": "This project develops a predictive analytics system aimed at identifying patterns and risk factors associated with student retention and academic success. Using historical academic records, enrollment data, and engagement indicators, the system applies statistical analysis and machine learning models to forecast potential retention challenges. The goal is to support advisors and administrators by providing early insights that enable proactive interventions, such as targeted advising or academic support. The platform emphasizes responsible data use, model transparency, and interpretability to ensure predictions can be understood and trusted by non-technical stakeholders. This project demonstrates how data science can be applied ethically to improve educational outcomes.",
+  "key_features": [
+    "Predictive models for identifying retention risk",
+    "Analysis of academic and engagement indicators",
+    "Explainable model outputs for advisor interpretation",
+    "Dashboards highlighting trends and risk factors",
+    "Scenario-based insights for intervention planning"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Balancing predictive accuracy with interpretability",
+      "solution": "Selected models that provide clear feature importance and human-readable explanations"
+    },
+    {
+      "challenge": "Handling sensitive academic data responsibly",
+      "solution": "Applied data anonymization and access controls throughout the system"
+    }
+  ],
+  "team_members": [
+    "Lauren McCarthy",
+    "Ibrahim Sadiq",
+    "Chloe Nguyen",
+    "Puskar Joshi"
+  ],
+  "supervisor": "Dr. Christel Young",
+  "timeline_start": "2017-01-23T00:00:00.000Z",
+  "timeline_end": "2017-05-11T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/student-retention-analytics",
+  "sourcecode_link": "https://github.com/etsu-computing/student-retention-analytics",
+  "tech_stack": [
+    "Python",
+    "Machine Learning",
+    "Statistical Modeling",
+    "Data Visualization",
+    "React"
+  ],
+  "achievements": [
+    "Demonstrated early identification of at-risk student profiles",
+    "Highlighted ethical considerations in educational data analytics",
+    "Referenced in discussions on data-informed advising strategies"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2017,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Predictive Analytics",
+    "Student Success",
+    "Educational Data",
+    "Data Science"
+  ],
+  "thumbnail_url": "/images/projects/student-retention-analytics.png",
+  "short_description": "A predictive analytics system that uses academic and engagement data to identify student retention risks and support proactive, data-informed advising interventions.",
+  "duration_start": "Jan 2017",
+  "duration_end": "May 2017",
+  "created_by": "system_seed",
+  "created_at": "2017-05-16T12:00:00.000Z",
+  "updated_at": "2017-05-16T12:00:00.000Z"
+},
+
+
+{
+  "project_code": "CYB-POL-2024-041",
+  "title": "Cybersecurity Policy Compliance and Risk Assessment Dashboard",
+  "overview": "This project develops a cybersecurity policy compliance and risk assessment dashboard to help organizations evaluate their adherence to established security standards and internal policies. The system allows administrators to map technical controls and operational practices against frameworks such as NIST and ISO-inspired guidelines adapted for academic environments. Users can conduct periodic assessments, document evidence, and track compliance gaps over time. The dashboard translates technical findings into risk scores and visual summaries that support decision-making by both technical staff and non-technical stakeholders. The project demonstrates how cybersecurity governance, risk management, and compliance (GRC) concepts can be operationalized through accessible software tools.",
+  "key_features": [
+    "Policy-to-control mapping for compliance evaluation",
+    "Risk scoring based on identified gaps and control maturity",
+    "Evidence tracking and assessment history",
+    "Visual dashboards for compliance and risk posture",
+    "Exportable reports for audits and reviews"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Making compliance requirements understandable to non-security users",
+      "solution": "Used plain-language descriptions and visual indicators for each control"
+    },
+    {
+      "challenge": "Balancing flexibility with consistency across assessments",
+      "solution": "Implemented standardized assessment templates with configurable sections"
+    }
+  ],
+  "team_members": [
+    "Jordan Miller",
+    "Sadia Rahman",
+    "Ethan Cole",
+    "Tahsin Rezwana"
+  ],
+  "supervisor": "Dr. Shehenaz Shaik",
+  "timeline_start": "2024-01-29T00:00:00.000Z",
+  "timeline_end": "2024-05-10T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/cyber-policy-compliance-dashboard",
+  "sourcecode_link": "https://github.com/etsu-computing/cyber-policy-compliance-dashboard",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Risk Assessment Models",
+    "Data Visualization"
+  ],
+  "achievements": [
+    "Demonstrated practical application of cybersecurity governance concepts",
+    "Provided clear visibility into compliance gaps and risk exposure",
+    "Used as a reference example in cybersecurity policy coursework"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2024,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Cybersecurity Policy",
+    "Risk Management",
+    "Compliance",
+    "Governance"
+  ],
+  "thumbnail_url": "/images/projects/cyber-policy-compliance-dashboard.png",
+  "short_description": "A cybersecurity policy compliance and risk assessment dashboard that helps organizations evaluate controls, identify gaps, and visualize risk posture using clear, non-technical insights.",
+  "duration_start": "Jan 2024",
+  "duration_end": "May 2024",
+  "created_by": "system_seed",
+  "created_at": "2024-05-18T11:20:00.000Z",
+  "updated_at": "2024-05-18T11:20:00.000Z"
+},
+
+{
+  "project_code": "IS-DASH-2019-042",
+  "title": "Enterprise Reporting and Decision Support Dashboard",
+  "overview": "This project focuses on building an enterprise reporting and decision support dashboard designed to help departments and administrators gain actionable insights from operational and academic data. The platform consolidates data from multiple sources such as enrollment systems, project tracking tools, and performance reports into a unified interface. Users can explore interactive dashboards that highlight key metrics, trends, and comparisons across time and departments. Emphasis was placed on data accuracy, consistency, and usability so that both technical and non-technical users could confidently rely on the system for decision-making. The project demonstrates core information systems principles including data integration, business intelligence, and user-centered dashboard design.",
+  "key_features": [
+    "Centralized reporting from multiple data sources",
+    "Interactive dashboards with charts and filters",
+    "Role-based access to reports and metrics",
+    "Trend analysis and period comparisons",
+    "Exportable reports for presentations and planning"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Integrating inconsistent data formats from different systems",
+      "solution": "Implemented a data normalization layer to standardize incoming datasets"
+    },
+    {
+      "challenge": "Designing dashboards that serve diverse user roles",
+      "solution": "Created configurable views tailored to administrative and academic users"
+    }
+  ],
+  "team_members": [
+    "Melissa Turner",
+    "David Kim",
+    "Ngozi Okafor",
+    "Benjamin Burton"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2019-02-04T00:00:00.000Z",
+  "timeline_end": "2019-06-07T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/enterprise-reporting-dashboard",
+  "sourcecode_link": "https://github.com/etsu-computing/enterprise-reporting-dashboard",
+  "tech_stack": [
+    "SQL",
+    "Data Warehousing",
+    "React",
+    "Node.js",
+    "Business Intelligence Tools"
+  ],
+  "achievements": [
+    "Improved visibility into departmental performance metrics",
+    "Demonstrated effective data integration and reporting workflows",
+    "Used as a sample project for business intelligence courses"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2019,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Business Intelligence",
+    "Dashboards",
+    "Decision Support",
+    "Information Systems"
+  ],
+  "thumbnail_url": "/images/projects/enterprise-reporting-dashboard.png",
+  "short_description": "An enterprise reporting and decision support dashboard that integrates data from multiple systems to provide clear, interactive insights for academic and administrative decision-making.",
+  "duration_start": "Feb 2019",
+  "duration_end": "Jun 2019",
+  "created_by": "system_seed",
+  "created_at": "2019-06-14T12:15:00.000Z",
+  "updated_at": "2019-06-14T12:15:00.000Z"
+},
+{
+  "project_code": "CS-VIS-2021-043",
+  "title": "Interactive Data Visualization Platform for Research Insights",
+  "overview": "This project delivers an interactive data visualization platform designed to help researchers and students explore complex datasets through intuitive visual representations. The system supports multiple chart types, dynamic filtering, and comparative views that allow users to uncover trends, correlations, and outliers across research data. Special attention was given to usability and visual clarity so that users without deep technical backgrounds could still gain meaningful insights. The platform also supports exporting visualizations for reports and presentations, making it suitable for academic research dissemination. This project highlights core computer science concepts in frontend engineering, data processing, and visualization design.",
+  "key_features": [
+    "Interactive charts and graphs with dynamic filters",
+    "Support for multiple dataset formats",
+    "Comparative and trend analysis views",
+    "Exportable visualizations for reports",
+    "Responsive and accessible UI design"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Rendering large datasets without performance degradation",
+      "solution": "Implemented data aggregation and virtualized rendering techniques"
+    },
+    {
+      "challenge": "Ensuring visual clarity across different chart types",
+      "solution": "Applied consistent color schemes and layout standards for readability"
+    }
+  ],
+  "team_members": [
+    "Kevin Marshall",
+    "Linh Tran",
+    "Sofia Alvarez",
+    "Jack Ramsey"
+  ],
+  "supervisor": "Dr. Douglas Battleson",
+  "timeline_start": "2021-02-01T00:00:00.000Z",
+  "timeline_end": "2021-06-04T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/interactive-data-visualization",
+  "sourcecode_link": "https://github.com/etsu-computing/interactive-data-visualization",
+  "tech_stack": [
+    "JavaScript",
+    "React",
+    "Data Visualization Libraries",
+    "Node.js",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Enabled clearer exploration of research datasets",
+    "Improved student understanding of data visualization principles",
+    "Referenced in coursework focused on data-driven research methods"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2021,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Data Visualization",
+    "Research Tools",
+    "Frontend Development",
+    "Computer Science"
+  ],
+  "thumbnail_url": "/images/projects/interactive-data-visualization.png",
+  "short_description": "An interactive data visualization platform that helps researchers and students explore complex datasets through dynamic charts, filters, and comparative visual analysis.",
+  "duration_start": "Feb 2021",
+  "duration_end": "Jun 2021",
+  "created_by": "system_seed",
+  "created_at": "2021-06-10T11:45:00.000Z",
+  "updated_at": "2021-06-10T11:45:00.000Z"
+},
+
+{
+  "project_code": "DS-NLP-2022-044",
+  "title": "Natural Language Processing System for Academic Document Analysis",
+  "overview": "This project develops a natural language processing (NLP) system designed to analyze and extract insights from academic documents such as research papers, project reports, and thesis submissions. The system processes unstructured text to identify key themes, keywords, and summary sections, helping faculty and students quickly understand the focus and scope of large collections of documents. Features include automated document summarization, topic modeling, and keyword extraction, all presented through a clean and searchable interface. The project demonstrates practical data science techniques applied to text analytics while emphasizing transparency and usability for academic audiences.",
+  "key_features": [
+    "Automated text preprocessing and analysis",
+    "Keyword extraction and topic modeling",
+    "Document summarization for quick review",
+    "Searchable document index with filters",
+    "Visualization of thematic trends across documents"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Handling diverse writing styles and document formats",
+      "solution": "Implemented robust text preprocessing and normalization pipelines"
+    },
+    {
+      "challenge": "Ensuring summaries remain accurate and meaningful",
+      "solution": "Combined extractive summarization with relevance scoring techniques"
+    }
+  ],
+  "team_members": [
+    "Hannah Moore",
+    "Abdul Rahman",
+    "Isabella Rossi",
+    "Chandler Scott"
+  ],
+  "supervisor": "Dr. Ghaith Husari",
+  "timeline_start": "2022-01-31T00:00:00.000Z",
+  "timeline_end": "2022-05-20T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-nlp-analysis",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-nlp-analysis",
+  "tech_stack": [
+    "Python",
+    "Natural Language Processing",
+    "Machine Learning",
+    "React",
+    "Data Visualization"
+  ],
+  "achievements": [
+    "Enabled faster review of large academic document collections",
+    "Demonstrated practical NLP applications in education",
+    "Used as a reference project for text analytics coursework"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2022,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Natural Language Processing",
+    "Text Analytics",
+    "Academic Research",
+    "Data Science"
+  ],
+  "thumbnail_url": "/images/projects/academic-nlp-analysis.png",
+  "short_description": "An NLP-based system that analyzes academic documents to extract keywords, summarize content, and identify research themes, helping users quickly explore large collections of scholarly work.",
+  "duration_start": "Jan 2022",
+  "duration_end": "May 2022",
+  "created_by": "system_seed",
+  "created_at": "2022-05-26T12:30:00.000Z",
+  "updated_at": "2022-05-26T12:30:00.000Z"
+},
+{
+  "project_code": "IT-IOT-2018-045",
+  "title": "IoT-Based Smart Campus Monitoring and Management System",
+  "overview": "This project implements an Internet of Things (IoT)–based smart campus monitoring and management system aimed at improving operational awareness and resource utilization across university facilities. The system connects sensor devices deployed in classrooms, labs, and common areas to collect real-time data such as temperature, occupancy, and energy usage. Collected data is transmitted to a centralized platform where it is processed, visualized, and analyzed to support informed facility management decisions. Administrators can monitor conditions, identify inefficiencies, and respond proactively to issues such as overcrowding or abnormal energy consumption. The project demonstrates applied information technology skills in IoT integration, data ingestion, and systems monitoring.",
+  "key_features": [
+    "Real-time data collection from IoT sensors",
+    "Centralized dashboard for campus monitoring",
+    "Visualization of occupancy and environmental metrics",
+    "Alerts for abnormal conditions or threshold breaches",
+    "Historical data analysis for trend identification"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Ensuring reliable data transmission from distributed sensors",
+      "solution": "Implemented lightweight communication protocols with retry and buffering mechanisms"
+    },
+    {
+      "challenge": "Managing and visualizing continuous data streams",
+      "solution": "Used time-series aggregation and dashboard components optimized for real-time updates"
+    }
+  ],
+  "team_members": [
+    "Carlos Mendoza",
+    "Nina Patel",
+    "Joshua Reed",
+    "Dillon Buchanan"
+  ],
+  "supervisor": "Ken Loveday",
+  "timeline_start": "2018-02-05T00:00:00.000Z",
+  "timeline_end": "2018-06-01T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/smart-campus-iot",
+  "sourcecode_link": "https://github.com/etsu-computing/smart-campus-iot",
+  "tech_stack": [
+    "IoT Devices",
+    "Node.js",
+    "MQTT",
+    "React",
+    "Time-Series Databases"
+  ],
+  "achievements": [
+    "Demonstrated real-time monitoring of campus facilities",
+    "Highlighted opportunities for energy and space optimization",
+    "Served as a practical example for IoT-focused coursework"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Internet of Things",
+    "Smart Campus",
+    "Systems Monitoring",
+    "Information Technology"
+  ],
+  "thumbnail_url": "/images/projects/smart-campus-iot.png",
+  "short_description": "An IoT-based smart campus system that collects and visualizes real-time occupancy and environmental data to support facility monitoring and operational decision-making.",
+  "duration_start": "Feb 2018",
+  "duration_end": "Jun 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-06-08T11:10:00.000Z",
+  "updated_at": "2018-06-08T11:10:00.000Z"
+},
+{
+  "project_code": "CYB-IR-2019-046",
+  "title": "Incident Response Simulation and Training Platform",
+  "overview": "This project develops an incident response simulation and training platform designed to help students and security practitioners practice responding to realistic cybersecurity incidents in a controlled environment. The platform presents simulated attack scenarios such as phishing campaigns, malware outbreaks, and unauthorized access events, guiding users through the stages of detection, analysis, containment, eradication, and recovery. Participants make decisions at each stage and receive feedback on the effectiveness and timeliness of their actions. The system also provides post-incident reports that highlight best practices, missed opportunities, and lessons learned. This project emphasizes hands-on cybersecurity education, incident response planning, and experiential learning.",
+  "key_features": [
+    "Interactive incident response simulation scenarios",
+    "Guided decision-making across incident response phases",
+    "Real-time feedback and scoring based on user actions",
+    "Post-incident analysis and reporting",
+    "Scenario configuration for different threat types"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Creating realistic but safe attack simulations",
+      "solution": "Used controlled mock data and scripted events instead of live exploits"
+    },
+    {
+      "challenge": "Providing meaningful feedback without overwhelming users",
+      "solution": "Structured feedback by response phase and highlighted key improvement areas"
+    }
+  ],
+  "team_members": [
+    "Marcus Johnson",
+    "Leila Haddad",
+    "Evan Price",
+    "Ryan Haas"
+  ],
+  "supervisor": "Dr. Jeff Roach",
+  "timeline_start": "2019-01-29T00:00:00.000Z",
+  "timeline_end": "2019-05-17T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/incident-response-simulator",
+  "sourcecode_link": "https://github.com/etsu-computing/incident-response-simulator",
+  "tech_stack": [
+    "Cybersecurity Frameworks",
+    "Simulation Engines",
+    "Node.js",
+    "React",
+    "Logging and Analytics"
+  ],
+  "achievements": [
+    "Improved student understanding of incident response workflows",
+    "Provided hands-on training without real-world risk",
+    "Adopted as a lab exercise in cybersecurity courses"
+  ],
+  "status": "Completed",
+  "department": "Cybersecurity",
+  "year": 2019,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Incident Response",
+    "Cybersecurity Training",
+    "Security Simulation",
+    "Cybersecurity"
+  ],
+  "thumbnail_url": "/images/projects/incident-response-simulator.png",
+  "short_description": "An incident response simulation platform that trains users to handle cybersecurity incidents through realistic scenarios, guided decision-making, and post-incident analysis.",
+  "duration_start": "Jan 2019",
+  "duration_end": "May 2019",
+  "created_by": "system_seed",
+  "created_at": "2019-05-22T12:05:00.000Z",
+  "updated_at": "2019-05-22T12:05:00.000Z"
+},
+
+{
+  "project_code": "IS-WF-2023-047",
+  "title": "Workflow Management System for Academic Project Collaboration",
+  "overview": "This project develops a workflow management system designed to support collaboration, task coordination, and progress tracking for academic projects involving students and faculty. The platform allows project teams to define workflows that reflect common academic processes such as proposal approval, milestone reviews, deliverable submissions, and feedback cycles. Each workflow stage includes assigned roles, deadlines, and documentation requirements, helping teams stay organized and accountable. Faculty advisors can monitor progress, provide feedback, and approve transitions between stages. The system emphasizes clarity, transparency, and flexibility, making it suitable for capstone projects, research initiatives, and multi-semester collaborations.",
+  "key_features": [
+    "Configurable workflows for academic project lifecycles",
+    "Task assignment and milestone tracking",
+    "Role-based access for students and faculty",
+    "Progress visualization and status indicators",
+    "Integrated feedback and approval mechanisms"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Accommodating different project structures and timelines",
+      "solution": "Designed flexible workflow templates that can be customized per project"
+    },
+    {
+      "challenge": "Ensuring clear visibility into project progress for advisors",
+      "solution": "Implemented dashboards with milestone completion and status summaries"
+    }
+  ],
+  "team_members": [
+    "Vanessa Cooper",
+    "Ahmed Sule",
+    "Thomas Nguyen",
+    "Hassan Abisoye"
+  ],
+  "supervisor": "Dr. Michael Lehrfeld",
+  "timeline_start": "2023-01-30T00:00:00.000Z",
+  "timeline_end": "2023-05-19T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/academic-workflow-management",
+  "sourcecode_link": "https://github.com/etsu-computing/academic-workflow-management",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Workflow Engines",
+    "REST APIs"
+  ],
+  "achievements": [
+    "Improved coordination and transparency in academic project teams",
+    "Reduced missed deadlines through milestone tracking",
+    "Adopted as a reference system for managing capstone workflows"
+  ],
+  "status": "Completed",
+  "department": "Information Systems",
+  "year": 2023,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Workflow Management",
+    "Project Collaboration",
+    "Academic Systems",
+    "Information Systems"
+  ],
+  "thumbnail_url": "/images/projects/academic-workflow-management.png",
+  "short_description": "A workflow management system that helps students and faculty collaborate on academic projects by tracking tasks, milestones, approvals, and progress across the project lifecycle.",
+  "duration_start": "Jan 2023",
+  "duration_end": "May 2023",
+  "created_by": "system_seed",
+  "created_at": "2023-05-25T11:50:00.000Z",
+  "updated_at": "2023-05-25T11:50:00.000Z"
+},
+{
+  "project_code": "CS-PLAT-2020-048",
+  "title": "Scalable Web Platform for Capstone Project Showcase and Discovery",
+  "overview": "This project designs and implements a scalable web platform that centralizes the discovery, presentation, and management of student capstone projects within the Department of Computing. The platform supports rich project profiles that include descriptions, tags, timelines, team composition, and media assets, enabling prospective students, faculty, and industry partners to explore work across multiple programs. Emphasis was placed on performance, accessibility, and maintainability so the system could scale as the number of projects grows year over year. The solution incorporates role-based access for contributors and reviewers, structured metadata for filtering and search, and a responsive UI optimized for both desktop and mobile use.",
+  "key_features": [
+    "Rich project profiles with media and metadata",
+    "Advanced search and multi-facet filtering",
+    "Role-based access for contributors and reviewers",
+    "Responsive, accessible user interface",
+    "Scalable backend architecture for long-term growth"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Ensuring fast performance with an increasing number of projects",
+      "solution": "Implemented indexed queries, pagination, and optimized API responses"
+    },
+    {
+      "challenge": "Balancing flexibility with consistent data structure",
+      "solution": "Defined a clear schema with optional fields and validation rules"
+    }
+  ],
+  "team_members": [
+    "Noah Parker",
+    "Samantha Lee",
+    "Ifeanyi Okoro",
+    "David Tarnoff"
+  ],
+  "supervisor": "Dr. Douglas Battleson",
+  "timeline_start": "2020-02-10T00:00:00.000Z",
+  "timeline_end": "2020-06-05T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/capstone-showcase-platform",
+  "sourcecode_link": "https://github.com/etsu-computing/capstone-showcase-platform",
+  "tech_stack": [
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Accessibility Standards"
+  ],
+  "achievements": [
+    "Provided a unified platform for showcasing departmental capstone work",
+    "Improved discoverability of student projects across programs",
+    "Served as a foundation for future departmental web initiatives"
+  ],
+  "status": "Completed",
+  "department": "Computer Science",
+  "year": 2020,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Web Platforms",
+    "Capstone Projects",
+    "Scalability",
+    "Computer Science"
+  ],
+  "thumbnail_url": "/images/projects/capstone-showcase-platform.png",
+  "short_description": "A scalable web platform that centralizes the discovery and presentation of student capstone projects with rich metadata, filtering, and responsive design for long-term departmental use.",
+  "duration_start": "Feb 2020",
+  "duration_end": "Jun 2020",
+  "created_by": "system_seed",
+  "created_at": "2020-06-12T11:25:00.000Z",
+  "updated_at": "2020-06-12T11:25:00.000Z"
+},
+{
+  "project_code": "IT-NET-2018-049",
+  "title": "Campus Network Performance Monitoring and Optimization Tool",
+  "overview": "This project develops a network performance monitoring and optimization tool tailored for campus and academic network environments. The system continuously collects metrics such as latency, packet loss, bandwidth utilization, and uptime from key network devices and access points. Collected data is analyzed to identify congestion points, performance degradation, and recurring reliability issues. Administrators can view dashboards that highlight network health trends and receive recommendations for optimization, such as load balancing or hardware upgrades. The project emphasizes practical networking concepts, monitoring strategies, and data-driven decision-making for IT infrastructure management.",
+  "key_features": [
+    "Continuous monitoring of network performance metrics",
+    "Visualization of latency, throughput, and uptime trends",
+    "Detection of congestion and performance anomalies",
+    "Historical analysis for capacity planning",
+    "Actionable recommendations for network optimization"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Collecting accurate metrics across diverse network hardware",
+      "solution": "Standardized metric collection using common network protocols and polling intervals"
+    },
+    {
+      "challenge": "Avoiding information overload in network dashboards",
+      "solution": "Focused on high-impact metrics and summarized insights with visual indicators"
+    }
+  ],
+  "team_members": [
+    "Aaron Mitchell",
+    "Blessing Okoye",
+    "Ryan Cooper",
+    "William Rochelle"
+  ],
+  "supervisor": "Ken Loveday",
+  "timeline_start": "2018-01-29T00:00:00.000Z",
+  "timeline_end": "2018-05-18T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/network-performance-monitoring",
+  "sourcecode_link": "https://github.com/etsu-computing/network-performance-monitoring",
+  "tech_stack": [
+    "Networking Tools",
+    "SNMP",
+    "Node.js",
+    "React",
+    "Data Visualization"
+  ],
+  "achievements": [
+    "Improved visibility into campus network performance",
+    "Supported data-driven decisions for infrastructure upgrades",
+    "Used as a teaching example in networking courses"
+  ],
+  "status": "Completed",
+  "department": "Information Technology",
+  "year": 2018,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Networking",
+    "Performance Monitoring",
+    "Infrastructure",
+    "Information Technology"
+  ],
+  "thumbnail_url": "/images/projects/network-performance-monitoring.png",
+  "short_description": "A network performance monitoring tool that tracks latency, throughput, and reliability to help administrators identify issues and optimize campus network infrastructure.",
+  "duration_start": "Jan 2018",
+  "duration_end": "May 2018",
+  "created_by": "system_seed",
+  "created_at": "2018-05-24T11:15:00.000Z",
+  "updated_at": "2018-05-24T11:15:00.000Z"
+},
+
+{
+  "project_code": "DS-VIS-2024-050",
+  "title": "Interactive Analytics Dashboard for Institutional Research Data",
+  "overview": "This project focuses on the design and implementation of an interactive analytics dashboard that supports institutional research and data-informed decision-making. The platform aggregates data related to enrollment trends, graduation rates, demographic distributions, and program performance into a unified analytics environment. Users can interact with dynamic charts and filters to explore trends over time, compare departments, and identify patterns that inform planning and assessment efforts. The system was designed with usability and clarity in mind, ensuring that insights are accessible to administrators, faculty, and staff without requiring advanced technical expertise. This project highlights applied data science skills in data visualization, analytics, and user-centered design.",
+  "key_features": [
+    "Interactive dashboards for institutional research metrics",
+    "Filtering and comparison across years and departments",
+    "Trend analysis with visual indicators",
+    "Exportable charts and reports",
+    "Role-based access to sensitive data views"
+  ],
+  "challenges_solutions": [
+    {
+      "challenge": "Presenting complex institutional data clearly to non-technical users",
+      "solution": "Designed intuitive visualizations with consistent layouts and explanatory labels"
+    },
+    {
+      "challenge": "Managing performance with large, multi-year datasets",
+      "solution": "Applied data aggregation and caching strategies to optimize dashboard responsiveness"
+    }
+  ],
+  "team_members": [
+    "Rachel Evans",
+    "Mohammed Ali",
+    "Sophie Laurent",
+    "Chandler Scott"
+  ],
+  "supervisor": "Dr. Christel Young",
+  "timeline_start": "2024-02-05T00:00:00.000Z",
+  "timeline_end": "2024-06-07T00:00:00.000Z",
+  "project_link": "https://computingprojects.etsu.edu/institutional-analytics-dashboard",
+  "sourcecode_link": "https://github.com/etsu-computing/institutional-analytics-dashboard",
+  "tech_stack": [
+    "Python",
+    "Data Visualization",
+    "React",
+    "REST APIs",
+    "Analytics Libraries"
+  ],
+  "achievements": [
+    "Improved accessibility of institutional research data",
+    "Supported data-informed planning and assessment discussions",
+    "Demonstrated effective use of analytics for administrative insights"
+  ],
+  "status": "Completed",
+  "department": "Data Science",
+  "year": 2024,
+  "project_status": "Completed",
+  "accepting_members": false,
+  "member_count": 4,
+  "tags": [
+    "Data Analytics",
+    "Institutional Research",
+    "Dashboards",
+    "Data Science"
+  ],
+  "thumbnail_url": "/images/projects/institutional-analytics-dashboard.png",
+  "short_description": "An interactive analytics dashboard that visualizes institutional research data, enabling administrators and faculty to explore trends, compare metrics, and support data-driven decision-making.",
+  "duration_start": "Feb 2024",
+  "duration_end": "Jun 2024",
+  "created_by": "system_seed",
+  "created_at": "2024-06-14T11:40:00.000Z",
+  "updated_at": "2024-06-14T11:40:00.000Z"
+}
+
+
+
+
+
+
+
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "overview": "string",
+    "methodology": "string",
+    "key_findings": "string",
+    "publications": [
+      {
+        "title": "string",
+        "link": "string",
+        "published_on": "2026-02-06T18:03:07.812Z"
+      }
+    ],
+    "future_work": "string",
+    "student": "string",
+    "supervisor": "string",
+    "department": "string",
+
+    "status": "string",
+    "tags": [
+      "string"
+    ],
+
+    "short_description": "string",
+    "duration_start": "string",
+    "duration_end": "string",
+    "created_at": "2026-02-06T18:03:07.812Z",
+    "updated_at": "2026-02-06T18:03:07.812Z"
+  }
+]

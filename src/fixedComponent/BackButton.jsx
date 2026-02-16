@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Colors } from "../theme/Colors";
 
-const BackButton = ({ label = "Back" }) => {
+const BackButton = ({ label }) => {
   const navigate = useNavigate();
 
   return (

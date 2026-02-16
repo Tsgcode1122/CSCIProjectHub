@@ -7,7 +7,7 @@ import { media } from "../../theme/Breakpoints";
 import { FiSearch, FiUsers, FiCalendar, FiArrowUpRight } from "react-icons/fi";
 
 import ProjectFilters from "./ProjectFilters";
-import defaultimg from "../../images/thumbnail.png";
+import projectsData from "../../projects.json";
 import BackButton from "../../fixedComponent/BackButton";
 import { useProjectContext } from "../../context/ProjectContext";
 
@@ -26,49 +26,37 @@ const ProjectGrid = () => {
     facultyAdvisor: "",
   });
 
+  // Build options dynamically from JSON
   const filterOptions = useMemo(() => {
     const uniq = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
-    const years = uniq(
-      projects.map((p) => {
-        if (!p.duration_end) return null;
-
-        const parts = p.duration_end.split(" ");
-        return parts[parts.length - 1];
-      }),
-    ).sort((a, b) => b - a);
-
-    const departments = uniq(projects.map((p) => p.department)).sort();
-    const statuses = uniq(
-      projects.map((p) => p.project_status || p.project_status),
-    ).sort();
-    const advisors = uniq(projects.map((p) => p.supervisor)).sort();
+    const years = uniq(projectsData.map((p) => p.year)).sort((a, b) => b - a);
+    const departments = uniq(projectsData.map((p) => p.department)).sort();
+    const statuses = uniq(projectsData.map((p) => p.projectStatus)).sort();
+    const advisors = uniq(projectsData.map((p) => p.facultyAdvisor)).sort();
 
     return { years, departments, statuses, advisors };
-  }, [projects]);
+  }, []);
 
   //  filters + search
   const filteredProjects = useMemo(() => {
     const q = search.trim().toLowerCase();
 
-    return projects.filter((p) => {
+    return projectsData.filter((p) => {
       const matchesSearch =
         !q ||
         p.title?.toLowerCase().includes(q) ||
-        p.short_description?.toLowerCase().includes(q) ||
+        p.shortDescription?.toLowerCase().includes(q) ||
         (p.tags || []).some((t) => String(t).toLowerCase().includes(q));
-      const matchesYear =
-        !filters.year ||
-        (p.duration_end && p.duration_end.split(" ").pop() === filters.year);
 
+      const matchesYear =
+        !filters.year || String(p.year) === String(filters.year);
       const matchesDept =
         !filters.department || p.department === filters.department;
-
       const matchesStatus =
-        !filters.projectStatus || p.project_status === filters.projectStatus;
-
+        !filters.projectStatus || p.projectStatus === filters.projectStatus;
       const matchesAdvisor =
-        !filters.facultyAdvisor || p.supervisor === filters.facultyAdvisor;
+        !filters.facultyAdvisor || p.facultyAdvisor === filters.facultyAdvisor;
 
       return (
         matchesSearch &&
@@ -78,7 +66,7 @@ const ProjectGrid = () => {
         matchesAdvisor
       );
     });
-  }, [search, filters, projects]);
+  }, [search, filters]);
 
   const handleFilterChange = (patch) => {
     setFilters((prev) => ({ ...prev, ...patch }));
@@ -101,9 +89,10 @@ const ProjectGrid = () => {
     <>
       {/* PAGE HEADER */}
       <HeaderWrap>
+        <div>{projects.length} projects</div>
         <SectionDiv>
           <HeaderInner>
-            <BackButton label="back" />
+            <BackButton />
             <HeaderText>
               <HeaderTitle>All Projects</HeaderTitle>
               <HeaderSubtitle>
@@ -142,17 +131,8 @@ const ProjectGrid = () => {
                 Showing <b>{filteredProjects.length}</b> project(s)
               </ResultCount>
             </ResultRow>
-            {loading ? (
-              <EmptyState>
-                <h4>Loading projects...</h4>
-                <p>Please wait.</p>
-              </EmptyState>
-            ) : error ? (
-              <EmptyState>
-                <h4>Could not load projects.</h4>
-                <p>{error}</p>
-              </EmptyState>
-            ) : filteredProjects.length === 0 ? (
+
+            {filteredProjects.length === 0 ? (
               <EmptyState>
                 <h4>No projects match your filters.</h4>
                 <p>Try clearing filters or searching a different keyword.</p>
@@ -161,54 +141,51 @@ const ProjectGrid = () => {
               <List>
                 {filteredProjects.map((p) => (
                   <ProjectCard
-                    key={p.id || p._id}
-                    onClick={() => handleOpenProject(p.id || p._id)}
+                    key={p.id}
+                    onClick={() => handleOpenProject(p.id)}
                   >
                     <TitleRow>
-                      <CardTitle>{p.title}</CardTitle>
-                      <StatusBadge $status={p.project_status}>
-                        {p.project_status}
+                      <CardTitle>{p.title}</CardTitle>{" "}
+                      <StatusBadge $status={p.projectStatus}>
+                        {p.projectStatus}
                       </StatusBadge>
                     </TitleRow>
 
                     <CardContent>
-                      {/* <Thumb>
+                      <Thumb>
                         <img
-                          src={p.thumbnail_url}
+                          src={
+                            p.thumbnail || "/images/projects/placeholder.png"
+                          }
                           alt={p.title}
                           onError={(e) => {
-                            e.currentTarget.src = defaultimg;
+                            e.currentTarget.src =
+                              "/images/projects/placeholder.png";
                           }}
                         />
-                      </Thumb> */}
-
+                      </Thumb>
                       <TopRow>
                         <Tags>
                           {(p.tags || []).slice(0, 4).map((tag) => (
                             <Tag key={tag}>{tag}</Tag>
                           ))}
                         </Tags>
-
-                        <MiniDesc>{p.short_description}</MiniDesc>
+                        <MiniDesc>{p.shortDescription}</MiniDesc>
 
                         <MetaRow>
                           <MetaItem>
                             <FiUsers />
-                            <span>{p.team_members.length ?? 0} members</span>
+                            <span>{p.memberCount ?? 0} members</span>
                           </MetaItem>
-
                           <MetaItem>
                             <FiCalendar />
                             <span>
-                              {p.duration_start || "—"} –{" "}
-                              {p.project_status === "In Progress" ||
-                              p.project_status === "Accepting Members"
-                                ? "Ongoing"
-                                : p.duration_end || "—"}
+                              {p.duration?.start || "—"} –{" "}
+                              {p.duration?.end || "—"}
                             </span>
                           </MetaItem>
-
                           <MetaRight>
+                            {" "}
                             <CornerIcon aria-hidden="true">
                               <FiArrowUpRight />
                             </CornerIcon>
@@ -321,7 +298,7 @@ const ResultCount = styled.div`
 
 const List = styled.div`
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const ProjectCard = styled.button`
@@ -331,8 +308,8 @@ const ProjectCard = styled.button`
   cursor: pointer;
   position: relative;
   gap: 1rem;
-  margin: 0;
-  padding: 0;
+
+  padding: 1rem;
   background: ${Colors.white};
   border-radius: 16px;
   border: 1px solid rgba(132, 172, 227, 0.306);
@@ -356,7 +333,7 @@ const ProjectCard = styled.button`
 
   @media ${media.tablet} {
     grid-template-columns: 140px 1fr;
-
+    padding: 1.1rem;
     gap: 1.1rem;
   }
 `;
@@ -381,11 +358,8 @@ const CardContent = styled.div`
 
   display: grid;
   gap: 12px;
-  /* grid-template-columns: 140px 1fr; */
-  padding: 1rem;
-  @media ${media.tablet} {
-    padding: 1.1rem;
-  }
+  grid-template-columns: 140px 1fr;
+  padding-top: 10px;
 `;
 
 const TopRow = styled.div`
@@ -393,30 +367,24 @@ const TopRow = styled.div`
 `;
 
 const TitleRow = styled.div`
-  position: relative !important;
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
   min-width: 0;
-  padding: 1rem;
-  border-radius: 16px 16px 0 0;
-  background: rgba(1, 51, 121, 0.095);
-  @media ${media.tablet} {
-    padding: 1.1rem;
-  }
+  /* background: rgba(4, 30, 66, 0.06); */
+  /* Reserve space for the absolute badge */
+  padding-right: 5.5rem;
 `;
 
 const CardTitle = styled.h5`
   margin: 0;
   color: ${Colors.brightBlue};
-  font-weight: 500 !important;
+  font-weight: 700;
   min-width: 0;
   flex: 1;
+  /* line-height: 1.35rem; */
   max-width: 80%;
-  @media ${media.tablet} {
-    max-width: 90%;
-  }
-
   /* overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; */
@@ -430,12 +398,12 @@ const StatusBadge = styled.span`
   font-weight: 700;
   font-size: 0.78rem;
   display: inline-block;
-  position: relative !important;
+  position: absolute;
 
   background: ${({ $status }) => {
     switch ($status) {
       case "Accepting Members":
-        return "#FFB81C";
+        return "#ffc72d7b";
       case "In Progress":
       default:
         return "rgba(4, 30, 66, 0.08)";
@@ -460,7 +428,7 @@ const StatusBadge = styled.span`
       switch ($status) {
         case "Completed":
           return "rgba(4, 30, 66, 0.12)";
-        case "Accepting Members":
+        case "In Progress":
           return "rgba(255, 184, 28, 0.45)";
         default:
           return "rgba(4, 30, 66, 0.12)";
@@ -472,9 +440,6 @@ const CornerIcon = styled.div`
   color: rgba(4, 30, 66, 0.65);
   font-size: 1.15rem;
   margin-top: 0.15rem;
-  svg {
-    transform: rotate(45deg);
-  }
 `;
 
 const Tags = styled.div`

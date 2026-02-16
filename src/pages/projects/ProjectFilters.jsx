@@ -173,20 +173,14 @@ const Panel = styled.aside`
   border: 1px solid rgba(132, 172, 227, 0.306);
   border-radius: 16px;
   padding: 1.1rem;
-
   @media ${media.tablet} {
     position: sticky;
     top: 82px;
-
-    max-height: calc(100vh - 92px - 24px);
-    overflow-y: auto;
-
-    /* hide scrollbar indicator */
-    scrollbar-width: none; /* Firefox */
+    max-height: calc(100vh - 108px - 24px);
+    overflow-y: auto; /* hide scrollbar indicator */ /* scrollbar-width: none; */
     &::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none;
     }
-
     overscroll-behavior: contain;
   }
 `;
@@ -283,24 +277,6 @@ const MoreBtn = styled.button`
   }
 `;
 
-const LessBtn = styled(MoreBtn)`
-  margin-top: 0.6rem;
-`;
-
-const YearSelect = styled.select`
-  width: 100%;
-  padding: 0.75rem 0.9rem;
-  border-radius: 12px;
-  border: 1px solid rgba(4, 30, 66, 0.18);
-  outline: none;
-  background: ${Colors.white};
-  margin-top: 0.2rem;
-
-  &:focus {
-    border-color: ${Colors.etsuGold};
-    box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25);
-  }
-`;
 const YearActions = styled.div`
   display: flex;
   gap: 0.75rem;

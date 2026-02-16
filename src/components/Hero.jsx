@@ -21,7 +21,7 @@ const Hero = () => {
       </HeroText>
       <CTAWrap>
         <ETSUButton text="View Projects" to="/projects" />
-        <ETSUButton text="Explore Research" to="/theses" />
+        <ETSUButton text="Explore Theses" to="/theses" />
       </CTAWrap>
     </SectionDiv>
   );

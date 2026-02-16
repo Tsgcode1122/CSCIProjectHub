@@ -105,7 +105,7 @@ const Wrapper = styled.div`
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   height: 70px;
 
   @media ${media.mobileXS} {
@@ -114,9 +114,38 @@ const Wrapper = styled.div`
   @media ${media.mobileS} {
     padding: 0 0.7rem;
   }
-  @media ${media.mobileL} {
-    padding: 0 1rem;
+  /* Medium phones (576px and above) */
+  @media ${media.mobileM} {
+    padding: 0rem 1.5rem;
   }
+
+  @media ${media.mobileL} {
+    padding: 0 3rem;
+  }
+
+  /* Tablets (768px and above) */
+  @media ${media.tablet} {
+    padding: 0rem 4rem;
+  }
+
+  /* Small laptops (1024px and above) */
+  @media ${media.laptop} {
+    max-width: 1200px;
+    padding: 0rem 4rem;
+  }
+
+  /* Desktops (1440px and above) */
+  @media ${media.desktop} {
+    max-width: 1200px;
+    padding: 0rem 6rem;
+  }
+
+  /* Extra large desktops / 4K screens (1920px) */
+  @media ${media.desktopXL} {
+    max-width: 1600px;
+    padding: 0rem 8rem;
+  }
+
   @media ${media.desktopXL} {
     max-width: 1400px;
   }
