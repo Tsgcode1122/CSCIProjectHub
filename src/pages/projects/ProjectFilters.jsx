@@ -173,20 +173,14 @@ const Panel = styled.aside`
   border: 1px solid rgba(132, 172, 227, 0.306);
   border-radius: 16px;
   padding: 1.1rem;
-
   @media ${media.tablet} {
     position: sticky;
     top: 82px;
-
-    max-height: calc(100vh - 92px - 24px);
-    overflow-y: auto;
-
-    /* hide scrollbar indicator */
-    scrollbar-width: none; /* Firefox */
+    max-height: calc(100vh - 108px - 24px);
+    overflow-y: auto; /* hide scrollbar indicator */ /* scrollbar-width: none; */
     &::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none;
     }
-
     overscroll-behavior: contain;
   }
 `;

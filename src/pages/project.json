@@ -1,0 +1,41 @@
+[
+{
+"title": "string",
+"overview": "string",
+"key_features": [
+"string"
+],
+"challenges_solutions": [
+{
+"challenge": "string",
+"solution": "string"
+}
+],
+"team_members": [
+"string"
+],
+"supervisor": "string",
+"project_link": "string",
+"sourcecode_link": "string",
+"tech_stack": [
+"string"
+],
+"achievements": [
+"string"
+],
+"status": "string",
+"department": "string",
+"project_status": "string",
+"accepting_members": true,
+"tags": [
+"string"
+],
+"thumbnail_url": "string",
+"short_description": "string",
+"duration_start": "string",
+"duration_end": "string",
+"created_by": "string",
+"created_at": "2026-02-12T14:44:55.837Z",
+"updated_at": "2026-02-12T14:44:55.837Z"
+}
+]
