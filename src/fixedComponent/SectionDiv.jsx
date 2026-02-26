@@ -5,17 +5,16 @@ import { breakpoints, media } from "../theme/Breakpoints";
 // ================== Section Container ==================
 const SectionContainer = styled.div`
   /* Default padding for medium screens */
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 0.7rem 1.5rem;
   margin: 0 auto;
 
   /* Extra small screens  */
   @media ${media.mobileXS} {
-    padding: 2rem 0.8rem;
+    padding: 1.3rem 0.8rem;
   }
 
-  /* Small phones (480px and above) */
   @media ${media.mobileS} {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   /* Medium phones (576px and above) */

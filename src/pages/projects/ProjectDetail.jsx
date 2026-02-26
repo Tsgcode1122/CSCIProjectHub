@@ -14,6 +14,8 @@ import {
   FiCalendar,
 } from "react-icons/fi";
 import { GoStack } from "react-icons/go";
+import RelatedProject from "./Relatedproject";
+
 const ProjectDetail = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
@@ -212,6 +214,7 @@ const ProjectDetail = () => {
             </Card>
           )}
         </Body>
+        <RelatedProject currentProject={project} />
       </SectionDiv>
     </>
   );
@@ -349,7 +352,10 @@ const Card = styled.section`
 const CardTitle = styled.h5`
   margin: 0 0 1rem 0;
   color: ${Colors.brightBlue};
-  /* font-weight: 700; */
+  font-weight: 600;
+  @media ${media.laptop} {
+    font-weight: 500;
+  }
 `;
 
 const CardText = styled.p`

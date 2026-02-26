@@ -79,7 +79,7 @@ const Footer = () => {
                   </Icon>
                   <ContactText>
                     <ContactValue>
-                      Nicks Hall, 365 Stout Dr #132, Johnson City, TN 37604
+                      1276 Gilbreath Dr., Box 70300, Johnson City, TN
                     </ContactValue>
                   </ContactText>
                 </ContactItem>

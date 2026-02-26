@@ -4,17 +4,24 @@ import { useNavigate } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
-import { FiSearch, FiUsers, FiCalendar, FiArrowUpRight } from "react-icons/fi";
-
+import {
+  FiSearch,
+  FiUsers,
+  FiCalendar,
+  FiArrowUpRight,
+  FiFilter,
+} from "react-icons/fi";
+import { BiSliderAlt } from "react-icons/bi";
 import ProjectFilters from "./ProjectFilters";
-import defaultimg from "../../images/thumbnail.png";
+
 import BackButton from "../../fixedComponent/BackButton";
 import { useProjectContext } from "../../context/ProjectContext";
+import ProjectCartItem from "./ProjectCardItem";
 
 const ProjectGrid = () => {
   const navigate = useNavigate();
   const { projects, loading, error } = useProjectContext();
-  // Search is in the header
+  const [showFilters, setShowFilters] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -93,8 +100,8 @@ const ProjectGrid = () => {
     });
   };
 
-  const handleOpenProject = (id) => {
-    navigate(`/projects/${id}`);
+  const HandleShowFilter = () => {
+    setShowFilters(!showFilters);
   };
 
   return (
@@ -111,118 +118,80 @@ const ProjectGrid = () => {
                 Department of Computing.
               </HeaderSubtitle>
             </HeaderText>
-
-            <SearchWrap>
-              <FiSearch />
-              <SearchInput
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search projects by title, tag, or keyword..."
-              />
-            </SearchWrap>
           </HeaderInner>
         </SectionDiv>
       </HeaderWrap>
-
-      {/* BODY */}
-      <SectionDiv>
-        <BodyGrid>
-          {/* LEFT SIDEBAR FILTER */}
-          <ProjectFilters
-            options={filterOptions}
-            value={filters}
-            onChange={handleFilterChange}
-            onClear={clearFilters}
-          />
-
-          {/* RIGHT LIST */}
-          <ListCol>
-            <ResultRow>
-              <ResultCount>
-                Showing <b>{filteredProjects.length}</b> project(s)
-              </ResultCount>
-            </ResultRow>
-            {loading ? (
-              <EmptyState>
-                <h4>Loading projects...</h4>
-                <p>Please wait.</p>
-              </EmptyState>
-            ) : error ? (
-              <EmptyState>
-                <h4>Could not load projects.</h4>
-                <p>{error}</p>
-              </EmptyState>
-            ) : filteredProjects.length === 0 ? (
-              <EmptyState>
-                <h4>No projects match your filters.</h4>
-                <p>Try clearing filters or searching a different keyword.</p>
-              </EmptyState>
-            ) : (
-              <List>
-                {filteredProjects.map((p) => (
-                  <ProjectCard
-                    key={p.id || p._id}
-                    onClick={() => handleOpenProject(p.id || p._id)}
-                  >
-                    <TitleRow>
-                      <CardTitle>{p.title}</CardTitle>
-                      <StatusBadge $status={p.project_status}>
-                        {p.project_status}
-                      </StatusBadge>
-                    </TitleRow>
-
-                    <CardContent>
-                      {/* <Thumb>
-                        <img
-                          src={p.thumbnail_url}
-                          alt={p.title}
-                          onError={(e) => {
-                            e.currentTarget.src = defaultimg;
-                          }}
-                        />
-                      </Thumb> */}
-
-                      <TopRow>
-                        <Tags>
-                          {(p.tags || []).slice(0, 4).map((tag) => (
-                            <Tag key={tag}>{tag}</Tag>
-                          ))}
-                        </Tags>
-
-                        <MiniDesc>{p.short_description}</MiniDesc>
-
-                        <MetaRow>
-                          <MetaItem>
-                            <FiUsers />
-                            <span>{p.team_members.length ?? 0} members</span>
-                          </MetaItem>
-
-                          <MetaItem>
-                            <FiCalendar />
-                            <span>
-                              {p.duration_start || "—"} –{" "}
-                              {p.project_status === "In Progress" ||
-                              p.project_status === "Accepting Members"
-                                ? "Ongoing"
-                                : p.duration_end || "—"}
-                            </span>
-                          </MetaItem>
-
-                          <MetaRight>
-                            <CornerIcon aria-hidden="true">
-                              <FiArrowUpRight />
-                            </CornerIcon>
-                          </MetaRight>
-                        </MetaRow>
-                      </TopRow>
-                    </CardContent>
-                  </ProjectCard>
-                ))}
-              </List>
-            )}
-          </ListCol>
-        </BodyGrid>
-      </SectionDiv>
+      <GridContainer>
+        {/* Sticky search/filter bar OUTSIDE HeaderWrap */}
+        <StickyBar>
+          <SectionContainer>
+            <Filter>
+              <SearchWrap>
+                <FiSearch />
+                <SearchInput
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search projects by title, tag, or keyword..."
+                />
+              </SearchWrap>
+              <FilterBtn type="button" onClick={() => HandleShowFilter()}>
+                <BiSliderAlt />
+              </FilterBtn>
+            </Filter>
+          </SectionContainer>
+        </StickyBar>
+        {/* BODY */}
+        <SectionDiv>
+          <BodyGrid>
+            {/* LEFT SIDEBAR FILTER */}
+            <>
+              <ProjectFilters
+                options={filterOptions}
+                value={filters}
+                onChange={handleFilterChange}
+                onClear={clearFilters}
+                show={showFilters}
+                onClose={() => setShowFilters(false)}
+                resultCount={filteredProjects.length}
+              />
+            </>
+            {/* RIGHT LIST */}
+            <ListCol>
+              <ResultRow>
+                <ResultCount>
+                  Showing <b>{filteredProjects.length}</b> project(s)
+                </ResultCount>
+              </ResultRow>
+              {loading ? (
+                <EmptyState>
+                  <h4>Loading projects...</h4>
+                  <p>Please wait.</p>
+                </EmptyState>
+              ) : error ? (
+                <EmptyState>
+                  <h4>Could not load projects.</h4>
+                  <p>{error}</p>
+                </EmptyState>
+              ) : filteredProjects.length === 0 ? (
+                <EmptyState>
+                  <h4>No projects match your filters.</h4>
+                  <p>Try clearing filters or searching a different keyword.</p>
+                </EmptyState>
+              ) : (
+                <List>
+                  {filteredProjects.map((p) => (
+                    <ProjectCartItem
+                      key={p.id || p._id}
+                      project={p}
+                      onOpen={(id) => navigate(`/projects/${id}`)}
+                    />
+                  ))}
+                </List>
+              )}
+            </ListCol>
+          </BodyGrid>
+        </SectionDiv>
+      </GridContainer>
     </>
   );
 };
@@ -230,16 +199,22 @@ const ProjectGrid = () => {
 export default ProjectGrid;
 
 // ---------------- styles ----------------
-
+const GridContainer = styled.div`
+  position: relative;
+  /* This container defines the "track" the sticky bar can slide on. 
+     Once the bottom of this div is reached, the bar stops sticking. */
+`;
 const HeaderWrap = styled.div`
   background: ${Colors.brightBlue};
-  padding: 0.2rem 0;
+  /* padding: 0.2rem 0; */
+  position: relative;
+  /* height: 40vh; */
 `;
 
 const HeaderInner = styled.div`
   display: grid;
   gap: 1.2rem;
-
+  position: relative;
   max-width: 1400px;
   margin: 0 auto;
   @media ${media.tablet} {
@@ -257,8 +232,66 @@ const HeaderTitle = styled.h2`
 
 const HeaderSubtitle = styled.p`
   margin: 0.6rem 0 0 0;
+
   color: rgba(255, 255, 255, 0.85);
   max-width: 900px;
+`;
+const SectionContainer = styled.div`
+  padding: 0rem 1.5rem;
+  margin: 0 auto;
+
+  /* Extra small screens  */
+  @media ${media.mobileXS} {
+    padding: 0rem 0.8rem;
+  }
+
+  @media ${media.mobileS} {
+    padding: 0rem 1rem;
+  }
+
+  /* Medium phones (576px and above) */
+  @media ${media.mobileM} {
+    padding: 0rem 1.5rem;
+  }
+
+  /* Large phones (679px and above) */
+  @media ${media.mobileL} {
+    padding: 0rem 3rem;
+  }
+
+  /* Tablets (768px and above) */
+  @media ${media.tablet} {
+    padding: 0rem 4rem;
+  }
+
+  /* Small laptops (1024px and above) */
+  @media ${media.laptop} {
+    max-width: 1200px;
+    padding: 0rem 4rem 1rem 4rem;
+  }
+
+  /* Desktops (1440px and above) */
+  @media ${media.desktop} {
+    max-width: 1200px;
+    padding: 0rem 6rem 1rem 6rem;
+  }
+
+  /* Extra large desktops / 4K screens (1920px) */
+  @media ${media.desktopXL} {
+    max-width: 1600px;
+    padding: 0rem 8rem 1rem 8rem;
+  }
+`;
+const StickyBar = styled.div`
+  top: 70px;
+  z-index: 50;
+  background: ${Colors.brightBlue};
+  padding: 0rem 0 1rem 0;
+  position: sticky;
+  @media ${media.laptop} {
+    position: relative;
+    top: 0px;
+  }
 `;
 
 const SearchWrap = styled.div`
@@ -275,6 +308,51 @@ const SearchWrap = styled.div`
 
   svg {
     font-size: 1.1rem;
+  }
+`;
+const Filter = styled.div`
+  /* MOBILE: search + filter button in grid */
+  position: sticky;
+  /* background-color: white; */
+  top: 202px;
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  gap: 0.75rem;
+
+  z-index: 20;
+
+  padding: 0.7rem 0 0 0;
+
+  /* TABLET+ : no grid, normal */
+  @media ${media.laptop} {
+    position: static;
+    padding: 0;
+  }
+`;
+
+const FilterBtn = styled.button`
+  border: none;
+  background: ${Colors.white};
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  svg {
+    font-size: 1.4rem;
+    color: ${Colors.etsuBlue};
+  }
+
+  &:hover svg {
+    color: ${Colors.etsuGold};
+  }
+
+  /* hide again on tablet and up */
+  @media ${media.laptop} {
+    display: none;
   }
 `;
 
@@ -298,7 +376,8 @@ const BodyGrid = styled.div`
   gap: 1.4rem;
   max-width: 1400px;
   margin: 0 auto;
-  @media ${media.tablet} {
+  grid-template-columns: 1fr;
+  @media ${media.laptop} {
     grid-template-columns: 280px 1fr;
     align-items: start;
   }
@@ -317,217 +396,15 @@ const ResultRow = styled.div`
 
 const ResultCount = styled.div`
   color: rgba(0, 0, 0, 0.65);
+  margin-top: -1rem;
+  @media ${media.laptop} {
+    margin-top: 0;
+  }
 `;
 
 const List = styled.div`
   display: grid;
   gap: 2rem;
-`;
-
-const ProjectCard = styled.button`
-  width: 100%;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  position: relative;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  background: ${Colors.white};
-  border-radius: 16px;
-  border: 1px solid rgba(132, 172, 227, 0.306);
-  /* border: 1px solid rgba(4, 30, 66, 0.12); */
-  /* box-shadow: ${Shadows.light}; */
-
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    border-color 160ms ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: ${Shadows.light};
-    border-color: rgba(177, 178, 179, 0.22);
-  }
-
-  @media ${media.mobileS} {
-    grid-template-columns: 120px 1fr;
-  }
-
-  @media ${media.tablet} {
-    grid-template-columns: 140px 1fr;
-
-    gap: 1.1rem;
-  }
-`;
-
-const Thumb = styled.div`
-  border-radius: 14px;
-  overflow: hidden;
-  background: rgba(4, 30, 66, 0.06);
-  border: 1px solid rgba(4, 30, 66, 0.08);
-
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    /* aspect-ratio: 1 / 1; */
-  }
-`;
-
-const CardContent = styled.div`
-  /* min-width: 0; */
-
-  display: grid;
-  gap: 12px;
-  /* grid-template-columns: 140px 1fr; */
-  padding: 1rem;
-  @media ${media.tablet} {
-    padding: 1.1rem;
-  }
-`;
-
-const TopRow = styled.div`
-  gap: 0.8rem;
-`;
-
-const TitleRow = styled.div`
-  position: relative !important;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  min-width: 0;
-  padding: 1rem;
-  border-radius: 16px 16px 0 0;
-  background: rgba(1, 51, 121, 0.095);
-  @media ${media.tablet} {
-    padding: 1.1rem;
-  }
-`;
-
-const CardTitle = styled.h5`
-  margin: 0;
-  color: ${Colors.brightBlue};
-  font-weight: 500 !important;
-  min-width: 0;
-  flex: 1;
-  max-width: 80%;
-  @media ${media.tablet} {
-    max-width: 90%;
-  }
-
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; */
-`;
-
-const StatusBadge = styled.span`
-  width: fit-content;
-  padding: 0.35rem 0.6rem;
-  right: 0rem;
-  border-radius: 9px;
-  font-weight: 700;
-  font-size: 0.78rem;
-  display: inline-block;
-  position: relative !important;
-
-  background: ${({ $status }) => {
-    switch ($status) {
-      case "Accepting Members":
-        return "#FFB81C";
-      case "In Progress":
-      default:
-        return "rgba(4, 30, 66, 0.08)";
-    }
-  }};
-
-  color: ${({ $status }) => {
-    switch ($status) {
-      case "Completed":
-        return "#003b7f";
-      case "In Progress":
-        return "rgba(4, 30, 66, 0.85)";
-      case "Accepting Members":
-        return Colors.etsuBlue;
-      default:
-        return "rgba(4, 30, 66, 0.85)";
-    }
-  }};
-
-  border: 1px solid
-    ${({ $status }) => {
-      switch ($status) {
-        case "Completed":
-          return "rgba(4, 30, 66, 0.12)";
-        case "Accepting Members":
-          return "rgba(255, 184, 28, 0.45)";
-        default:
-          return "rgba(4, 30, 66, 0.12)";
-      }
-    }};
-`;
-
-const CornerIcon = styled.div`
-  color: rgba(4, 30, 66, 0.65);
-  font-size: 1.15rem;
-  margin-top: 0.15rem;
-  svg {
-    transform: rotate(45deg);
-  }
-`;
-
-const Tags = styled.div`
-  /* margin-top: 0.6rem; */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-`;
-
-const Tag = styled.span`
-  padding: 0.2rem 0.5rem;
-  border-radius: 9px;
-  background: #e8f1f8;
-  border: 1px solid rgba(4, 30, 66, 0.1);
-  color: #003f87ca;
-  font-weight: 300;
-  font-size: 0.78rem;
-`;
-
-const MiniDesc = styled.p`
-  margin: 0.65rem 0 0 0;
-  color: rgba(0, 0, 0, 0.68);
-  line-height: 1.3rem;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
-const MetaRow = styled.div`
-  margin-top: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-`;
-
-const MetaItem = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: rgba(0, 0, 0, 0.62);
-  font-weight: 600;
-
-  svg {
-    color: ${Colors.etsuGold};
-  }
-`;
-
-const MetaRight = styled.div`
-  margin-left: auto;
-  color: rgba(0, 0, 0, 0.5);
 `;
 
 const EmptyState = styled.div`
