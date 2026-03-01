@@ -5,6 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   useNavigate,
+  Navigate,
 } from "react-router-dom";
 
 import { Result, Button } from "antd";
@@ -22,6 +23,13 @@ import ProjectDetail from "./pages/projects/ProjectDetail";
 import Policy from "./pages/footerPages/Policy";
 import Accessibility from "./pages/footerPages/Accessibility";
 import TermsofUse from "./pages/footerPages/TermsofUse";
+
+import { AdminAuthProvider } from "./admin/AdminAuthContext";
+import { RequireAdmin } from "./admin/AdminRouteGuards";
+import AdminLayout from "./admin/AdminLayout";
+import AdminLogin from "./admin/pages/AdminLogin";
+import AdminProjects from "./admin/pages/Projects";
+import AdminUsers from "./admin/pages/Users";
 
 const StyledResult = styled(Result)`
   .ant-result-title {
@@ -80,6 +88,32 @@ const routes = [
       { path: "*", element: <InvalidPath /> },
     ],
   },
+
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+  },
+
+  {
+    path: "/admin",
+    element: <RequireAdmin />, // if authed -> Outlet, else redirect to /admin/login
+    children: [
+      {
+        element: <AdminLayout />, // sidebar + topbar layout
+        children: [
+          // /admin -> redirect to /admin/projects
+          { index: true, element: <Navigate to="/admin/projects" replace /> },
+
+          // /admin/projects
+          { path: "projects", element: <AdminProjects /> },
+
+          // /admin/users
+          { path: "users", element: <AdminUsers /> },
+        ],
+      },
+    ],
+  },
+
 ];
 
 const router = createBrowserRouter(routes);
@@ -89,7 +123,11 @@ const App = () => (
     {/* <PageUnderConstruction /> */}
     <GlobalStyle />
 
-    <RouterProvider router={router} />
+    <AdminAuthProvider>
+      <RouterProvider router={router} />
+    </AdminAuthProvider>
+
+    {/* <RouterProvider router={router} /> */}
   </>
 );
 
