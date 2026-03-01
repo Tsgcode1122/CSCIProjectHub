@@ -22,6 +22,7 @@ const Navbar = () => {
     { label: "Theses", to: "/theses" },
     { label: "About", to: "/about" },
     { label: "Contact", to: "/contact" },
+    { label: "Login", to: "/admin/login"}
   ];
 
   return (
