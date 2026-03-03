@@ -375,7 +375,7 @@ const StatusBadge = styled.span`
   padding: 0.35rem 0.6rem;
   right: 0rem;
   border-radius: 9px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.78rem;
   display: inline-block;
   position: relative !important;

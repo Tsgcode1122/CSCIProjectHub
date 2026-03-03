@@ -1,0 +1,326 @@
+[
+  {
+    "title": "Predictive Health Modeling in Rural Appalachian Populations",
+    "overview": "Chronic health conditions disparately impact rural Appalachian populations, often exacerbated by socioeconomic factors that traditional medical models fail to capture. This thesis presents a comprehensive predictive health model leveraging advanced machine learning algorithms to analyze disparate socioeconomic and clinical datasets. By identifying hidden correlations between localized economic distress markers and early-onset chronic diseases, this research aims to provide regional healthcare providers with actionable, data-driven insights for preventative care, ultimately bridging the gap between social determinants of health and clinical outcomes.",
+    "methodology": "Aggregated anonymized healthcare records and census data, applying Random Forest and XGBoost models to identify predictive factors for chronic illnesses.",
+    "key_findings": "The XGBoost model achieved an 87% accuracy rate in predicting early-onset diabetes when incorporating regional socioeconomic markers.",
+    "publications": [
+      {
+        "title": "Predictive Health Modeling in Rural Populations",
+        "link": "https://doi.org/10.1000/etsu.cs.2025.1",
+        "published_on": "2025-11-12T10:00:00.000Z"
+      }
+    ],
+    "future_work": "Integrate real-time wearable sensor data into the predictive model to track daily patient activity.",
+    "student": "Sarah Jenkins",
+    "supervisor": "Dr. Ahmad Al Doulat",
+    "department": "Data Science",
+    "status": "Completed",
+    "tags": ["Machine Learning", "Healthcare", "Predictive Analytics"],
+    "short_description": "Using machine learning to predict chronic health outcomes in Appalachian populations.",
+    "duration_start": "August 2024",
+    "duration_end": "May 2025",
+    "created_at": "2024-08-15T14:22:10.000Z",
+    "updated_at": "2025-05-20T09:15:30.000Z"
+  },
+  {
+    "title": "Lightweight Zero-Trust Architecture for Rural Healthcare IT",
+    "overview": "Ransomware attacks increasingly target vulnerable healthcare networks, with rural clinics facing disproportionate risks due to limited IT infrastructure and budget constraints. This research explores the feasibility and implementation of a Zero-Trust Architecture (ZTA) tailored specifically for these resource-constrained environments. By shifting from perimeter-based defense to a micro-segmented, identity-centric model, the study evaluates how lightweight ZTA frameworks can effectively isolate threats and ensure continuity of patient care without imposing crippling operational overhead on small medical facilities.",
+    "methodology": "Simulated a standard rural clinic network topology and subjected it to simulated ransomware attacks before and after implementing a custom lightweight ZTA framework.",
+    "key_findings": "The lightweight ZTA reduced lateral movement of simulated malware by 94% with only a 6% increase in network latency.",
+    "publications": [
+      {
+        "title": "Lightweight Zero-Trust for Rural Healthcare IT",
+        "link": "https://doi.org/10.1000/etsu.cyber.2025.2",
+        "published_on": "2026-01-05T08:30:00.000Z"
+      }
+    ],
+    "future_work": "Pilot the lightweight ZTA framework in a live, partnering healthcare facility.",
+    "student": "Marcus Thorne",
+    "supervisor": "Dr. Ghaith Husari",
+    "department": "Cybersecurity",
+    "status": "In Progress",
+    "tags": ["Zero-Trust", "Ransomware", "Network Security"],
+    "short_description": "Defending rural healthcare networks from ransomware using optimized Zero-Trust models.",
+    "duration_start": "January 2025",
+    "duration_end": "December 2026",
+    "created_at": "2025-01-10T11:05:00.000Z",
+    "updated_at": "2026-02-15T16:45:12.000Z"
+  },
+  {
+    "title": "Optimizing Emergency Route Planning Algorithms for Mountainous Terrains",
+    "overview": "Standard GPS routing algorithms frequently fail emergency medical services (EMS) navigating the complex, mountainous topography of East Tennessee, particularly during severe weather events. This project addresses the critical need for resilient, terrain-aware navigation by optimizing traditional graph-based routing algorithms like Dijkstra's and A*. By dynamically integrating real-time topographic elevation models and localized historical weather disruption data, the proposed system calculates optimal emergency response routes that prioritize safety and accessibility over simple geographic distance, significantly improving EMS response reliability.",
+    "methodology": "Modified Dijkstra's and A* algorithms to heavily weight topographic elevation and historical weather disruption data.",
+    "key_findings": "The modified A* algorithm improved emergency response route efficiency by 18% during simulated adverse weather conditions.",
+    "publications": [],
+    "future_work": "Develop a mobile application prototype for local EMS dispatchers to test the routing algorithm in the field.",
+    "student": "David Chen",
+    "supervisor": "Dr. Mohammad Khan",
+    "department": "Computer Science",
+    "status": "In Progress",
+    "tags": ["Algorithms", "GIS", "Emergency Services"],
+    "short_description": "Optimizing emergency route planning in mountainous terrains using elevation-weighted algorithms.",
+    "duration_start": "August 2025",
+    "duration_end": "May 2027",
+    "created_at": "2025-08-20T09:00:00.000Z",
+    "updated_at": "2026-02-20T10:12:00.000Z"
+  },
+  {
+    "title": "Evaluating ERP Adoption Barriers in Regional Manufacturing",
+    "overview": "Small-to-medium manufacturing enterprises (SMEs) represent a crucial economic driver in the region, yet their adoption of cloud-based Enterprise Resource Planning (ERP) systems lags significantly behind national averages. This thesis conducts a comprehensive, mixed-methods investigation into the sociotechnical barriers preventing ERP modernization within local manufacturing hubs. By analyzing user acceptance, perceived data sovereignty risks, and localized IT training deficits, the research provides a strategic roadmap for software vendors and regional policymakers to facilitate digital transformation in traditional manufacturing environments.",
+    "methodology": "Conducted mixed-methods research utilizing surveys (n=150) and semi-structured interviews (n=20) with local manufacturing managers and IT staff.",
+    "key_findings": "The primary barrier to adoption is not cost, but rather a lack of localized IT training and perceived data sovereignty risks.",
+    "publications": [
+      {
+        "title": "ERP Adoption Barriers in Regional Manufacturing",
+        "link": "https://doi.org/10.1000/etsu.is.2024.1",
+        "published_on": "2024-12-01T14:00:00.000Z"
+      }
+    ],
+    "future_work": "Design a localized training framework tailored for non-technical manufacturing staff.",
+    "student": "Emily Rostova",
+    "supervisor": "Dr. Stephen Hendrix",
+    "department": "Information Systems",
+    "status": "Completed",
+    "tags": ["ERP", "Cloud Computing", "User Acceptance"],
+    "short_description": "Evaluating the barriers to cloud ERP adoption for regional manufacturing businesses.",
+    "duration_start": "August 2023",
+    "duration_end": "May 2024",
+    "created_at": "2023-08-25T13:30:00.000Z",
+    "updated_at": "2024-05-15T11:20:00.000Z"
+  },
+  {
+    "title": "Edge Computing for Efficient Agricultural IoT Networks",
+    "overview": "Precision agriculture relies heavily on Internet of Things (IoT) sensor networks, but transmitting continuous environmental data from remote farmland to centralized cloud servers results in prohibitive power consumption and latency. This study evaluates the deployment of decentralized edge computing nodes directly within agricultural fields to perform localized data processing. By comparing edge-processed soil moisture and crop health analytics against traditional cloud architectures, the research demonstrates how offloading computation to the edge dramatically extends sensor battery life and reduces reliance on unstable rural cellular networks.",
+    "methodology": "Deployed Raspberry Pi and Arduino-based edge nodes in a test farm, comparing data transmission latency and power consumption against a centralized cloud model.",
+    "key_findings": "Edge processing reduced cellular data transmission by 70% and increased battery life of remote sensors by over 400%.",
+    "publications": [
+      {
+        "title": "Edge Computing for Efficient Agricultural IoT",
+        "link": "https://doi.org/10.1000/etsu.it.2025.1",
+        "published_on": "2025-10-22T09:45:00.000Z"
+      }
+    ],
+    "future_work": "Implement solar-powered edge nodes for true off-grid sustainability.",
+    "student": "Liam O'Connor",
+    "supervisor": "David Tarnoff",
+    "department": "Information Technology",
+    "status": "Completed",
+    "tags": ["IoT", "Edge Computing", "Agriculture Tech"],
+    "short_description": "Using edge computing to optimize agricultural IoT sensor networks for low power consumption.",
+    "duration_start": "January 2024",
+    "duration_end": "May 2025",
+    "created_at": "2024-01-15T08:00:00.000Z",
+    "updated_at": "2025-05-28T14:10:00.000Z"
+  },
+  {
+    "title": "Fine-Tuning NLP Models for Appalachian Dialect Transcription",
+    "overview": "Current commercial speech-to-text models demonstrate a pronounced bias against regional dialects, leading to significant transcription errors when processing Appalachian English. This research addresses this inequity by fine-tuning state-of-the-art Natural Language Processing (NLP) models, specifically the Whisper architecture, using a highly curated dataset of regional oral histories and localized speech samples. The resulting model not only improves automated transcription accuracy for regional users but also provides a vital digital humanities tool for preserving and analyzing the unique linguistic heritage of the Appalachian region.",
+    "methodology": "Fine-tuned a pre-trained Whisper model using a newly compiled dataset of local oral histories and regional podcast audio.",
+    "key_findings": "The fine-tuned model decreased the Word Error Rate (WER) on Appalachian audio samples from 22% to 8.5%.",
+    "publications": [],
+    "future_work": "Expand the training dataset to include specific sub-regional dialects and historical archive audio.",
+    "student": "Chloe Vance",
+    "supervisor": "Dr. Christel Young",
+    "department": "Computer Science",
+    "status": "In Progress",
+    "tags": ["NLP", "Machine Learning", "Linguistics"],
+    "short_description": "Fine-tuning NLP speech-to-text models for accurate transcription of Appalachian dialects.",
+    "duration_start": "August 2025",
+    "duration_end": "May 2026",
+    "created_at": "2025-08-12T10:15:00.000Z",
+    "updated_at": "2026-01-20T11:45:00.000Z"
+  },
+  {
+    "title": "A Scalable Ransomware Mitigation Framework for Municipal Networks",
+    "overview": "Local municipal governments manage critical civic infrastructure but often operate with outdated legacy systems, making them prime targets for catastrophic ransomware extortion. This thesis assesses the unique vulnerabilities inherent in municipal network topologies and proposes a scalable, cost-effective mitigation framework designed for public sector IT departments. By mapping historical breach data against simulated attacks on mock city networks, the research establishes a prioritized patching and network segmentation strategy that maximizes defense-in-depth security within the constraints of strict municipal budgets.",
+    "methodology": "Conducted vulnerability assessments on mock municipal networks and analyzed historical ransomware payouts by local governments.",
+    "key_findings": "Identified that unpatched legacy VPNs accounted for 65% of successful simulated breaches; proposed a tiered patching prioritization framework.",
+    "publications": [
+      {
+        "title": "Ransomware Vulnerabilities in Municipal Networks",
+        "link": "https://doi.org/10.1000/etsu.cyber.2026.1",
+        "published_on": "2026-02-10T12:00:00.000Z"
+      }
+    ],
+    "future_work": "Develop an automated patch-management script specifically for legacy municipal systems.",
+    "student": "James Dalton",
+    "supervisor": "Dr. Michael Lehrfeld",
+    "department": "Cybersecurity",
+    "status": "In Progress",
+    "tags": ["Ransomware", "Infrastructure Security", "Policy"],
+    "short_description": "Creating a scalable ransomware mitigation and patching framework for local governments.",
+    "duration_start": "January 2025",
+    "duration_end": "May 2026",
+    "created_at": "2025-01-22T09:30:00.000Z",
+    "updated_at": "2026-02-18T15:20:00.000Z"
+  },
+  {
+    "title": "Deep Learning for Genomic Sequencing in Regional Autoimmune Studies",
+    "overview": "The identification of rare genetic markers linked to localized autoimmune diseases remains a computationally expensive and complex challenge in modern bioinformatics. This project leverages deep learning, specifically Convolutional Neural Networks (CNNs), to automate the analysis of visual representations derived from massive genomic sequencing datasets. Working in conjunction with regional biobank data, the research aims to isolate previously undetected anomalies within the HLA gene cluster, accelerating the discovery of genetic predispositions and supporting the development of targeted, localized precision medicine initiatives.",
+    "methodology": "Utilized Convolutional Neural Networks (CNNs) to analyze visual representations of genomic sequences from a regional biobank.",
+    "key_findings": "The CNN successfully identified a recurring anomaly in the HLA gene cluster correlated with a specific local autoimmune response.",
+    "publications": [],
+    "future_work": "Collaborate with the College of Medicine to validate the identified genetic marker in a clinical setting.",
+    "student": "Priya Patel",
+    "supervisor": "Dr. Shehenaz Shaik",
+    "department": "Data Science",
+    "status": "In Progress",
+    "tags": ["Deep Learning", "Bioinformatics", "Genomics"],
+    "short_description": "Using Convolutional Neural Networks to find rare genetic markers in regional biobank data.",
+    "duration_start": "August 2025",
+    "duration_end": "December 2026",
+    "created_at": "2025-08-30T14:10:00.000Z",
+    "updated_at": "2026-02-25T10:05:00.000Z"
+  },
+  {
+    "title": "Overcoming UX Barriers in Telehealth Patient Portals for the Elderly",
+    "overview": "Despite the rapid expansion of telehealth services, elderly patients frequently encounter insurmountable User Experience (UX) and interface design barriers that prevent equitable access to virtual care. This study conducts rigorous usability testing and eye-tracking analysis with participants over the age of 65 to identify the specific cognitive and physical friction points within commercial telehealth portals. The findings inform a set of evidence-based design heuristics aimed at simplifying multi-factor authentication, optimizing tap targets, and ultimately fostering digital healthcare autonomy for the aging population.",
+    "methodology": "Performed usability testing and eye-tracking studies with 40 participants over the age of 65 using standard commercial telehealth platforms.",
+    "key_findings": "Small tap targets and complex multi-factor authentication flows were the primary causes of task abandonment.",
+    "publications": [
+      {
+        "title": "UX Barriers in Telehealth for the Elderly",
+        "link": "https://doi.org/10.1000/etsu.is.2025.2",
+        "published_on": "2025-08-14T08:00:00.000Z"
+      }
+    ],
+    "future_work": "Propose and test a simplified, high-contrast, biometrics-only login flow for telehealth apps.",
+    "student": "Robert Miles",
+    "supervisor": "Dr. T. Janel Paulk",
+    "department": "Information Systems",
+    "status": "Completed",
+    "tags": ["UX/UI", "Telehealth", "Accessibility"],
+    "short_description": "Identifying and solving UX barriers for elderly users of telehealth patient portals.",
+    "duration_start": "January 2024",
+    "duration_end": "May 2025",
+    "created_at": "2024-01-20T11:00:00.000Z",
+    "updated_at": "2025-05-10T16:30:00.000Z"
+  },
+  {
+    "title": "Benchmarking IPv6 Transition Mechanisms in Legacy Enterprise Environments",
+    "overview": "As the exhaustion of IPv4 addresses forces enterprise networks to adopt IPv6, network administrators face critical decisions regarding transition mechanisms that can severely impact legacy system performance. This research provides a comprehensive empirical evaluation comparing Dual Stack implementations against various tunneling protocols within simulated, large-scale enterprise environments. By benchmarking network throughput, packet loss, and latency under stress, the thesis delivers actionable guidelines for IT professionals managing complex infrastructure migrations while attempting to maintain optimal operational performance.",
+    "methodology": "Set up an enterprise-scale virtual lab to benchmark network throughput, latency, and packet loss across different IPv6 transition protocols.",
+    "key_findings": "Dual Stack implementations showed a 12% performance advantage over tunneling methods, though requiring significantly higher upfront configuration time.",
+    "publications": [],
+    "future_work": "Analyze the security vulnerabilities introduced by specific IPv6 tunneling protocols.",
+    "student": "Thomas Reed",
+    "supervisor": "William Rochelle",
+    "department": "Information Technology",
+    "status": "In Progress",
+    "tags": ["Networking", "IPv6", "Enterprise IT"],
+    "short_description": "Benchmarking the performance of IPv6 transition mechanisms in legacy networks.",
+    "duration_start": "August 2025",
+    "duration_end": "May 2026",
+    "created_at": "2025-08-18T13:45:00.000Z",
+    "updated_at": "2026-01-12T09:20:00.000Z"
+  },
+  {
+    "title": "Automated Road Damage Detection using YOLOv8 and Dashcam Video",
+    "overview": "Maintaining road infrastructure is a continuous logistical challenge for local municipalities, often relying on inefficient manual reporting of surface damage. This project develops an automated, real-time computer vision system capable of detecting and mapping potholes and structural degradation using standard vehicular dashcam footage. By training a YOLOv8 object detection model and integrating spatial GPS metadata, the system provides city planners with a dynamic, low-cost topological map of road hazards, facilitating proactive and data-driven infrastructure repair schedules.",
+    "methodology": "Trained a YOLOv8 object detection model on thousands of dashcam frames, integrating GPS metadata to map the detected anomalies.",
+    "key_findings": "The system achieved 92% precision in identifying severe road damage in daylight and 78% during night conditions.",
+    "publications": [
+      {
+        "title": "Automated Road Damage Detection using YOLOv8",
+        "link": "https://doi.org/10.1000/etsu.cs.2025.2",
+        "published_on": "2025-12-20T15:00:00.000Z"
+      }
+    ],
+    "future_work": "Improve night-time detection accuracy using infrared or enhanced low-light training datasets.",
+    "student": "Anna Kowalski",
+    "supervisor": "Dr. Biju Bajracharya",
+    "department": "Computer Science",
+    "status": "Completed",
+    "tags": ["Computer Vision", "Machine Learning", "Smart Cities"],
+    "short_description": "Mapping road damage automatically using computer vision and dashcam video feeds.",
+    "duration_start": "August 2024",
+    "duration_end": "December 2025",
+    "created_at": "2024-08-10T10:00:00.000Z",
+    "updated_at": "2025-12-15T14:10:00.000Z"
+  },
+  {
+    "title": "Detecting Zero-Day Exploits in Consumer IoT Devices via Traffic Anomaly Analysis",
+    "overview": "The proliferation of consumer Internet of Things (IoT) devices has exponentially expanded the attack surface of residential networks, frequently introducing unpatched, zero-day vulnerabilities. This thesis proposes a machine learning approach to dynamically monitor and classify inbound and outbound IoT network traffic to detect exploitation attempts in real-time. By utilizing advanced anomaly detection algorithms trained on baseline device behaviors, the research creates a robust security layer capable of identifying and isolating compromised smart home devices before malicious lateral movement can occur.",
+    "methodology": "Captured network traffic from 50 common smart home devices, using an anomaly detection algorithm to identify irregular communication patterns indicative of exploitation.",
+    "key_findings": "The model successfully flagged anomalous traffic in 3 out of 5 simulated zero-day exploit scenarios with a false positive rate of under 2%.",
+    "publications": [],
+    "future_work": "Optimize the anomaly detection algorithm to run natively on consumer-grade network routers.",
+    "student": "Jamal Washington",
+    "supervisor": "Ken Loveday",
+    "department": "Cybersecurity",
+    "status": "In Progress",
+    "tags": ["IoT Security", "Machine Learning", "Network Traffic Analysis"],
+    "short_description": "Detecting zero-day exploits in smart home IoT devices using traffic anomaly detection.",
+    "duration_start": "January 2026",
+    "duration_end": "December 2026",
+    "created_at": "2026-01-15T09:00:00.000Z",
+    "updated_at": "2026-02-26T10:00:00.000Z"
+  },
+  {
+    "title": "NLP-Driven Sentiment Analysis of Student Feedback for Retention Modeling",
+    "overview": "University retention rates are heavily influenced by the holistic student experience, yet academic institutions struggle to extract actionable insights from vast amounts of unstructured qualitative feedback. This research applies advanced Natural Language Processing (NLP) and transformer-based sentiment analysis models to aggregate and evaluate student course evaluations, forum interactions, and campus surveys. By correlating temporal sentiment shifts regarding campus facilities and academic advising with historical enrollment data, the study provides a predictive framework to help university administrators proactively address student dissatisfaction.",
+    "methodology": "Applied BERT-based NLP models to anonymized end-of-semester course evaluations and university forum posts to extract sentiment trends.",
+    "key_findings": "Found a strong correlation between negative sentiment regarding 'campus parking' and 'advising availability' with lower subsequent semester enrollment.",
+    "publications": [
+      {
+        "title": "NLP-Driven Insights into Student Retention",
+        "link": "https://doi.org/10.1000/etsu.ds.2025.1",
+        "published_on": "2025-11-05T08:00:00.000Z"
+      }
+    ],
+    "future_work": "Develop a real-time dashboard for university administration to monitor campus sentiment shifts.",
+    "student": "Samantha Lee",
+    "supervisor": "Tahsin Rezwana",
+    "department": "Data Science",
+    "status": "Completed",
+    "tags": ["Sentiment Analysis", "NLP", "Educational Tech"],
+    "short_description": "Analyzing unstructured student feedback using NLP to identify factors affecting retention.",
+    "duration_start": "August 2024",
+    "duration_end": "May 2025",
+    "created_at": "2024-08-05T14:20:00.000Z",
+    "updated_at": "2025-05-02T11:15:00.000Z"
+  },
+  {
+    "title": "Tracking Regional Agricultural Supply Chains with Permissioned Blockchain",
+    "overview": "Local agricultural producers often face significant logistical hurdles and data reconciliation errors when integrating their goods into broader regional supply chains. This thesis investigates the feasibility of deploying permissioned blockchain technology, specifically Hyperledger Fabric, to create an immutable, transparent ledger for tracking produce from farm to distributor. The research evaluates the system's impact on data integrity, transaction latency, and stakeholder trust, determining whether decentralized ledger technologies can provide a competitive, verifiable advantage for small-scale Appalachian farmers.",
+    "methodology": "Developed a Hyperledger Fabric prototype to track produce from local farms to regional distributors, analyzing transaction speed and data integrity.",
+    "key_findings": "The blockchain prototype successfully eliminated data reconciliation errors between farms and distributors, though adoption requires significant upfront technical support.",
+    "publications": [],
+    "future_work": "Create a mobile-friendly DApp (Decentralized Application) to make entry easier for farmers.",
+    "student": "Brian Scott",
+    "supervisor": "Jacob Gillenwater",
+    "department": "Information Systems",
+    "status": "In Progress",
+    "tags": ["Blockchain", "Supply Chain", "Agriculture"],
+    "short_description": "Using permissioned blockchain to track and verify local agricultural supply chains.",
+    "duration_start": "August 2025",
+    "duration_end": "December 2026",
+    "created_at": "2025-08-22T10:30:00.000Z",
+    "updated_at": "2026-01-30T13:45:00.000Z"
+  },
+  {
+    "title": "Benchmarking Serverless Cold Start Performance Across Cloud Providers",
+    "overview": "Serverless computing architectures offer unparalleled scalability and cost-efficiency, but \"cold start\" execution latency remains a critical bottleneck for performance-sensitive applications. This comparative analysis benchmarks the cold start performance of major cloud providers—AWS Lambda, Azure Functions, and Google Cloud Functions—across multiple programming languages and varied load conditions. The study systematically dissects the underlying container provisioning delays, offering cloud architects empirical data and optimization strategies to mitigate latency spikes in event-driven microservice deployments.",
+    "methodology": "Deployed identical Node.js and Python microservices across the three major cloud providers, automating thousands of invocation tests under varied load conditions.",
+    "key_findings": "AWS Lambda provided the lowest cold start latency for Python, while Azure Functions demonstrated the most consistent warm execution times.",
+    "publications": [
+      {
+        "title": "Benchmarking Serverless Cold Starts",
+        "link": "https://doi.org/10.1000/etsu.it.2026.1",
+        "published_on": "2026-02-01T09:00:00.000Z"
+      }
+    ],
+    "future_work": "Expand the testing to include compiled languages like Go and Rust to measure performance differences.",
+    "student": "Kevin Nguyen",
+    "supervisor": "Mathew Desjardins",
+    "department": "Information Technology",
+    "status": "In Progress",
+    "tags": ["Cloud Computing", "Serverless", "Performance Testing"],
+    "short_description": "Comparing the execution latency and cold-start times of major serverless cloud providers.",
+    "duration_start": "January 2025",
+    "duration_end": "May 2026",
+    "created_at": "2025-01-08T15:10:00.000Z",
+    "updated_at": "2026-02-10T16:20:00.000Z"
+  }
+]

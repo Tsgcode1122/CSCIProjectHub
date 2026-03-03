@@ -1,101 +1,100 @@
 import React, { useMemo, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
-import { useProjectContext } from "../../context/ProjectContext";
+import { FiArrowUpRight, FiCalendar, FiUser } from "react-icons/fi";
+import { useThesesContext } from "../../context/ThesesContext";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 
-const RelatedProject = ({ currentProject }) => {
-  const { projects } = useProjectContext();
+const RelatedThesis = ({ currentThesis }) => {
+  const { theses } = useThesesContext();
   const navigate = useNavigate();
   const rowRef = useRef(null);
 
-  const currentId = currentProject?.id || currentProject?._id;
+  const currentId =
+    currentThesis?.id || currentThesis?._id || currentThesis?.title;
 
   const related = useMemo(() => {
-    if (!currentProject || !projects?.length) return [];
+    if (!currentThesis || !theses?.length) return [];
 
-    const dept = currentProject.department;
-    const tags = currentProject.tags || [];
+    const dept = currentThesis.department;
+    const tags = currentThesis.tags || [];
 
     // prioritize: shared tags + same dept
-    const scored = projects
-      .filter((p) => {
-        const pid = p.id || p._id;
-        if (!pid || pid === currentId) return false;
+    const scored = theses
+      .filter((t) => {
+        const tid = t.id || t._id || t.title;
+        if (!tid || tid === currentId) return false;
 
-        const sameDept = p.department === dept;
-        const sharedTag = (p.tags || []).some((t) => tags.includes(t));
+        const sameDept = t.department === dept;
+        const sharedTag = (t.tags || []).some((tag) => tags.includes(tag));
 
         return sameDept || sharedTag;
       })
-      .map((p) => {
-        const sameDept = p.department === dept ? 1 : 0;
-        const sharedCount = (p.tags || []).filter((t) =>
-          tags.includes(t),
+      .map((t) => {
+        const sameDept = t.department === dept ? 1 : 0;
+        const sharedCount = (t.tags || []).filter((tag) =>
+          tags.includes(tag),
         ).length;
-        return { p, score: sharedCount * 10 + sameDept };
+        return { t, score: sharedCount * 10 + sameDept };
       })
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
-      .map((x) => x.p);
+      .map((x) => x.t);
 
     return scored;
-  }, [projects, currentProject, currentId]);
+  }, [theses, currentThesis, currentId]);
 
   if (!related.length) return null;
 
-  const openProject = (p) => {
-    const id = p.id || p._id;
-    navigate(`/projects/${id}`);
+  const openThesis = (t) => {
+    const id = t.id || t._id || t.title;
+    navigate(`/theses/${id}`);
   };
 
-  const isOngoing = (status) =>
-    status === "In Progress" || status === "Accepting Members";
+  const isOngoing = (status) => status === "In Progress";
 
   return (
     <Wrap>
       <HeaderRow>
-        <Title>Related Projects</Title>
-        <SubTitle>More projects you may be interested in.</SubTitle>
+        <Title>Related Theses</Title>
+        <SubTitle>More research and theses you may be interested in.</SubTitle>
       </HeaderRow>
 
       <Row ref={rowRef}>
-        {related.map((p) => (
-          <Card key={p.id || p._id} onClick={() => openProject(p)}>
+        {related.map((t) => (
+          <Card key={t.id || t._id || t.title} onClick={() => openThesis(t)}>
             <Top>
-              <StatusBadge $status={p.project_status}>
-                {p.project_status}
-              </StatusBadge>
+              <StatusBadge $status={t.status}>{t.status}</StatusBadge>
               <CornerIcon aria-hidden="true">
                 <FiArrowUpRight />
               </CornerIcon>
             </Top>
 
-            <CardTitle title={p.title}>{p.title}</CardTitle>
+            <CardTitle title={t.title}>{t.title}</CardTitle>
 
-            <Desc>{p.short_description}</Desc>
+            <Desc>{t.short_description || t.overview}</Desc>
 
             <Tags>
-              {(p.tags || []).slice(0, 2).map((tag) => (
+              {(t.tags || []).slice(0, 2).map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
             </Tags>
 
+            {/* Optional: Uncomment to show MetaRow on related cards */}
             {/* <MetaRow>
               <MetaItem>
-                <FiUsers />
-                <span>{(p.team_members || []).length} members</span>
+                <FiUser />
+                <span>{t.student || "Student"}</span>
               </MetaItem>
 
               <MetaItem>
                 <FiCalendar />
                 <span>
-                  {p.duration_start || "—"} –{" "}
-                  {isOngoing(p.project_status)
+                  {t.duration_start || "—"} –{" "}
+                  {isOngoing(t.status)
                     ? "Ongoing"
-                    : p.duration_end || "—"}
+                    : t.duration_end || "—"}
                 </span>
               </MetaItem>
             </MetaRow> */}
@@ -106,7 +105,7 @@ const RelatedProject = ({ currentProject }) => {
   );
 };
 
-export default RelatedProject;
+export default RelatedThesis;
 
 /* ---------------- styles ---------------- */
 
@@ -131,7 +130,6 @@ const HeaderRow = styled.div`
 const Title = styled.h5`
   margin: 0;
   color: ${Colors.brightBlue};
-  /* font-weight: 600; */
 `;
 
 const SubTitle = styled.small`
@@ -201,26 +199,38 @@ const StatusBadge = styled.span`
   width: fit-content;
   padding: 0.35rem 0.6rem;
   border-radius: 9px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.78rem;
+  display: inline-block;
 
   background: ${({ $status }) => {
     switch ($status) {
-      case "Accepting Members":
-        return "rgba(255, 184, 28, 0.22)";
       case "Completed":
-        return "rgba(4, 30, 66, 0.10)";
+        return "rgba(4, 30, 66, 0.08)";
+      case "In Progress":
+        return "#FFB81C"; // Gold
       default:
         return "rgba(4, 30, 66, 0.08)";
     }
   }};
 
-  color: ${Colors.etsuBlue};
+  color: ${({ $status }) => {
+    switch ($status) {
+      case "Completed":
+        return "#003b7f";
+      case "In Progress":
+        return Colors.etsuBlue;
+      default:
+        return "rgba(4, 30, 66, 0.85)";
+    }
+  }};
 
   border: 1px solid
     ${({ $status }) => {
       switch ($status) {
-        case "Accepting Members":
+        case "Completed":
+          return "rgba(4, 30, 66, 0.12)";
+        case "In Progress":
           return "rgba(255, 184, 28, 0.45)";
         default:
           return "rgba(4, 30, 66, 0.12)";

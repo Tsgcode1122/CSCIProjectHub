@@ -50,16 +50,16 @@ font-family: "Inter", sans-serif;
     line-height: 1.6rem;
     @media ${media.mobileS} { font-size: 1.4rem; line-height: 1.8rem; }
     @media ${media.tablet} { font-size: 1.6rem; line-height: 2rem; }
-    @media ${media.laptop} { font-size: 1.8rem; line-height: 2.2rem; }
-    @media ${media.desktop} { font-size: 2rem; line-height: 2.4rem; }
+    @media ${media.laptop} { font-size: 1.6rem; line-height: 2.2rem; }
+    @media ${media.desktop} { font-size: 1.8rem; line-height: 2.4rem; }
     @media ${media.desktopXL} { font-size: 2rem; line-height: 2.6rem; }
   }
 
   /* H5 */
   h5 {
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 1.4rem;
-    @media ${media.mobileS} { font-size: 1.2rem; line-height: 1.4rem; }
+    @media ${media.mobileS} { font-size: 1.1rem; line-height: 1.4rem; }
     @media ${media.tablet} { font-size: 1.4rem; line-height: 1.6rem; }
     @media ${media.laptop} { font-size: 1.4rem; line-height: 1.8rem; }
     @media ${media.desktop} { font-size: 1.5rem; line-height: 2rem; }

@@ -10,14 +10,18 @@ import {
 import { Result, Button } from "antd";
 import Layout from "./fixedComponent/Layout";
 import Home from "./pages/Home";
-import ThesisGrid from "./pages/thesis/ThesisGrid";
-import ThesisDetail from "./pages/thesis/ThesisDetail";
+import ThesesGrid from "./pages/theses/ThesesGrid";
+import ThesisDetail from "./pages/theses/ThesisDetail";
 
 import ProjectGrid from "./pages/projects/ProjectGrid";
-import ProjectDetail from "./pages/Projects/ProjectDetail";
+
 import Contact from "./pages/Contact";
 import GlobalStyle from "./fixedComponent/GlobalStyle";
 import About from "./pages/About";
+import ProjectDetail from "./pages/projects/ProjectDetail";
+import Policy from "./pages/footerPages/Policy";
+import Accessibility from "./pages/footerPages/Accessibility";
+import TermsofUse from "./pages/footerPages/TermsofUse";
 
 const StyledResult = styled(Result)`
   .ant-result-title {
@@ -68,8 +72,11 @@ const routes = [
       { path: "/about", element: <About /> },
       { path: "/projects", element: <ProjectGrid /> },
       { path: "/projects/:projectId", element: <ProjectDetail /> },
-      { path: "/theses", element: <ThesisGrid /> },
-      { path: "/thesis/:thesisId", element: <ThesisDetail /> },
+      { path: "/theses", element: <ThesesGrid /> },
+      { path: "/theses/:thesisId", element: <ThesisDetail /> },
+      { path: "/policy", element: <Policy /> },
+      { path: "/accessibility", element: <Accessibility /> },
+      { path: "/termsofuse", element: <TermsofUse /> },
       { path: "*", element: <InvalidPath /> },
     ],
   },
