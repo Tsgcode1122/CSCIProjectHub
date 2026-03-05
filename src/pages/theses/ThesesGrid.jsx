@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
@@ -24,9 +24,17 @@ const ThesesGrid = () => {
   const navigate = useNavigate();
   const { theses, loading, error } = useThesesContext();
   const [showFilters, setShowFilters] = useState(false);
-
+  const [searchParams] = useSearchParams();
   const [search, setSearch] = useState("");
-
+  useEffect(() => {
+    const departmentFromUrl = searchParams.get("department");
+    if (departmentFromUrl) {
+      setFilters((prev) => ({
+        ...prev,
+        department: departmentFromUrl,
+      }));
+    }
+  }, [searchParams]);
   // Sidebar filter state mapping to the JSON attributes
   const [filters, setFilters] = useState({
     year: "",
