@@ -5,6 +5,8 @@ import { Colors } from "../theme/Colors";
 const GlobalStyle = createGlobalStyle`
   body {
 font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+
   background: ${Colors.softBlue} ;
     margin: 0;
     padding: 0;

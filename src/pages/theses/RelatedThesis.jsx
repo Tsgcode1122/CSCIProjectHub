@@ -73,7 +73,7 @@ const RelatedThesis = ({ currentThesis }) => {
 
             <CardTitle title={t.title}>{t.title}</CardTitle>
 
-            <Desc>{t.short_description || t.overview}</Desc>
+            {/* <Desc>{t.short_description || t.overview}</Desc> */}
 
             <Tags>
               {(t.tags || []).slice(0, 2).map((tag) => (
@@ -241,12 +241,12 @@ const StatusBadge = styled.span`
 const CardTitle = styled.h5`
   margin: 0;
   color: ${Colors.brightBlue};
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.55rem;
 
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 `;
 
 const Desc = styled.p`

@@ -140,7 +140,7 @@ const FeaturedThesis = () => {
                 </Top>
 
                 <Title>{t.title}</Title>
-                <Desc>{t.short_description || t.overview}</Desc>
+                {/* <Desc>{t.short_description || t.overview}</Desc> */}
 
                 <Tags>
                   {(t.tags || []).slice(0, 2).map((tag) => (
@@ -375,9 +375,9 @@ const Title = styled.h5`
   font-weight: 400;
   line-height: 1.5rem;
 
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 `;
 
 const Desc = styled.p`

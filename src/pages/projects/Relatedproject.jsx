@@ -75,7 +75,7 @@ const RelatedProject = ({ currentProject }) => {
 
             <CardTitle title={p.title}>{p.title}</CardTitle>
 
-            <Desc>{p.short_description}</Desc>
+            {/* <Desc>{p.short_description}</Desc> */}
 
             <Tags>
               {(p.tags || []).slice(0, 2).map((tag) => (
@@ -231,12 +231,8 @@ const StatusBadge = styled.span`
 const CardTitle = styled.h5`
   margin: 0;
   color: ${Colors.brightBlue};
-  font-weight: 500;
-  line-height: 1.55rem;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-weight: 400;
+  line-height: 1.5rem;
 `;
 
 const Desc = styled.p`
