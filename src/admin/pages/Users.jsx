@@ -74,7 +74,6 @@ export default function Users() {
         }
 
         const json = await res.json();
-        console.log("users:", json);
 
         setUsers(Array.isArray(json) ? json : []);
       } catch (e) {
