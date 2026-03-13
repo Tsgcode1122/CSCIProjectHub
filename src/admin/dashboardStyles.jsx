@@ -54,7 +54,6 @@ export const StatIcon = styled.div`
   font-size: 18px;
 `;
 
-/* ===== Panels / Toolbar ===== */
 export const Panel = styled.div`
   background: white;
   border: 1px solid ${BORDER};
@@ -258,7 +257,7 @@ export const Right = styled.div`
 export const PageCol = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%; 
+  height: 100%;
   gap: 14px;
   min-height: 0;
 `;
@@ -267,14 +266,13 @@ export const StickyTop = styled.div`
   // position: sticky;
   // top: 0;
   // z-index: 20;
-  // background: #f5f7fb; 
+  // background: #f5f7fb;
   // padding-top: 10px;
   flex: 0 0 auto;
 `;
 
 export const TableArea = styled.div`
   flex: 1;
-  min-height: 0; 
+  min-height: 0;
   border-radius: 16px;
 `;
-
