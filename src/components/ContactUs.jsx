@@ -2,18 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import SectionHeader from "../fixedComponent/SectionHeader";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { Colors, Shadows } from "../theme/Colors";
 import { media } from "../theme/Breakpoints";
-import { Form, Input, Button, message, Row, Col } from "antd";
-
-import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
-import { ArrowRightOutlined } from "@ant-design/icons";
-import ETSUButton from "../fixedComponent/ETSUButton";
+import { Form, Input, Button, message } from "antd";
 
 const { TextArea } = Input;
 
-const ContactUs = () => {
+// 1. Pass hideHeader as a prop, defaulting to false
+const ContactUs = ({ hideHeader = false }) => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -37,15 +34,16 @@ const ContactUs = () => {
   return (
     <SectionDiv>
       <Wrap>
-        <SectionHeader
-          title="Contact Us"
-          subtitle="Have questions about our research projects or want to collaborate? We’d love to hear from you."
-        />
+        {/* 2. Conditionally render the header based on the prop */}
+        {!hideHeader && (
+          <SectionHeader
+            title="Contact Us"
+            subtitle="Have questions about our research projects or want to collaborate? We’d love to hear from you."
+          />
+        )}
 
         <Grid>
           <FormCard>
-            {/* <FormTitle>Send a message</FormTitle> */}
-
             <StyledForm form={form} layout="vertical" onFinish={onFinish}>
               <TwoCol>
                 <Form.Item name="name" label="Your Name (optional)">
@@ -93,7 +91,6 @@ const ContactUs = () => {
                 <FiMail />
               </Icon>
               <InfoText>
-                {/* <InfoLabel>Email</InfoLabel> */}
                 <InfoValue>
                   <a href="mailto:research@etsu.edu">research@etsu.edu</a>
                 </InfoValue>
@@ -105,7 +102,6 @@ const ContactUs = () => {
                 <FiPhone />
               </Icon>
               <InfoText>
-                {/* <InfoLabel>Phone</InfoLabel> */}
                 <InfoValue>
                   <a href="tel:+14234391000">(423) 439-1000</a>
                 </InfoValue>
@@ -117,7 +113,6 @@ const ContactUs = () => {
                 <FiMapPin />
               </Icon>
               <InfoText>
-                {/* <InfoLabel>Address</InfoLabel> */}
                 <InfoValue>
                   Nicks Hall, 365 Stout Dr #132 Johnson City, TN 37604
                 </InfoValue>
@@ -131,6 +126,9 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
+// ---------------- styles ----------------
+
 const Wrap = styled.div`
   padding: 3rem 0;
   max-width: 1400px;
@@ -152,13 +150,7 @@ const FormCard = styled.div`
   background: ${Colors.white};
   border: 1px solid rgba(4, 30, 66, 0.12);
   border-radius: 16px;
-  /* box-shadow: ${Shadows.light}; */
   padding: 1.8rem 1.6rem;
-`;
-
-const FormTitle = styled.h4`
-  margin: 0 0 1.2rem 0;
-  color: ${Colors.etsuBlue};
 `;
 
 const StyledForm = styled(Form)`
@@ -171,6 +163,7 @@ const StyledForm = styled(Form)`
     font-weight: 600;
   }
 `;
+
 const TwoCol = styled.div`
   display: flex;
   flex-direction: column;
@@ -184,29 +177,17 @@ const TwoCol = styled.div`
     }
   }
 `;
-4;
+
 const StyledInput = styled(Input)`
   border-radius: 12px !important;
   padding: 0.85rem 0.95rem !important;
   border: 1px solid rgba(4, 30, 66, 0.18) !important;
-
-  &:focus,
-  &:focus-within {
-    /* border-color: ${Colors.etsuGold} !important; */
-    /* box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25) !important; */
-  }
 `;
 
 const StyledTextArea = styled(TextArea)`
   border-radius: 12px !important;
   padding: 0.85rem 0.95rem !important;
   border: 1px solid rgba(4, 30, 66, 0.18) !important;
-
-  &:focus,
-  &:focus-within {
-    /* border-color: ${Colors.etsuGold} !important;
-    box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25) !important; */
-  }
 `;
 
 const ButtonRow = styled.div`
@@ -270,7 +251,6 @@ const InfoCard = styled.div`
   background: ${Colors.white};
   border-radius: 14px;
   border: 1px solid rgba(4, 30, 66, 0.12);
-  /* box-shadow: ${Shadows.light}; */
 `;
 
 const Icon = styled.div`
@@ -280,11 +260,6 @@ const Icon = styled.div`
 `;
 
 const InfoText = styled.div``;
-
-const InfoLabel = styled.div`
-  font-weight: 700;
-  color: ${Colors.etsuBlue};
-`;
 
 const InfoValue = styled.div`
   color: rgba(0, 0, 0, 0.65);

@@ -49,10 +49,32 @@ export default function Users() {
         setLoading(true);
         setError("");
 
-        const res = await fetch(`${API_BASE}/users/`, { signal: ac.signal });
-        if (!res.ok) throw new Error(`Users fetch failed (${res.status})`);
+        const storedSession = sessionStorage.getItem("capstone_admin_session");
+
+        const session = storedSession ? JSON.parse(storedSession) : null;
+        const token = session?.access_token;
+
+        console.log("session:", session);
+        console.log("token:", token);
+
+        if (!token) {
+          throw new Error("No access token found in session storage");
+        }
+
+        const res = await fetch(`${API_BASE}/users/`, {
+          signal: ac.signal,
+          headers: {
+            Authorization: `Bearer ${token.trim()}`,
+            Accept: "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Users fetch failed (${res.status})`);
+        }
 
         const json = await res.json();
+
         setUsers(Array.isArray(json) ? json : []);
       } catch (e) {
         if (e.name !== "AbortError") {
@@ -82,7 +104,8 @@ export default function Users() {
     const q = query.trim().toLowerCase();
 
     return allRows.filter((r) => {
-      const matchesDept = deptFilter === "All" ? true : r.department === deptFilter;
+      const matchesDept =
+        deptFilter === "All" ? true : r.department === deptFilter;
 
       const matchesQuery = !q
         ? true
@@ -100,7 +123,9 @@ export default function Users() {
 
     // example: count roles if you want
     const admins = allRows.filter((u) => safeLower(u.role) === "admin").length;
-    const students = allRows.filter((u) => safeLower(u.role) === "student").length;
+    const students = allRows.filter(
+      (u) => safeLower(u.role) === "student",
+    ).length;
 
     return [
       {
@@ -198,13 +223,22 @@ export default function Users() {
       }}
       renderActions={(row) => (
         <>
-          <IconBtn title="View" onClick={() => console.log("VIEW USER", row.raw)}>
+          <IconBtn
+            title="View"
+            onClick={() => console.log("VIEW USER", row.raw)}
+          >
             👁
           </IconBtn>
-          <IconBtn title="Edit" onClick={() => console.log("EDIT USER", row.raw)}>
+          <IconBtn
+            title="Edit"
+            onClick={() => console.log("EDIT USER", row.raw)}
+          >
             ✎
           </IconBtn>
-          <IconBtn title="Delete" onClick={() => console.log("DELETE USER", row.raw)}>
+          <IconBtn
+            title="Delete"
+            onClick={() => console.log("DELETE USER", row.raw)}
+          >
             🗑
           </IconBtn>
         </>

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 const Title = styled.h4`
   margin: 0;
   color: ${Colors.brightBlue};
-  font-weight: 500;
+  /* font-weight: 600; */
 `;
 
 const Underline = styled.div`

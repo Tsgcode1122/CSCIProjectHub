@@ -2,41 +2,47 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
-import BackButton from "../../fixedComponent/BackButton"; // optional if you already have it
+import BackButton from "../../fixedComponent/BackButton";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
-import { useProjectContext } from "../../context/ProjectContext";
+
 import {
-  FiArrowLeft,
   FiExternalLink,
-  FiGithub,
   FiUsers,
   FiCalendar,
+  FiUser,
+  FiBookOpen,
 } from "react-icons/fi";
-import { GoStack } from "react-icons/go";
-import RelatedProject from "./Relatedproject";
 
-const ProjectDetail = () => {
+import { useThesesContext } from "../../context/ThesesContext";
+import RelatedThesis from "./RelatedThesis";
+
+const ThesisDetail = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
-  const { projects, loading, error } = useProjectContext();
+  const { thesisId } = useParams(); // Updated param name
+  const { theses, loading, error } = useThesesContext();
 
-  const project = useMemo(() => {
-    return projects?.find((p) => String(p.id || p._id) === String(projectId));
-  }, [projects, projectId]);
+  const thesis = useMemo(() => {
+    // Falls back to checking title if id is not available (based on our JSON)
+    return theses?.find(
+      (t) =>
+        String(t.id || t._id) === String(thesisId) ||
+        String(t.title) === String(thesisId),
+    );
+  }, [theses, thesisId]);
 
-  if (loading) return <SectionDiv>Loading project...</SectionDiv>;
-  if (error) return <SectionDiv>Failed to load project: {error}</SectionDiv>;
+  if (loading) return <SectionDiv>Loading thesis...</SectionDiv>;
+  if (error) return <SectionDiv>Failed to load thesis: {error}</SectionDiv>;
 
-  if (!project) {
+  if (!thesis) {
     return (
       <SectionDiv>
         <NotFound>
-          <h3>Project not found</h3>
-          <p>The project you are looking for may not exist.</p>
+          <h3>Thesis not found</h3>
+          <p>The research paper or thesis you are looking for may not exist.</p>
 
-          <PrimaryBtn type="button" onClick={() => navigate("/projects")}>
-            Back to Projects
+          <PrimaryBtn type="button" onClick={() => navigate("/theses")}>
+            Back to Theses
           </PrimaryBtn>
         </NotFound>
       </SectionDiv>
@@ -49,22 +55,15 @@ const ProjectDetail = () => {
       <HeaderWrap>
         <SectionDiv>
           <HeaderInner>
-            <BackButton label="Back to Projects" />
+            <BackButton label="Back to Theses" />
 
             <TitleRow>
-              <HeaderTitle>{project.title}</HeaderTitle>
-              {/* <StatusBadge $status={project.project_status}>
-                {project.project_status}
-              </StatusBadge> */}
+              <HeaderTitle>{thesis.title}</HeaderTitle>
             </TitleRow>
 
-            {/* {project.short_description && (
-              <HeaderDesc>{project.short_description}</HeaderDesc>
-            )} */}
-
-            {(project.tags || []).length > 0 && (
+            {(thesis.tags || []).length > 0 && (
               <TagRow>
-                {project.tags.slice(0, 3).map((t) => (
+                {thesis.tags.slice(0, 4).map((t) => (
                   <HeaderTag key={t}>{t}</HeaderTag>
                 ))}
               </TagRow>
@@ -79,38 +78,37 @@ const ProjectDetail = () => {
           {/* OVERVIEW CARD */}
           <Card>
             <TitleRow>
-              <CardTitle>Project Overview</CardTitle>
-              <StatusBadge $status={project.project_status}>
-                {project.project_status}
-              </StatusBadge>
+              <CardTitle>Abstract / Overview</CardTitle>
+              <StatusBadge $status={thesis.status}>{thesis.status}</StatusBadge>
             </TitleRow>
-            <CardText>{project.overview || "—"}</CardText>
+            <CardText>{thesis.overview || "—"}</CardText>
 
             <CardDivider />
 
             <MiniGrid>
+              {/* STUDENT */}
               <MiniItem>
                 <MiniIcon>
-                  <FiUsers />
+                  <FiUser />
                 </MiniIcon>
                 <MiniText>
-                  <MiniLabel>Team Members</MiniLabel>
-                  <MiniValue>
-                    {(project.team_members || []).length
-                      ? project.team_members.join(", ")
-                      : "—"}
-                  </MiniValue>
+                  <MiniLabel>Student</MiniLabel>
+                  <MiniValue>{thesis.student || "—"}</MiniValue>
                 </MiniText>
               </MiniItem>
+
+              {/* SUPERVISOR */}
               <MiniItem>
                 <MiniIcon>
                   <FiUsers />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Supervisor</MiniLabel>
-                  <MiniValue>{project.supervisor || "—"}</MiniValue>
+                  <MiniValue>{thesis.supervisor || "—"}</MiniValue>
                 </MiniText>
               </MiniItem>
+
+              {/* TIMELINE */}
               <MiniItem>
                 <MiniIcon>
                   <FiCalendar />
@@ -118,109 +116,78 @@ const ProjectDetail = () => {
                 <MiniText>
                   <MiniLabel>Timeline</MiniLabel>
                   <MiniValue>
-                    {project.duration_start || "—"} –{" "}
-                    {project.project_status === "In Progress" ||
-                    project.project_status === "Accepting Members"
+                    {thesis.duration_start || "—"} –{" "}
+                    {thesis.status === "In Progress"
                       ? "Ongoing"
-                      : project.duration_end || "—"}
+                      : thesis.duration_end || "—"}
                   </MiniValue>
                 </MiniText>
               </MiniItem>
 
-              {/* NEW: Supervisor */}
-
-              {/* NEW: Tech Stack */}
+              {/* DEPARTMENT */}
               <MiniItem>
                 <MiniIcon>
-                  <GoStack />
+                  <FiBookOpen />
                 </MiniIcon>
                 <MiniText>
-                  <MiniLabel>Tech Stack</MiniLabel>
-                  <MiniValue>
-                    {(project.tech_stack || []).length
-                      ? project.tech_stack.join(", ")
-                      : "—"}
-                  </MiniValue>
+                  <MiniLabel>Department</MiniLabel>
+                  <MiniValue>{thesis.department || "—"}</MiniValue>
                 </MiniText>
               </MiniItem>
             </MiniGrid>
 
-            <BtnRow>
-              {project.project_link?.trim() && (
-                <OutlineBtn
-                  as="a"
-                  href={project.project_link}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FiExternalLink />
-                  View Live Project
-                </OutlineBtn>
-              )}
-
-              {project.sourcecode_link?.trim() && (
-                <OutlineBtn
-                  as="a"
-                  href={project.sourcecode_link}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FiGithub />
-                  View Source Code
-                </OutlineBtn>
-              )}
-            </BtnRow>
+            {/* PUBLICATIONS (Buttons) */}
+            {(thesis.publications || []).length > 0 && (
+              <BtnRow>
+                {thesis.publications.map((pub, idx) => (
+                  <OutlineBtn
+                    key={idx}
+                    as="a"
+                    href={pub.link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FiExternalLink />
+                    View Publication{" "}
+                    {thesis.publications.length > 1 ? idx + 1 : ""}
+                  </OutlineBtn>
+                ))}
+              </BtnRow>
+            )}
           </Card>
 
-          {/* KEY FEATURES */}
-          {(project.key_features || []).length > 0 && (
+          {/* METHODOLOGY */}
+          {thesis.methodology && (
             <Card>
-              <CardTitle>Key Features</CardTitle>
-              <BulletList>
-                {project.key_features.map((f, idx) => (
-                  <BulletItem key={idx}>{f}</BulletItem>
-                ))}
-              </BulletList>
+              <CardTitle>Methodology</CardTitle>
+              <CardText>{thesis.methodology}</CardText>
             </Card>
           )}
 
-          {/* CHALLENGES & SOLUTIONS */}
-          {(project.challenges_solutions || []).length > 0 && (
+          {/* KEY FINDINGS */}
+          {thesis.key_findings && (
             <Card>
-              <CardTitle>Challenges & Solutions</CardTitle>
-              <BulletList>
-                {project.challenges_solutions.map((cs, idx) => (
-                  <BulletItem key={idx}>
-                    <b>{cs.challenge}</b>
-                    <br />
-                    <span>{cs.solution}</span>
-                  </BulletItem>
-                ))}
-              </BulletList>
+              <CardTitle>Key Findings</CardTitle>
+              <CardText>{thesis.key_findings}</CardText>
             </Card>
           )}
 
-          {/* ACHIEVEMENTS */}
-          {(project.achievements || []).length > 0 && (
+          {/* FUTURE WORK */}
+          {thesis.future_work && (
             <Card>
-              <CardTitle>Achievements</CardTitle>
-              <BulletList>
-                {project.achievements.map((a, idx) => (
-                  <BulletItem key={idx}>{a}</BulletItem>
-                ))}
-              </BulletList>
+              <CardTitle>Future Work</CardTitle>
+              <CardText>{thesis.future_work}</CardText>
             </Card>
           )}
         </Body>
-        <RelatedProject currentProject={project} />
+
+        <RelatedThesis currentThesis={thesis} />
       </SectionDiv>
     </>
   );
 };
 
-export default ProjectDetail;
+export default ThesisDetail;
 
 /* ---------------- styles ---------------- */
 
@@ -228,15 +195,11 @@ const HeaderWrap = styled.header`
   background: ${Colors.brightBlue};
   color: ${Colors.white};
   padding: 0.2rem 0;
-  @media ${media.tablet} {
-    /* padding: 2.6rem 0 3rem 0; */
-  }
 `;
 
 const HeaderInner = styled.div`
   display: grid;
   gap: 1.2rem;
-
   max-width: 1400px;
   margin: 0 auto;
   @media ${media.tablet} {
@@ -248,8 +211,6 @@ const TitleRow = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  /* gap: 1rem; */
-  /* align-items: center; */
   flex-wrap: wrap;
   position: relative;
 `;
@@ -263,7 +224,6 @@ const HeaderTitle = styled.h4`
 
 const StatusBadge = styled.span`
   width: fit-content;
-
   padding: 0.35rem 0.6rem;
   right: 0rem;
   border-radius: 9px;
@@ -274,9 +234,10 @@ const StatusBadge = styled.span`
 
   background: ${({ $status }) => {
     switch ($status) {
-      case "Accepting Members":
-        return "#FFB81C";
+      case "Completed":
+        return "rgba(4, 30, 66, 0.08)";
       case "In Progress":
+        return "#FFB81C";
       default:
         return "rgba(4, 30, 66, 0.08)";
     }
@@ -287,8 +248,6 @@ const StatusBadge = styled.span`
       case "Completed":
         return "#003b7f";
       case "In Progress":
-        return "rgba(4, 30, 66, 0.85)";
-      case "Accepting Members":
         return Colors.etsuBlue;
       default:
         return "rgba(4, 30, 66, 0.85)";
@@ -300,19 +259,12 @@ const StatusBadge = styled.span`
       switch ($status) {
         case "Completed":
           return "rgba(4, 30, 66, 0.12)";
-        case "Accepting Members":
+        case "In Progress":
           return "rgba(255, 184, 28, 0.45)";
         default:
           return "rgba(4, 30, 66, 0.12)";
       }
     }};
-`;
-const HeaderDesc = styled.p`
-  margin: 0;
-  max-width: 980px;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.5;
 `;
 
 const TagRow = styled.div`
@@ -327,7 +279,6 @@ const HeaderTag = styled.span`
   border: 1px solid rgba(216, 219, 224, 0.1);
   font-weight: 300;
   font-size: 0.78rem;
-
   background: rgba(255, 255, 255, 0.16);
   color: rgba(255, 255, 255, 0.92);
 `;
@@ -354,9 +305,6 @@ const CardTitle = styled.h5`
   margin: 0 0 1rem 0;
   color: ${Colors.brightBlue};
   font-weight: 500;
-  @media ${media.laptop} {
-    font-weight: 500;
-  }
 `;
 
 const CardText = styled.p`
@@ -416,19 +364,14 @@ const OutlineBtn = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-
   padding: 0.65rem 1rem;
   border-radius: 10px;
   cursor: pointer;
   text-decoration: none;
-
-  /* font-weight: 700; */
   font-size: 0.9rem;
-
   color: ${Colors.brightBlue};
   background: ${Colors.white};
   border: 1px solid #003f87;
-
   transition:
     transform 160ms ease,
     box-shadow 160ms ease;
@@ -436,29 +379,6 @@ const OutlineBtn = styled.a`
   &:hover {
     transform: translateY(-1px);
     box-shadow: ${Shadows.medium};
-  }
-`;
-
-const BulletList = styled.ul`
-  margin: 0;
-  padding-left: 1.1rem;
-  display: grid;
-  gap: 0.65rem;
-  li::marker {
-    color: ${Colors.etsuGold};
-  }
-`;
-
-const BulletItem = styled.li`
-  color: rgba(0, 0, 0, 0.72);
-  line-height: 1.6;
-
-  b {
-    color: rgba(0, 0, 0, 0.82);
-  }
-
-  span {
-    color: rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -472,7 +392,6 @@ const NotFound = styled.div`
   h3 {
     margin: 0;
   }
-
   p {
     margin: 0;
     opacity: 0.8;

@@ -161,7 +161,7 @@ const FeaturedProject = () => {
                 </Top>
 
                 <Title>{p.title}</Title>
-                <Desc>{p.short_description}</Desc>
+                {/* <Desc>{p.short_description}</Desc> */}
 
                 <Tags>
                   {(p.tags || []).slice(0, 2).map((tag) => (
@@ -375,7 +375,7 @@ const StatusBadge = styled.span`
   padding: 0.35rem 0.6rem;
   right: 0rem;
   border-radius: 9px;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.78rem;
   display: inline-block;
   position: relative !important;
@@ -427,9 +427,9 @@ const Title = styled.h5`
   font-weight: 400;
   line-height: 1.5rem;
 
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap; */
 `;
 
 const Desc = styled.p`
