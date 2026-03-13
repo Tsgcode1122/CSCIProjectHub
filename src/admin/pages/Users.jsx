@@ -49,11 +49,32 @@ export default function Users() {
         setLoading(true);
         setError("");
 
-        const res = await fetch(`${API_BASE}/users/`, { signal: ac.signal });
-        if (!res.ok) throw new Error(`Users fetch failed (${res.status})`);
+        const storedSession = sessionStorage.getItem("capstone_admin_session");
+
+        const session = storedSession ? JSON.parse(storedSession) : null;
+        const token = session?.access_token;
+
+        console.log("session:", session);
+        console.log("token:", token);
+
+        if (!token) {
+          throw new Error("No access token found in session storage");
+        }
+
+        const res = await fetch(`${API_BASE}/users/`, {
+          signal: ac.signal,
+          headers: {
+            Authorization: `Bearer ${token.trim()}`,
+            Accept: "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Users fetch failed (${res.status})`);
+        }
 
         const json = await res.json();
-        console.log(json);
+        console.log("users:", json);
 
         setUsers(Array.isArray(json) ? json : []);
       } catch (e) {
