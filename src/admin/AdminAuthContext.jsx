@@ -25,30 +25,34 @@ export function AdminAuthProvider({ children }) {
   }, []);
 
   const login = async ({ email, password }) => {
-    const res = await fetch(`${API_BASE}/auth/login`, {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        etsu_email: email,
-        password,
-      }),
-    });
+    const res = await fetch(
+      `${API_BASE}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          etsu_email: email,
+          password,
+        }),
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Invalid credentials, You need to be authorized");
     }
 
     const data = await res.json();
-    console.log(data);
+
     const user = {
       email,
       access_token: data.access_token,
       token_type: data.token_type,
     };
 
+    
     // if (!email || !password) throw new Error("Email and password required");
 
     // const user = { email, role: "admin" };
@@ -63,16 +67,11 @@ export function AdminAuthProvider({ children }) {
 
   const value = useMemo(() => ({ adminUser, login, logout }), [adminUser]);
 
-  return (
-    <AdminAuthContext.Provider value={value}>
-      {children}
-    </AdminAuthContext.Provider>
-  );
+  return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
 }
 
 export function useAdminAuth() {
   const ctx = useContext(AdminAuthContext);
-  if (!ctx)
-    throw new Error("useAdminAuth must be used within AdminAuthProvider");
+  if (!ctx) throw new Error("useAdminAuth must be used within AdminAuthProvider");
   return ctx;
 }
