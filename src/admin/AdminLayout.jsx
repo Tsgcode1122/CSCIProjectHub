@@ -43,7 +43,6 @@
 //   );
 // }
 
-
 import React, { useEffect } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
@@ -242,7 +241,6 @@ const NavGroup = styled.nav`
   padding-top: 8px;
 `;
 
-
 const SideLink = styled(NavLink)`
   position: relative;
   display: flex;
@@ -308,13 +306,13 @@ const LogoutBtn = styled.button`
 const Main = styled.main`
   background: ${BG};
   min-height: 0;
-//   overflow: auto;
+  //   overflow: auto;
 
   overflow: hidden;
 `;
 
 const MainInner = styled.div`
-  width: 100%;
+  /* width: 100%; */
   padding: 22px 28px 32px;
   max-width: 1600px;
   margin: 0;

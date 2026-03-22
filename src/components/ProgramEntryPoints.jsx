@@ -3,36 +3,43 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Colors, Shadows } from "../theme/Colors";
 import SectionDiv from "../fixedComponent/SectionDiv";
-import SectionHeader from "../fixedComponent/SectionHeader";
 import { FiArrowUpRight } from "react-icons/fi";
 import { media } from "../theme/Breakpoints";
 
 const ProgramEntryPoints = () => {
   const navigate = useNavigate();
 
+  // 1. Add a 'path' property to each program object
   const programs = [
-    { key: "cs", label: "Computer Science", icon: "💻" },
-    { key: "it", label: "Information Technology", icon: "🖧" },
-    { key: "is", label: "Information Systems", icon: "🗂️" },
-    { key: "cybersecurity", label: "Cybersecurity", icon: "🛡️" },
-    { key: "datascience", label: "Data Science", icon: "📊" },
+    { key: "cs", label: "Computer Science", icon: "💻", path: "/projects" },
+    {
+      key: "it",
+      label: "Information Technology",
+      icon: "🖧",
+      path: "/projects",
+    },
+    { key: "is", label: "Information Systems", icon: "🗂️", path: "/projects" },
+    {
+      key: "cybersecurity",
+      label: "Cybersecurity",
+      icon: "🛡️",
+      path: "/theses",
+    },
+    { key: "datascience", label: "Data Science", icon: "📊", path: "/theses" },
   ];
 
+  // 2. Accept the whole program object to get both the path and the label
   const handleNavigate = (program) => {
-    navigate(`/projects?program=${program}`);
+    navigate(`${program.path}?department=${encodeURIComponent(program.label)}`);
   };
 
   return (
     <SectionDiv>
       <Wrapper>
-        {/* <SectionHeader
-          title="Browse by Program"
-          subtitle="Scroll to explore projects and thesis work by area of study."
-        /> */}
-
         <ScrollRow>
           {programs.map((program) => (
-            <Card key={program.key} onClick={() => handleNavigate(program.key)}>
+            // 3. Pass the entire program object to the handler
+            <Card key={program.key} onClick={() => handleNavigate(program)}>
               <Arrow>
                 <FiArrowUpRight />
               </Arrow>
@@ -48,6 +55,7 @@ const ProgramEntryPoints = () => {
 
 export default ProgramEntryPoints;
 
+// ... (keep all your existing styled components exactly the same) ...
 const Wrapper = styled.div`
   display: grid;
   gap: 1.2rem;
@@ -56,19 +64,14 @@ const Arrow = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
-
   width: 26px;
   height: 26px;
   border-radius: 8px;
-
   display: grid;
   place-items: center;
-
   background: rgba(4, 30, 66, 0.06);
   color: ${Colors.etsuBlue};
-
   font-size: 1rem;
-
   opacity: 0.6;
   transform: translateY(2px);
   transition:
@@ -80,17 +83,12 @@ const Arrow = styled.div`
 const ScrollRow = styled.div`
   display: flex;
   gap: 0.9rem;
-
   overflow-x: auto;
   overflow-y: hidden;
-
   padding: 0 0.5rem 0.2rem 1rem;
-
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-
-  /* hide scrollbar */
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -101,24 +99,19 @@ const ScrollRow = styled.div`
   }
 `;
 const Card = styled.button`
-  position: relative; /* REQUIRED for arrow positioning */
-
+  position: relative;
   flex: 0 0 auto;
   min-width: 160px;
-
   padding: 1.1rem 1rem;
   border-radius: 14px;
   border: 1px solid rgba(4, 30, 66, 0.14);
   background: ${Colors.white};
   box-shadow: ${Shadows.light};
   cursor: pointer;
-
   display: grid;
   place-items: center;
   gap: 0.55rem;
-
   scroll-snap-align: start;
-
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -147,7 +140,6 @@ const Icon = styled.div`
   border-radius: 12px;
   background: rgba(4, 30, 66, 0.06);
   color: ${Colors.etsuBlue};
-
   display: grid;
   place-items: center;
   font-size: 1.35rem;

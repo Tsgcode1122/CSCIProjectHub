@@ -122,9 +122,9 @@ const Footer = () => {
             </Copyright>
 
             <BottomLinks>
-              <PlainLink href="#privacy">Privacy Policy</PlainLink>
-              <PlainLink href="#terms">Terms of Use</PlainLink>
-              <PlainLink href="#accessibility">Accessibility</PlainLink>
+              <PlainLink to="/policy">Privacy Policy</PlainLink>
+              <PlainLink to="/termsofuse">Terms of Use</PlainLink>
+              <PlainLink to="/accessibility">Accessibility</PlainLink>
             </BottomLinks>
           </Bottom>
         </Inner>
@@ -261,7 +261,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const PlainLink = styled.a`
+const PlainLink = styled(Link)`
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
 

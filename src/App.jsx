@@ -11,22 +11,31 @@ import {
 import { Result, Button } from "antd";
 import Layout from "./fixedComponent/Layout";
 import Home from "./pages/Home";
-import ThesisGrid from "./pages/thesis/ThesisGrid";
-import ThesisDetail from "./pages/thesis/ThesisDetail";
+import ThesesGrid from "./pages/theses/ThesesGrid";
+import ThesisDetail from "./pages/theses/ThesisDetail";
 
 import ProjectGrid from "./pages/projects/ProjectGrid";
-import ProjectDetail from "./pages/Projects/ProjectDetail";
+
 import Contact from "./pages/Contact";
 import GlobalStyle from "./fixedComponent/GlobalStyle";
 import About from "./pages/About";
+import ProjectDetail from "./pages/projects/ProjectDetail";
+import Policy from "./pages/footerPages/Policy";
+import Accessibility from "./pages/footerPages/Accessibility";
+import TermsofUse from "./pages/footerPages/TermsofUse";
 
 import { AdminAuthProvider } from "./admin/AdminAuthContext";
 import { RequireAdmin } from "./admin/AdminRouteGuards";
 import AdminLayout from "./admin/AdminLayout";
 import AdminLogin from "./admin/pages/AdminLogin";
 import AdminProjects from "./admin/pages/Projects";
-import AddProject from "./admin/pages/AddProject"
+import AdminUsers from "./admin/pages/Users";
 
+import { AdminAuthProvider } from "./admin/AdminAuthContext";
+import { RequireAdmin } from "./admin/AdminRouteGuards";
+import AdminLayout from "./admin/AdminLayout";
+import AdminLogin from "./admin/pages/AdminLogin";
+import AdminProjects from "./admin/pages/Projects";
 import AdminUsers from "./admin/pages/Users";
 
 const StyledResult = styled(Result)`
@@ -78,9 +87,11 @@ const routes = [
       { path: "/about", element: <About /> },
       { path: "/projects", element: <ProjectGrid /> },
       { path: "/projects/:projectId", element: <ProjectDetail /> },
-      { path: "/theses", element: <ThesisGrid /> },
-      { path: "/thesis/:thesisId", element: <ThesisDetail /> },
-      { path: "projects/new", element: <AddProject/>},
+      { path: "/theses", element: <ThesesGrid /> },
+      { path: "/theses/:thesisId", element: <ThesisDetail /> },
+      { path: "/policy", element: <Policy /> },
+      { path: "/accessibility", element: <Accessibility /> },
+      { path: "/termsofuse", element: <TermsofUse /> },
       { path: "*", element: <InvalidPath /> },
     ],
   },
@@ -109,14 +120,12 @@ const routes = [
       },
     ],
   },
-
 ];
 
 const router = createBrowserRouter(routes);
 
 const App = () => (
   <>
-    {/* <PageUnderConstruction /> */}
     <GlobalStyle />
 
     <AdminAuthProvider>

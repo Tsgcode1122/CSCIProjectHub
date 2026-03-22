@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from "react";
-
 import styled from "styled-components";
-import { Colors, Shadows } from "../../theme/Colors";
+import { Colors } from "../../theme/Colors"; // Removed unused Shadows
 import { media } from "../../theme/Breakpoints";
 
-const ProjectFilters = ({
+const ThesesFilters = ({
   options,
   value,
   onChange,
@@ -17,7 +16,7 @@ const ProjectFilters = ({
     years = [],
     departments = [],
     statuses = [],
-    advisors = [],
+    advisors = [], // We map this to supervisor
   } = options;
   const CHUNK = 5;
 
@@ -46,21 +45,18 @@ const ProjectFilters = ({
       <Overlay $show={show} onClick={onClose} />
       <Panel $show={show}>
         <PanelHeader>
-          {/* Row 1: Title and X */}
           <TopHeaderRow>
             <PanelTitle>Filters</PanelTitle>
             <MobileCloseBtn type="button" onClick={onClose}>
               ✕
             </MobileCloseBtn>
           </TopHeaderRow>
-
-          {/* Row 2: Result count and Clear */}
         </PanelHeader>
+
         <Divider />
+
         <Group>
           <GroupTitle>Year</GroupTitle>
-
-          {/* Always show "All" as radio */}
           <RadioList>
             <RadioItem>
               <input
@@ -71,7 +67,6 @@ const ProjectFilters = ({
               />
               <span>All</span>
             </RadioItem>
-
             <>
               {visibleYears.map((y) => (
                 <RadioItem key={y}>
@@ -84,14 +79,12 @@ const ProjectFilters = ({
                   <span>{y}</span>
                 </RadioItem>
               ))}
-
               <YearActions>
                 {canShowMore && (
                   <ShowBtn type="button" onClick={handleShowMoreYears}>
                     Show more
                   </ShowBtn>
                 )}
-
                 {canShowLess && (
                   <ShowLessBtn type="button" onClick={handleShowLessYears}>
                     Show less
@@ -134,14 +127,15 @@ const ProjectFilters = ({
         <Divider />
 
         <Group>
-          <GroupTitle>Project Status</GroupTitle>
+          {/* Changed to Status */}
+          <GroupTitle>Status</GroupTitle>
           <RadioList>
             <RadioItem>
               <input
                 type="radio"
                 name="status"
-                checked={!value.projectStatus}
-                onChange={() => onChange({ projectStatus: "" })}
+                checked={!value.status}
+                onChange={() => onChange({ status: "" })}
               />
               <span>All</span>
             </RadioItem>
@@ -151,8 +145,8 @@ const ProjectFilters = ({
                 <input
                   type="radio"
                   name="status"
-                  checked={value.projectStatus === s}
-                  onChange={() => onChange({ projectStatus: s })}
+                  checked={value.status === s}
+                  onChange={() => onChange({ status: s })}
                 />
                 <span>{s}</span>
               </RadioItem>
@@ -163,10 +157,11 @@ const ProjectFilters = ({
         <Divider />
 
         <Group>
-          <GroupTitle>Faculty Advisor</GroupTitle>
+          {/* Changed to Supervisor */}
+          <GroupTitle>Supervisor</GroupTitle>
           <Select
-            value={value.facultyAdvisor}
-            onChange={(e) => onChange({ facultyAdvisor: e.target.value })}
+            value={value.supervisor}
+            onChange={(e) => onChange({ supervisor: e.target.value })}
           >
             <option value="">All</option>
             {advisors.map((a) => (
@@ -176,6 +171,7 @@ const ProjectFilters = ({
             ))}
           </Select>
         </Group>
+
         <PanelFooter>
           <ResultCountText>
             Showing <b>{resultCount}</b> result{resultCount !== 1 ? "s" : ""}
@@ -189,26 +185,23 @@ const ProjectFilters = ({
   );
 };
 
-export default ProjectFilters;
-const Overlay = styled.div`
-  /* Show only if the panel is open */
-  display: ${({ $show }) => ($show ? "block" : "none")};
+export default ThesesFilters;
 
+// ---------------- styles ----------------
+
+const Overlay = styled.div`
+  display: ${({ $show }) => ($show ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-
-  /* Dim the background slightly and apply the blur */
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px); /* Safari support */
-
+  -webkit-backdrop-filter: blur(4px);
   z-index: 999;
   cursor: pointer;
 
-  /* Completely hide the overlay on desktop where the panel is just a sidebar */
   @media ${media.laptop} {
     display: none;
   }
@@ -219,18 +212,17 @@ const Panel = styled.aside`
   border: 1px solid rgba(132, 172, 227, 0.306);
   border-radius: 16px 0 0 0;
   padding: 0 1.1rem 1.1rem 1.1rem;
+
   @media ${media.laptop} {
     border-radius: 16px;
   }
+
   /* --- MOBILE / TABLET VIEW --- */
-
   display: ${({ $show }) => ($show ? "block" : "none")};
-
   position: fixed;
-  top: 70px; /* Distance from top of screen */
+  top: 70px;
   right: 0px;
   z-index: 1000;
-
   width: 230px;
   max-height: calc(100vh - 100px);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
@@ -258,20 +250,14 @@ const PanelHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
-  /* Make it stick to the top of the Panel */
   position: sticky;
   top: 0;
   z-index: 10;
-
   background: ${Colors.white};
-
   margin: -1.1rem -1.1rem 0.9rem -1.1rem;
   padding: 0.9rem;
-
   border-bottom: 1px solid rgba(4, 30, 66, 0.08);
 
-  /*  */
   @media ${media.laptop} {
     position: static;
     margin: 0 0 0.9rem 0;
@@ -291,16 +277,11 @@ const PanelFooter = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-
   position: sticky;
-
   bottom: -1.1rem;
   z-index: 10;
-
   background: ${Colors.white};
-
   border-top: 1px solid rgba(4, 30, 66, 0.08);
-
   margin: 1.5rem -1.1rem -1.1rem -1.1rem;
   padding: 1rem 1.1rem;
 
@@ -316,44 +297,36 @@ const PanelTitle = styled.h5`
   color: ${Colors.etsuBlue};
   font-size: 1.1rem;
 `;
+
 const MobileCloseBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  /* position: absolute;
-  left: 0; */
-
   width: 36px;
   height: 36px;
   border-radius: 50%;
-
   background: ${Colors.white};
   border: 1px solid rgba(4, 30, 66, 0.05);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-
-  /* Typography */
   font-size: 1.1rem;
   font-weight: bold;
   color: ${Colors.etsuBlue};
   cursor: pointer;
-
-  /* Smooth transitions for hover effects */
   transition: all 0.2s ease-in-out;
 
-  /* Interactive hover effect */
   &:hover {
     background: ${Colors.brightBlue};
     color: ${Colors.white};
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
-    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
   }
 
-  /* Hide on desktop/laptop where the panel acts as a permanent sidebar */
   @media ${media.laptop} {
     display: none;
   }
 `;
+
 const ResultCountText = styled.span`
   font-size: 0.85rem;
   color: rgba(0, 0, 0, 0.65);
@@ -366,6 +339,7 @@ const ResultCountText = styled.span`
     display: none;
   }
 `;
+
 const ClearBtn = styled.button`
   border: none;
   background: transparent;
@@ -380,6 +354,7 @@ const ClearBtn = styled.button`
     color: ${Colors.etsuBlue};
   }
 `;
+
 const Group = styled.div`
   margin-top: 0.9rem;
 `;
@@ -432,21 +407,6 @@ const Divider = styled.div`
   height: 1px;
   background: rgba(4, 30, 66, 0.08);
 `;
-const MoreBtn = styled.button`
-  margin-top: 0.4rem;
-  width: fit-content;
-
-  border: none;
-  background: transparent;
-  cursor: pointer;
-
-  color: ${Colors.etsuBlue};
-  font-weight: 600;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
 
 const YearActions = styled.div`
   display: flex;
@@ -458,7 +418,6 @@ const ShowBtn = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
-
   color: ${Colors.etsuBlue};
   font-weight: 600;
 

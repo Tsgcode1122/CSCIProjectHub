@@ -28,7 +28,7 @@ export default function AdminLogin() {
 
   return (
     <Bg>
-        <BackLink to="/">← Back to ETSU Project Hub</BackLink>
+      <BackLink to="/">← Back to ETSU Project Hub</BackLink>
       <Card>
         <Header>
           <IconCircle>
@@ -100,8 +100,6 @@ export default function AdminLogin() {
           <Footnote>
             Authorized personnel only. All access is monitored.
           </Footnote>
-
-          
         </Body>
       </Card>
     </Bg>
@@ -120,7 +118,12 @@ const Bg = styled.div`
   padding: 16px;
   overflow: hidden;
 
-  background: linear-gradient(135deg, ${ETSU_NAVY}, ${ETSU_NAVY}, ${ETSU_LIGHT_BLUE});
+  background: linear-gradient(
+    135deg,
+    ${ETSU_NAVY},
+    ${ETSU_NAVY},
+    ${ETSU_LIGHT_BLUE}
+  );
 `;
 
 const Card = styled.div`
@@ -128,7 +131,7 @@ const Card = styled.div`
   max-width: 430px;
   background: #ffffff;
   border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 `;
 
@@ -202,8 +205,13 @@ const PrimaryButton = styled.button`
   cursor: pointer;
   margin-top: 6px;
 
-  &:hover { filter: brightness(0.95); }
-  &:disabled { opacity: 0.65; cursor: not-allowed; }
+  &:hover {
+    filter: brightness(0.95);
+  }
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 `;
 
 const DividerWrap = styled.div`
@@ -247,7 +255,10 @@ const OutlineButton = styled.button`
     color: white;
   }
 
-  &:disabled { opacity: 0.65; cursor: not-allowed; }
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 `;
 
 const MicrosoftIcon = styled.svg`
