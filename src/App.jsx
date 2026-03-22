@@ -25,6 +25,8 @@ import { RequireAdmin } from "./admin/AdminRouteGuards";
 import AdminLayout from "./admin/AdminLayout";
 import AdminLogin from "./admin/pages/AdminLogin";
 import AdminProjects from "./admin/pages/Projects";
+import AddProject from "./admin/pages/AddProject"
+
 import AdminUsers from "./admin/pages/Users";
 
 const StyledResult = styled(Result)`
@@ -78,6 +80,7 @@ const routes = [
       { path: "/projects/:projectId", element: <ProjectDetail /> },
       { path: "/theses", element: <ThesisGrid /> },
       { path: "/thesis/:thesisId", element: <ThesisDetail /> },
+      { path: "projects/new", element: <AddProject/>},
       { path: "*", element: <InvalidPath /> },
     ],
   },

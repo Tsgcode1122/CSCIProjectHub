@@ -1,45 +1,5 @@
-// import React from "react";
-// import styled from "styled-components";
-
-// const ETSU_NAVY = "#041E42";
-
-// export default function Projects() {
-//   return (
-//     <>
-//       <TitleRow>
-//         <h2>Projects</h2>
-//       </TitleRow>
-
-//       <Card>
-//         <p style={{ margin: 0, color: "#6b7280" }}>
-//           This page will manage projects (hook to API).
-//         </p>
-//       </Card>
-//     </>
-//   );
-// }
-
-// const TitleRow = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   margin-bottom: 14px;
-
-//   h2 {
-//     margin: 0;
-//     color: ${ETSU_NAVY};
-//     font-weight: 800;
-//   }
-// `;
-
-// const Card = styled.div`
-//   background: white;
-//   border-radius: 16px;
-//   border: 1px solid #e5e7eb;
-//   padding: 16px;
-// `;
-
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Dashboard from "../../components/Dashboard";
 import {
   TypeBadge,
@@ -49,6 +9,7 @@ import {
   ETSU_GOLD,
   IconBtn,
 } from "../dashboardStyles";
+
 
 const API_BASE = "https://crpp-project.onrender.com";
 
@@ -263,7 +224,7 @@ export default function Projects() {
       filterValue={typeFilter}
       onFilterChange={setTypeFilter}
       filterOptions={[
-        { value: "All", label: "All Types" },
+        { value: "All", label: "Filter By" },
         { value: "Project", label: "Project" },
         { value: "Thesis", label: "Thesis" },
       ]}
