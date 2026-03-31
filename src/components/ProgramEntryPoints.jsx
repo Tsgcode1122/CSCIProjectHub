@@ -34,28 +34,33 @@ const ProgramEntryPoints = () => {
   };
 
   return (
-    <SectionDiv>
-      <Wrapper>
-        <ScrollRow>
-          {programs.map((program) => (
-            // 3. Pass the entire program object to the handler
-            <Card key={program.key} onClick={() => handleNavigate(program)}>
-              <Arrow>
-                <FiArrowUpRight />
-              </Arrow>
-              <Icon>{program.icon}</Icon>
-              <Label>{program.label}</Label>
-            </Card>
-          ))}
-        </ScrollRow>
-      </Wrapper>
-    </SectionDiv>
+    <ProgramWrap>
+      <SectionDiv>
+        <Wrapper>
+          <ScrollRow>
+            {programs.map((program) => (
+              // 3. Pass the entire program object to the handler
+              <Card key={program.key} onClick={() => handleNavigate(program)}>
+                <Arrow>
+                  <FiArrowUpRight />
+                </Arrow>
+                <Icon>{program.icon}</Icon>
+                <Label>{program.label}</Label>
+              </Card>
+            ))}
+          </ScrollRow>
+        </Wrapper>
+      </SectionDiv>
+    </ProgramWrap>
   );
 };
 
 export default ProgramEntryPoints;
 
-// ... (keep all your existing styled components exactly the same) ...
+const ProgramWrap = styled.div`
+  background-color: white !important;
+`;
+
 const Wrapper = styled.div`
   display: grid;
   gap: 1.2rem;

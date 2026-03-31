@@ -43,7 +43,7 @@ const ContactUs = ({ hideHeader = false }) => {
         )}
 
         <Grid>
-          <FormCard>
+          {/* <FormCard>
             <StyledForm form={form} layout="vertical" onFinish={onFinish}>
               <TwoCol>
                 <Form.Item name="name" label="Your Name (optional)">
@@ -83,7 +83,7 @@ const ContactUs = ({ hideHeader = false }) => {
                 </SubmitBtn>
               </ButtonRow>
             </StyledForm>
-          </FormCard>
+          </FormCard> */}
 
           <InfoCol>
             <InfoCard>
@@ -137,12 +137,13 @@ const Wrap = styled.div`
 
 const Grid = styled.div`
   margin-top: 2.5rem;
-  display: grid;
+  display: flex;
   gap: 1.6rem;
-
+  justify-content: center;
+  align-items: center;
   @media ${media.tablet} {
-    grid-template-columns: 1.35fr 0.65fr;
-    align-items: start;
+    /* grid-template-columns: 1.35fr 0.65fr;
+    align-items: start; */
   }
 `;
 
@@ -239,7 +240,10 @@ const SubmitBtn = styled(Button)`
 
 /* RIGHT SIDE INFO */
 const InfoCol = styled.div`
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1.1rem;
 `;
 
