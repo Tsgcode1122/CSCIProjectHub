@@ -113,79 +113,83 @@ const FeaturedThesis = () => {
   }, [featured.length]);
 
   return (
-    <SectionDiv>
-      <Wrap>
-        <HeaderRow>
-          <SectionHeader
-            title="Featured Theses Research"
-            subtitle="Swipe or use the arrows to explore recent research and graduate theses across the Department of Computing."
-          />
-        </HeaderRow>
+    <FeaturedThesesWrap>
+      <SectionDiv>
+        <Wrap>
+          <HeaderRow>
+            <SectionHeader
+              title="Featured Theses Research"
+              subtitle="Swipe or use the arrows to explore recent research and graduate theses across the Department of Computing."
+            />
+          </HeaderRow>
 
-        {loading ? (
-          <LoadingRow>Loading featured theses…</LoadingRow>
-        ) : (
-          <Row ref={rowRef}>
-            {featured.map((t) => (
-              <Card
-                data-card="featured"
-                key={t.id || t._id || t.title}
-                onClick={() => openThesis(t)}
-              >
-                <Top>
-                  <StatusBadge $status={t.status}>{t.status}</StatusBadge>
-                  <CornerIcon aria-hidden="true">
-                    <FiArrowUpRight />
-                  </CornerIcon>
-                </Top>
+          {loading ? (
+            <LoadingRow>Loading featured theses…</LoadingRow>
+          ) : (
+            <Row ref={rowRef}>
+              {featured.map((t) => (
+                <Card
+                  data-card="featured"
+                  key={t.id || t._id || t.title}
+                  onClick={() => openThesis(t)}
+                >
+                  <Top>
+                    <StatusBadge $status={t.status}>{t.status}</StatusBadge>
+                    <CornerIcon aria-hidden="true">
+                      <FiArrowUpRight />
+                    </CornerIcon>
+                  </Top>
 
-                <Title>{t.title}</Title>
-                {/* <Desc>{t.short_description || t.overview}</Desc> */}
+                  <Title>{t.title}</Title>
+                  {/* <Desc>{t.short_description || t.overview}</Desc> */}
 
-                <Tags>
-                  {(t.tags || []).slice(0, 2).map((tag) => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </Tags>
-              </Card>
-            ))}
-          </Row>
-        )}
+                  <Tags>
+                    {(t.tags || []).slice(0, 2).map((tag) => (
+                      <Tag key={tag}>{tag}</Tag>
+                    ))}
+                  </Tags>
+                </Card>
+              ))}
+            </Row>
+          )}
 
-        <Controls>
-          <NavBtn
-            type="button"
-            onClick={handlePrev}
-            disabled={activeIndex === 0}
-          >
-            <FiChevronLeft />
-          </NavBtn>
-          <Dots>
-            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <Dot key={i} $active={i === activeIndex} />
-            ))}
-          </Dots>
-          <NavBtn
-            type="button"
-            onClick={handleNext}
-            disabled={activeIndex === maxIndex}
-          >
-            <FiChevronRight />
-          </NavBtn>
-        </Controls>
+          <Controls>
+            <NavBtn
+              type="button"
+              onClick={handlePrev}
+              disabled={activeIndex === 0}
+            >
+              <FiChevronLeft />
+            </NavBtn>
+            <Dots>
+              {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                <Dot key={i} $active={i === activeIndex} />
+              ))}
+            </Dots>
+            <NavBtn
+              type="button"
+              onClick={handleNext}
+              disabled={activeIndex === maxIndex}
+            >
+              <FiChevronRight />
+            </NavBtn>
+          </Controls>
 
-        <ButtonWrap>
-          <ETSUButton text="View All Theses" to="/theses" />
-        </ButtonWrap>
-      </Wrap>
-    </SectionDiv>
+          <ButtonWrap>
+            <ETSUButton text="View All Theses" to="/theses" />
+          </ButtonWrap>
+        </Wrap>
+      </SectionDiv>
+    </FeaturedThesesWrap>
   );
 };
 
 export default FeaturedThesis;
 
 /* ---------------- styles ---------------- */
-
+const FeaturedThesesWrap = styled.div`
+  background-color: white !important;
+`;
 const Wrap = styled.div`
   padding: 2.2rem 0;
   display: grid;
