@@ -2,9 +2,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Dashboard from "../../components/Dashboard";
 import { ETSU_NAVY, IconBtn } from "../dashboardStyles";
+import CreateUser from "../../components/CreateUser";
+import DeleteUserModal from "../../components/DeleteUserModal";
+import EditUserModal from "../../components/EditUserModal";
+import ViewUserModal from "../../components/ViewUserModal";
 
 const API_BASE = "https://crpp-project.onrender.com";
-
+const STORAGE_KEY = "capstone_admin_session";
 function safeLower(x) {
   return String(x ?? "").toLowerCase();
 }
@@ -36,11 +40,15 @@ function normalizeUser(u) {
 export default function Users() {
   const [query, setQuery] = useState("");
   const [deptFilter, setDeptFilter] = useState("All");
-
+  const [openModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
 
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   useEffect(() => {
     const ac = new AbortController();
 
@@ -124,7 +132,7 @@ export default function Users() {
     // example: count roles if you want
     const admins = allRows.filter((u) => safeLower(u.role) === "admin").length;
     const students = allRows.filter(
-      (u) => safeLower(u.role) === "student",
+      (u) => safeLower(u.role) === "faculty",
     ).length;
 
     return [
@@ -144,7 +152,7 @@ export default function Users() {
         valueColor: "#3B82F6",
       },
       {
-        label: "Students",
+        label: "Faculty",
         value: loading ? "—" : students,
         accent: "#111827",
         icon: "🎓",
@@ -159,7 +167,79 @@ export default function Users() {
       },
     ];
   }, [allRows, loading, deptOptions]);
+  const handleDelete = async (user) => {
+    console.log(user);
 
+    try {
+      const storedUser = sessionStorage.getItem(STORAGE_KEY);
+      const users = storedUser ? JSON.parse(storedUser) : null;
+      const token = users?.access_token;
+
+      if (!token) {
+        throw new Error("No access token found in session storage");
+      }
+
+      const res = await fetch(`${API_BASE}/users/${user.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete user");
+      }
+      setDeleteOpen(false);
+      fetchUsers();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  // 1. to reload users
+  const fetchUsers = async (signal) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const storedSession = sessionStorage.getItem("capstone_admin_session");
+      const session = storedSession ? JSON.parse(storedSession) : null;
+      const token = session?.access_token;
+
+      if (!token) {
+        throw new Error("No access token found in session storage");
+      }
+
+      const res = await fetch(`${API_BASE}/users/`, {
+        signal, // Pass the abort signal if it exists
+        headers: {
+          Authorization: `Bearer ${token.trim()}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Users fetch failed (${res.status})`);
+      }
+
+      const json = await res.json();
+      setUsers(Array.isArray(json) ? json : []);
+    } catch (e) {
+      if (e.name !== "AbortError") {
+        setError(e.message || "Failed to load users.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // useeffect to update users instantly
+  useEffect(() => {
+    const ac = new AbortController();
+    fetchUsers(ac.signal);
+    return () => ac.abort();
+  }, []);
   if (error) {
     return (
       <div style={{ padding: 16 }}>
@@ -186,63 +266,118 @@ export default function Users() {
   }
 
   return (
-    <Dashboard
-      stats={stats}
-      query={query}
-      onQueryChange={setQuery}
-      filterValue={deptFilter}
-      onFilterChange={setDeptFilter}
-      filterOptions={deptOptions.map((d) => ({
-        value: d,
-        label: d === "All" ? "All Departments" : d,
-      }))}
-      addLabel="Add User"
-      onAdd={() => alert("Open Add User modal/page")}
-      columns={[
-        { key: "name", header: "Name" },
-        { key: "email", header: "ETSU Email" },
-        { key: "role", header: "Role" },
-        { key: "department", header: "Department" },
-        { key: "major", header: "Major" },
-        { key: "createdAt", header: "Created" },
-      ]}
-      rows={filtered}
-      renderCell={(row, key) => {
-        if (key === "name") {
-          return (
-            <>
-              <div style={{ fontWeight: 900 }}>{row.name}</div>
-              <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
-                {row.role} • {row.department}
-              </div>
-            </>
-          );
-        }
+    <>
+      <Dashboard
+        stats={stats}
+        query={query}
+        onQueryChange={setQuery}
+        filterValue={deptFilter}
+        onFilterChange={setDeptFilter}
+        filterOptions={deptOptions.map((d) => ({
+          value: d,
+          label: d === "All" ? "All Programs" : d,
+        }))}
+        addLabel="Add User"
+        onAdd={() => setOpenModal(true)}
+        columns={[
+          { key: "name", header: "Name" },
+          { key: "email", header: "ETSU Email" },
+          { key: "role", header: "Role" },
+          { key: "department", header: "Program" },
 
-        return row[key] ?? "—";
-      }}
-      renderActions={(row) => (
-        <>
-          <IconBtn
-            title="View"
-            onClick={() => console.log("VIEW USER", row.raw)}
-          >
-            👁
-          </IconBtn>
-          <IconBtn
-            title="Edit"
-            onClick={() => console.log("EDIT USER", row.raw)}
-          >
-            ✎
-          </IconBtn>
-          <IconBtn
-            title="Delete"
-            onClick={() => console.log("DELETE USER", row.raw)}
-          >
-            🗑
-          </IconBtn>
-        </>
+          { key: "createdAt", header: "Created" },
+        ]}
+        rows={filtered}
+        renderCell={(row, key) => {
+          if (key === "name") {
+            return (
+              <>
+                <div style={{ fontWeight: 900 }}>{row.name}</div>
+                <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
+                  {row.role} • {row.department}
+                </div>
+              </>
+            );
+          }
+
+          return row[key] ?? "—";
+        }}
+        renderActions={(row) => (
+          <>
+            <IconBtn
+              title="View"
+              onClick={() => {
+                const matchedUser = users.find((u) => u.id === row.raw.id);
+                setSelectedUser(matchedUser || row.raw);
+                setViewOpen(true);
+              }}
+            >
+              👁
+            </IconBtn>
+            <IconBtn
+              title="Edit"
+              onClick={() => {
+                const matchedUser = users.find((u) => u.id === row.raw.id);
+                setSelectedUser(matchedUser || row.raw);
+                setEditOpen(true);
+              }}
+            >
+              ✎
+            </IconBtn>
+            <IconBtn
+              title="Delete"
+              onClick={() => {
+                setSelectedUser(row.raw);
+                setDeleteOpen(true);
+              }}
+            >
+              🗑
+            </IconBtn>
+          </>
+        )}
+      />
+      {openModal && (
+        <CreateUser
+          onClose={() => setOpenModal(false)}
+          onSuccess={() => {
+            setOpenModal(false);
+            fetchUsers();
+          }}
+        />
       )}
-    />
+      {viewOpen && selectedUser && (
+        <ViewUserModal
+          user={selectedUser}
+          onClose={() => {
+            setViewOpen(false);
+            setSelectedUser(null);
+          }}
+        />
+      )}
+      {editOpen && selectedUser && (
+        <EditUserModal
+          user={selectedUser}
+          onClose={() => {
+            setEditOpen(false);
+            setSelectedUser(null);
+          }}
+          onSuccess={() => {
+            setEditOpen(false);
+            setSelectedUser(null);
+            fetchUsers();
+          }}
+        />
+      )}
+      {deleteOpen && (
+        <DeleteUserModal
+          user={selectedUser}
+          onClose={() => {
+            setDeleteOpen(false);
+            setSelectedUser(null);
+          }}
+          onConfirm={handleDelete}
+        />
+      )}
+    </>
   );
 }

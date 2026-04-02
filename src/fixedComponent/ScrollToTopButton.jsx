@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { RiArrowUpSLine } from "react-icons/ri";
-import bgg from "../images/down.png";
+
 import styled from "styled-components";
 import { Colors, Gradients, Shadows } from "../theme/Colors";
 
