@@ -21,21 +21,22 @@ import {
   TD,
   Actions,
 } from "../admin/dashboardStyles";
+import { FaSearch } from "react-icons/fa";
 
 export default function Dashboard({
-  stats = [],
-  query,
-  onQueryChange,
-  filterValue,
-  onFilterChange,
-  filterOptions = [],
-  addLabel = "Add New",
-  onAdd,
-  columns = [],
-  rows = [],
-  renderCell,
-  renderActions,
-}) {
+    stats = [],
+    query,
+    onQueryChange,
+    filterValue,
+    onFilterChange,
+    filterOptions = [],
+    addLabel = "Add New",
+    onAdd,
+    columns = [],
+    rows = [],
+    renderCell,
+    renderActions,
+  }) {
   return (
     <PageCol>
       {/* ✅ Everything above table stays static */}
@@ -57,7 +58,7 @@ export default function Dashboard({
         <Panel>
           <Toolbar>
             <SearchWrap>
-              <SearchIcon>🔍</SearchIcon>
+              <SearchIcon><FaSearch size={14}/></SearchIcon>
               <Search
                 value={query}
                 onChange={(e) => onQueryChange?.(e.target.value)}
