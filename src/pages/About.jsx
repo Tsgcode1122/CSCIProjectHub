@@ -76,9 +76,9 @@ const About = () => {
               platform to life."
             />
 
-            {/* 3-COLUMN TEAM GRID */}
+            {/*            
             <TeamGrid>
-              {/* CARD 1: FRONTEND */}
+     
               <RoleCard>
                 <IconWrapper>
                   <FiMonitor />
@@ -92,7 +92,7 @@ const About = () => {
                 </RoleDetails>
               </RoleCard>
 
-              {/* CARD 2: BACKEND */}
+       
               <RoleCard>
                 <IconWrapper>
                   <FiTarget />
@@ -106,7 +106,7 @@ const About = () => {
                 </RoleDetails>
               </RoleCard>
 
-              {/* CARD 3: SUPERVISOR */}
+           
               <RoleCard>
                 <IconWrapper>
                   <FiAward />
@@ -118,7 +118,7 @@ const About = () => {
                   <DetailText>Rezwana Tahsin</DetailText>
                 </RoleDetails>
               </RoleCard>
-            </TeamGrid>
+            </TeamGrid> */}
           </TeamSection>
         </PageWrap>
       </SectionDiv>

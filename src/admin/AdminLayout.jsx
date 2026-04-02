@@ -43,12 +43,12 @@
 //   );
 // }
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "./AdminAuthContext";
-import etsuLogo from "../images/etsuE.png";
-
+const API_BASE = "https://crpp-project.onrender.com";
+const STORAGE_KEY = "capstone_admin_session";
 const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";
@@ -57,8 +57,62 @@ const BORDER = "#E5E7EB";
 const TOPBAR_H = 76;
 
 export default function AdminLayout() {
-  const { logout } = useAdminAuth();
+  const { logout, adminUser } = useAdminAuth();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState("");
 
+  const [error, setError] = useState("");
+  useEffect(() => {
+    const ac = new AbortController();
+
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const storedSession = sessionStorage.getItem("capstone_admin_session");
+        const session = storedSession ? JSON.parse(storedSession) : null;
+        const token = session?.access_token;
+
+        console.log("Stored session:", session);
+        console.log("Token:", token);
+
+        if (!token) {
+          throw new Error("No access token found in session storage");
+        }
+
+        const res = await fetch(`${API_BASE}/users/me`, {
+          signal: ac.signal,
+          headers: {
+            Authorization: `Bearer ${token.trim()}`,
+            Accept: "application/json",
+          },
+        });
+
+        console.log("Status:", res.status);
+        console.log("Response object:", res);
+
+        if (!res.ok) {
+          throw new Error(`Users fetch failed (${res.status})`);
+        }
+
+        const json = await res.json();
+        console.log("Response body:", json);
+
+        setUser(json);
+      } catch (e) {
+        if (e.name !== "AbortError") {
+          console.error("LOAD ERROR:", e);
+          setError(e.message || "Failed to load users.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+    return () => ac.abort();
+  }, []);
   // ✅ Prevent layout “jank” from scrollbar showing/hiding
   useEffect(() => {
     const html = document.documentElement;
@@ -108,7 +162,9 @@ export default function AdminLayout() {
         <Side>
           <NavGroup>
             <SideLink to="/admin/projects">Projects</SideLink>
-            <SideLink to="/admin/users">Users</SideLink>
+            {user.role === "admin" && (
+              <SideLink to="/admin/users">Users</SideLink>
+            )}
           </NavGroup>
 
           <SideBottom>

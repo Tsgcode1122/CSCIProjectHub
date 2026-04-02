@@ -19,5 +19,5 @@ export function RequireAdmin() {
     return <Navigate to="/admin/login" replace />;
   }
 
-  return <Outlet />; 
+  return <Outlet />;
 }

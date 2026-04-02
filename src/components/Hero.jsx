@@ -7,29 +7,35 @@ import ETSUButton from "../fixedComponent/ETSUButton";
 import { breakpoints, media } from "../theme/Breakpoints";
 const Hero = () => {
   return (
-    <SectionDiv>
-      <HeroText>
-        <Title>Showcasing Research & Innovation</Title>
-        <Underline />
+    <HeroWrap>
+      <SectionDiv>
+        <HeroText>
+          <Title>Showcasing Research & Innovation</Title>
+          <Underline />
 
-        <Description>
-          Explore student and faculty projects and thesis work across Computer
-          Science, Information Technology, Information Systems, and
-          Cybersecurity, highlighting research, innovation, and academic
-          excellence.
-        </Description>
-      </HeroText>
-      <CTAWrap>
-        <ETSUButton text="View Projects" to="/projects" />
-        <ETSUButton text="Explore Theses" to="/theses" />
-      </CTAWrap>
-    </SectionDiv>
+          <Description>
+            Explore student and faculty projects and thesis work across Computer
+            Science, Information Technology, Information Systems, and
+            Cybersecurity, highlighting research, innovation, and academic
+            excellence.
+          </Description>
+        </HeroText>
+        <CTAWrap>
+          <ETSUButton text="View Projects" to="/projects" />
+          <ETSUButton text="Explore Theses" to="/theses" />
+        </CTAWrap>
+      </SectionDiv>
+    </HeroWrap>
   );
 };
 
 export default Hero;
 
 // Styling
+
+const HeroWrap = styled.div`
+  background-color: white !important;
+`;
 const HeroText = styled.div`
   text-align: center;
   margin: 0 auto;
