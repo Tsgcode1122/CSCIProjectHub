@@ -1,54 +1,12 @@
-// import React from "react";
-// import { Outlet } from "react-router-dom";
-// import { useAdminAuth } from "./AdminAuthContext";
-// import {
-//   Page,
-//   Sidebar,
-//   Shell,
-//   Topbar,
-//   Brand,
-//   Content,
-//   SideTitle,
-//   SideLink,
-//   Button,
-// } from "./styles";
-
-// export default function AdminLayout() {
-//   const { logout } = useAdminAuth();
-
-//   return (
-//     <Page>
-//       <Sidebar>
-//         <Brand style={{ padding: "8px 8px 14px" }}>Admin</Brand>
-
-//         <SideTitle>Manage</SideTitle>
-//         <SideLink to="/admin/projects">Projects</SideLink>
-//         <SideLink to="/admin/users">Users</SideLink>
-
-//         <div style={{ marginTop: 18, padding: 8 }}>
-//           <Button onClick={logout}>Logout</Button>
-//         </div>
-//       </Sidebar>
-
-//       <Shell>
-//         <Topbar>
-//           <Brand>Admin Dashboard</Brand>
-//         </Topbar>
-
-//         <Content>
-//           <Outlet />
-//         </Content>
-//       </Shell>
-//     </Page>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "./AdminAuthContext";
+import etsuLogo from "../images/etsuE.png"
+
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
+
 const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";

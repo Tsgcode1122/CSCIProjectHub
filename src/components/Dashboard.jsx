@@ -24,19 +24,19 @@ import {
 import { FaSearch } from "react-icons/fa";
 
 export default function Dashboard({
-  stats = [],
-  query,
-  onQueryChange,
-  filterValue,
-  onFilterChange,
-  filterOptions = [],
-  addLabel = "Add New",
-  onAdd,
-  columns = [],
-  rows = [],
-  renderCell,
-  renderActions,
-}) {
+    stats = [],
+    query,
+    onQueryChange,
+    filterValue,
+    onFilterChange,
+    filterOptions = [],
+    addLabel = "Add New",
+    onAdd,
+    columns = [],
+    rows = [],
+    renderCell,
+    renderActions,
+  }) {
   return (
     <PageCol>
       {/* ✅ Everything above table stays static */}

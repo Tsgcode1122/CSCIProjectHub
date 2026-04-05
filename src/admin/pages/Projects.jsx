@@ -91,7 +91,7 @@ function normalizeThesis(r) {
     year: r.year ?? "—",
     department: r.department ?? "—",
     status: currentStatus,
-    // Pass the status here
+   
     duration: formatDuration(r.duration_start, r.duration_end, currentStatus),
     tags: Array.isArray(r.tags) ? r.tags : [],
     raw: r,

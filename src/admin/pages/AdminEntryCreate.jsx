@@ -77,7 +77,7 @@ export default function AdminEntryCreate() {
             <ErrorBanner>Invalid entry type.</ErrorBanner>
             <BackButton
               type="button"
-              onClick={() => navigate("/admin/projects")}
+              onClick={() => navigate(-1)}
             >
               <FaArrowLeft />
               <span>Back</span>
