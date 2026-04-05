@@ -58,7 +58,9 @@ export default function Dashboard({
         <Panel>
           <Toolbar>
             <SearchWrap>
-              <SearchIcon><FaSearch size={14}/></SearchIcon>
+              <SearchIcon>
+                <FaSearch size={14} />
+              </SearchIcon>
               <Search
                 value={query}
                 onChange={(e) => onQueryChange?.(e.target.value)}
@@ -66,16 +68,19 @@ export default function Dashboard({
               />
             </SearchWrap>
 
-            <Select
-              value={filterValue}
-              onChange={(e) => onFilterChange?.(e.target.value)}
-            >
-              {filterOptions.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </Select>
+            {/* Only render the Select if filterOptions exist AND have at least 1 item */}
+            {filterOptions && filterOptions.length > 0 && (
+              <Select
+                value={filterValue}
+                onChange={(e) => onFilterChange?.(e.target.value)}
+              >
+                {filterOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </Select>
+            )}
 
             <AddBtn onClick={onAdd}>
               <span style={{ fontSize: 18, lineHeight: 0 }}>＋</span> {addLabel}

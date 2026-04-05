@@ -11,7 +11,7 @@ const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";
 const BORDER = "#E5E7EB";
-
+import etsuLogo from "../images/etsuE.png";
 const TOPBAR_H = 76;
 
 export default function AdminLayout() {
@@ -122,6 +122,9 @@ export default function AdminLayout() {
             <SideLink to="/admin/projects">Projects</SideLink>
             {user.role === "admin" && (
               <SideLink to="/admin/users">Users</SideLink>
+            )}
+            {user.role === "admin" && (
+              <SideLink to="/admin/editsupervisors">Edit Supervisors</SideLink>
             )}
           </NavGroup>
 

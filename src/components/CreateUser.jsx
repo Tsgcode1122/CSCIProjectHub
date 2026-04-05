@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Colors } from "../theme/Colors";
-
-const STORAGE_KEY = "capstone_admin_session";
-const API_BASE = "https://crpp-project.onrender.com";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import {
   Overlay,
   ModalCard,
@@ -27,9 +25,11 @@ import {
   sharedInputStyles,
   InputWrapper,
   EyeButton,
-  CloseActionButton,
 } from "../components/ModalStyles";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+
+const STORAGE_KEY = "capstone_admin_session";
+const API_BASE = "https://crpp-project.onrender.com";
+
 const departments = [
   "Computer Science",
   "Information Technology",
@@ -40,21 +40,24 @@ const departments = [
 
 const roles = ["admin", "faculty"];
 
-const CreateUserModal = ({ onClose, onSuccess }) => {
+// 1. Added isSupervisor prop (defaults to false so regular Users page doesn't break)
+const CreateUserModal = ({ onClose, onSuccess, isSupervisor = false }) => {
   const [form, setForm] = useState({
     etsu_email: "",
     password: "",
     first_name: "",
     last_name: "",
+    fullname: "", // Added for Supervisor
+    speciality: "", // Added for Supervisor
     role: "",
     department: "",
     major: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -78,14 +81,36 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
         throw new Error("No access token found in session storage");
       }
 
-      const res = await fetch(`${API_BASE}/users/`, {
+      // 2. Dynamically set the endpoint
+      const endpoint = isSupervisor
+        ? `${API_BASE}/supervisors/`
+        : `${API_BASE}/users/`;
+
+      // 3. Dynamically build the exact payload required
+      const payload = isSupervisor
+        ? {
+            fullname: form.fullname.trim(),
+            speciality: form.speciality.trim(),
+            designation: "",
+          }
+        : {
+            etsu_email: form.etsu_email.trim(),
+            password: form.password,
+            first_name: form.first_name.trim(),
+            last_name: form.last_name.trim(),
+            role: form.role,
+            department: form.department,
+            major: form.major.trim(),
+          };
+
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       let data = {};
@@ -101,34 +126,30 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
           data?.message?.toLowerCase().includes("already exists") ||
           data?.detail?.toLowerCase().includes("already exists")
         ) {
-          throw new Error("A user with this email already exists.");
-        }
-
-        if (res.status === 400) {
           throw new Error(
-            data?.message || data?.detail || "Invalid user information.",
+            `A ${isSupervisor ? "supervisor" : "user"} with this info already exists.`,
           );
         }
 
-        if (res.status === 404) {
-          throw new Error(
-            "User creation endpoint not found. Check your backend route.",
-          );
-        }
+        const errorMsg = data?.detail
+          ? Array.isArray(data.detail)
+            ? data.detail[0].msg
+            : String(data.detail)
+          : data?.message;
 
-        throw new Error(
-          data?.message ||
-            data?.detail ||
-            `Failed to create user (${res.status})`,
-        );
+        throw new Error(errorMsg || `Failed to create (${res.status})`);
       }
 
       setSuccessOpen(true);
+
+      // Reset form
       setForm({
         etsu_email: "",
         password: "",
         first_name: "",
         last_name: "",
+        fullname: "",
+        speciality: "",
         role: "",
         department: "",
         major: "",
@@ -139,7 +160,10 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
         if (onSuccess) onSuccess(data);
       }, 2000);
     } catch (err) {
-      setError(err.message || "Failed to create user.");
+      setError(
+        err.message ||
+          `Failed to create ${isSupervisor ? "supervisor" : "user"}.`,
+      );
     } finally {
       setLoading(false);
     }
@@ -151,9 +175,10 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
         <ModalCard onClick={(e) => e.stopPropagation()}>
           <Header>
             <HeaderTextWrap>
-              <Title>Create User</Title>
+              <Title>Create {isSupervisor ? "Supervisor" : "User"}</Title>
               <Subtitle>
-                Add a new user to the CSCI Project Hub system.
+                Add a new {isSupervisor ? "supervisor" : "user"} to the CSCI
+                Project Hub system.
               </Subtitle>
             </HeaderTextWrap>
 
@@ -164,130 +189,163 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
 
           <FormBody>
             <Form onSubmit={handleSubmit}>
-              <TwoCol>
-                <Field>
-                  <Label>
-                    First Name <Required>*</Required>
-                  </Label>
-                  <Input
-                    type="text"
-                    name="first_name"
-                    value={form.first_name}
-                    onChange={handleChange}
-                    placeholder="Enter first name"
-                    required
-                  />
-                </Field>
+              {/* 4. Conditional UI Rendering */}
+              {isSupervisor ? (
+                <>
+                  <Field>
+                    <Label>
+                      Full Name <Required>*</Required>
+                    </Label>
+                    <Input
+                      type="text"
+                      name="fullname"
+                      value={form.fullname}
+                      onChange={handleChange}
+                      placeholder="e.g. Dr. Jane Doe"
+                      required
+                    />
+                  </Field>
 
-                <Field>
-                  <Label>
-                    Last Name <Required>*</Required>
-                  </Label>
-                  <Input
-                    type="text"
-                    name="last_name"
-                    value={form.last_name}
-                    onChange={handleChange}
-                    placeholder="Enter last name"
-                    required
-                  />
-                </Field>
-              </TwoCol>
+                  <Field>
+                    <Label>Speciality</Label>
+                    <Input
+                      type="text"
+                      name="speciality"
+                      value={form.speciality}
+                      onChange={handleChange}
+                      placeholder="e.g. Artificial Intelligence"
+                    />
+                  </Field>
+                </>
+              ) : (
+                <>
+                  <TwoCol>
+                    <Field>
+                      <Label>
+                        First Name <Required>*</Required>
+                      </Label>
+                      <Input
+                        type="text"
+                        name="first_name"
+                        value={form.first_name}
+                        onChange={handleChange}
+                        placeholder="Enter first name"
+                        required
+                      />
+                    </Field>
 
-              <Field>
-                <Label>
-                  ETSU Email <Required>*</Required>
-                </Label>
-                <Input
-                  type="email"
-                  name="etsu_email"
-                  value={form.etsu_email}
-                  onChange={handleChange}
-                  placeholder="Enter ETSU email"
-                  required
-                />
-              </Field>
-              <Field>
-                <Label>
-                  Password <Required>*</Required>
-                </Label>
+                    <Field>
+                      <Label>
+                        Last Name <Required>*</Required>
+                      </Label>
+                      <Input
+                        type="text"
+                        name="last_name"
+                        value={form.last_name}
+                        onChange={handleChange}
+                        placeholder="Enter last name"
+                        required
+                      />
+                    </Field>
+                  </TwoCol>
 
-                <InputWrapper>
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="••••••••"
-                    required
-                  />
+                  <Field>
+                    <Label>
+                      ETSU Email <Required>*</Required>
+                    </Label>
+                    <Input
+                      type="email"
+                      name="etsu_email"
+                      value={form.etsu_email}
+                      onChange={handleChange}
+                      placeholder="Enter ETSU email"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <Label>
+                      Password <Required>*</Required>
+                    </Label>
 
-                  <EyeButton
-                    type="button"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? <FiEyeOff /> : <FiEye />}
-                  </EyeButton>
-                </InputWrapper>
-              </Field>
+                    <InputWrapper>
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        placeholder="••••••••"
+                        required
+                      />
 
-              <TwoCol>
-                <Field>
-                  <Label>
-                    Role <Required>*</Required>
-                  </Label>
-                  <Select
-                    name="role"
-                    value={form.role}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select role</option>
-                    {roles.map((role) => (
-                      <option key={role} value={role}>
-                        {role.charAt(0).toUpperCase() + role.slice(1)}
-                      </option>
-                    ))}
-                  </Select>
-                </Field>
+                      <EyeButton
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? <FiEyeOff /> : <FiEye />}
+                      </EyeButton>
+                    </InputWrapper>
+                  </Field>
 
-                <Field>
-                  <Label>Program</Label>
-                  <Select
-                    name="department"
-                    value={form.department}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Program</option>
-                    {departments.map((dept) => (
-                      <option key={dept} value={dept}>
-                        {dept}
-                      </option>
-                    ))}
-                  </Select>
-                </Field>
-              </TwoCol>
+                  <TwoCol>
+                    <Field>
+                      <Label>
+                        Role <Required>*</Required>
+                      </Label>
+                      <Select
+                        name="role"
+                        value={form.role}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select role</option>
+                        {roles.map((role) => (
+                          <option key={role} value={role}>
+                            {role.charAt(0).toUpperCase() + role.slice(1)}
+                          </option>
+                        ))}
+                      </Select>
+                    </Field>
 
-              <Field>
-                <Label>Major</Label>
-                <Input
-                  type="text"
-                  name="major"
-                  value={form.major}
-                  onChange={handleChange}
-                  placeholder="Enter major"
-                />
-              </Field>
+                    <Field>
+                      <Label>Program</Label>
+                      <Select
+                        name="department"
+                        value={form.department}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Program</option>
+                        {departments.map((dept) => (
+                          <option key={dept} value={dept}>
+                            {dept}
+                          </option>
+                        ))}
+                      </Select>
+                    </Field>
+                  </TwoCol>
+
+                  <Field>
+                    <Label>Major</Label>
+                    <Input
+                      type="text"
+                      name="major"
+                      value={form.major}
+                      onChange={handleChange}
+                      placeholder="Enter major"
+                    />
+                  </Field>
+                </>
+              )}
 
               {error && <ErrorText>{error}</ErrorText>}
-              {success && <SuccessText>{success}</SuccessText>}
 
               <ButtonRow>
                 <CancelButton type="button" onClick={onClose}>
                   Cancel
                 </CancelButton>
                 <SubmitButton type="submit" disabled={loading}>
-                  {loading ? "Creating..." : "Create User"}
+                  {loading
+                    ? "Creating..."
+                    : `Create ${isSupervisor ? "Supervisor" : "User"}`}
                 </SubmitButton>
               </ButtonRow>
             </Form>
@@ -297,9 +355,12 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
           <SuccessOverlay>
             <SuccessCard>
               <SuccessIcon>✓</SuccessIcon>
-              <SuccessTitle>User Created Successfully</SuccessTitle>
+              <SuccessTitle>
+                {isSupervisor ? "Supervisor" : "User"} Created
+              </SuccessTitle>
               <SuccessText>
-                The new user has been added to the database successfully.
+                The new {isSupervisor ? "supervisor" : "user"} has been added to
+                the database successfully.
               </SuccessText>
             </SuccessCard>
           </SuccessOverlay>

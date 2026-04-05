@@ -6,7 +6,7 @@ import CreateUser from "../../components/CreateUser";
 import DeleteUserModal from "../../components/DeleteUserModal";
 import EditUserModal from "../../components/EditUserModal";
 import ViewUserModal from "../../components/ViewUserModal";
-
+import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
 function safeLower(x) {
@@ -312,7 +312,7 @@ export default function Users() {
                 setViewOpen(true);
               }}
             >
-              👁
+              <FaEye />
             </IconBtn>
             <IconBtn
               title="Edit"
@@ -322,7 +322,7 @@ export default function Users() {
                 setEditOpen(true);
               }}
             >
-              ✎
+              <FaEdit />
             </IconBtn>
             <IconBtn
               title="Delete"
@@ -331,7 +331,7 @@ export default function Users() {
                 setDeleteOpen(true);
               }}
             >
-              🗑
+              <FaTrash />
             </IconBtn>
           </>
         )}

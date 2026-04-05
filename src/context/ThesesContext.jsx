@@ -21,7 +21,7 @@ export const ThesesProvider = ({ children }) => {
         const data = res.data ?? [];
         console.log(res.data);
 
-        setTheses(Array.isArray(data) ? data : []);
+        setTheses(Array.isArray(data) ? data.reverse() : []);
       } catch (err) {
         console.error("Error fetching theses:", err);
         setError(

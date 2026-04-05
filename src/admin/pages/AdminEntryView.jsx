@@ -30,7 +30,6 @@ function formatTimeline(start, end) {
   return "No timeline provided";
 }
 
-
 export default function AdminEntryView() {
   const { kind, id } = useParams();
   const navigate = useNavigate();
@@ -46,7 +45,6 @@ export default function AdminEntryView() {
 
   const isProject = kind === "project";
   const isThesis = kind === "thesis";
-
 
   async function handleDeleteConfirmed() {
     try {
@@ -69,12 +67,11 @@ export default function AdminEntryView() {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        const msg =
-          errData?.detail
-            ? Array.isArray(errData.detail)
-              ? errData.detail.map((d) => d.msg).join(", ")
-              : String(errData.detail)
-            : `Delete failed (${res.status})`;
+        const msg = errData?.detail
+          ? Array.isArray(errData.detail)
+            ? errData.detail.map((d) => d.msg).join(", ")
+            : String(errData.detail)
+          : `Delete failed (${res.status})`;
         throw new Error(msg);
       }
 
@@ -97,8 +94,8 @@ export default function AdminEntryView() {
         const endpoint = isProject
           ? `${API_BASE}/projects/${id}`
           : isThesis
-          ? `${API_BASE}/research/${id}`
-          : null;
+            ? `${API_BASE}/research/${id}`
+            : null;
 
         if (!endpoint) {
           throw new Error("Invalid entry type.");
@@ -132,10 +129,35 @@ export default function AdminEntryView() {
     loadEntry();
     return () => ac.abort();
   }, [id, isProject, isThesis, adminUser]);
+  function formatTimeline(start, end, status) {
+    const s = String(status ?? "")
+      .toLowerCase()
+      .trim();
 
+    // Define which statuses count as "Ongoing"
+    const isOngoing = s === "in progress" || s === "accepting members";
+
+    if (isOngoing) {
+      return start ? `${start} – Ongoing` : "Ongoing";
+    }
+
+    // Fallback to standard range if not ongoing
+    if (start && end) return `${start} – ${end}`;
+    if (start) return start;
+    if (end) return end;
+    return "—";
+  }
   const timeline = useMemo(() => {
     if (!entry) return "";
-    return formatTimeline(entry.duration_start, entry.duration_end);
+
+    // Get the status from the entry
+    const currentStatus = entry.project_status || entry.status || "";
+
+    return formatTimeline(
+      entry.duration_start,
+      entry.duration_end,
+      currentStatus,
+    );
   }, [entry]);
 
   const pageTitle = isProject ? "Project" : "Thesis";
@@ -167,357 +189,377 @@ export default function AdminEntryView() {
   return (
     <Page>
       <ScrollArea>
-      <Hero $isProject={isProject}>
-        <HeroTop>
-          <BackLink to="/admin/projects">
-            <FaArrowLeft />
-            <span>Back to Projects</span>
-          </BackLink>
+        <Hero $isProject={isProject}>
+          <HeroTop>
+            <BackLink to="/admin/projects">
+              <FaArrowLeft />
+              <span>Back to Projects</span>
+            </BackLink>
 
-          <ActionRow>
-            <ActionBtn
-              type="button"
-              onClick={() => navigate(`/admin/entries/${kind}/${id}/edit`)}
-            >
-              <FaEdit />
-              <span>Edit</span>
-            </ActionBtn>
+            <ActionRow>
+              <ActionBtn
+                type="button"
+                onClick={() => navigate(`/admin/entries/${kind}/${id}/edit`)}
+              >
+                <FaEdit />
+                <span>Edit</span>
+              </ActionBtn>
 
-            <DeleteBtn
-              type="button"
-              onClick={() => {
-                setDeleteError("");
-                setShowDeleteModal(true);
-              }}
-            >
-              <FaTrash />
-              <span>Delete</span>
-            </DeleteBtn>
-          </ActionRow>
-        </HeroTop>
+              <DeleteBtn
+                type="button"
+                onClick={() => {
+                  setDeleteError("");
+                  setShowDeleteModal(true);
+                }}
+              >
+                <FaTrash />
+                <span>Delete</span>
+              </DeleteBtn>
+            </ActionRow>
+          </HeroTop>
 
-        <HeroTitle>{entry.title || `Untitled ${pageTitle}`}</HeroTitle>
-        <HeroSubtitle>
-          {entry.short_description || entry.overview || "No description provided."}
-        </HeroSubtitle>
-      </Hero>
+          <HeroTitle>{entry.title || `Untitled ${pageTitle}`}</HeroTitle>
+          <HeroSubtitle>
+            {entry.short_description ||
+              entry.overview ||
+              "No description provided."}
+          </HeroSubtitle>
+        </Hero>
 
-      <ContentGrid>
-        <LeftCol>
-          <Card>
-            <CardTitle>
-              {isProject ? <FaFolderOpen /> : <FaBookOpen />}
-              <span>{overviewTitle}</span>
-            </CardTitle>
+        <ContentGrid>
+          <LeftCol>
+            <Card>
+              <CardTitle>
+                {isProject ? <FaFolderOpen /> : <FaBookOpen />}
+                <span>{overviewTitle}</span>
+              </CardTitle>
 
-            <InfoGrid>
-              <InfoBlock>
-                <InfoLabel>{isProject ? "Supervisor" : "Student"}</InfoLabel>
-                <InfoValue>
-                  {isProject ? entry.supervisor || "—" : entry.student || "—"}
-                </InfoValue>
-              </InfoBlock>
+              <InfoGrid>
+                <InfoBlock>
+                  <InfoLabel>{isProject ? "Supervisor" : "Student"}</InfoLabel>
+                  <InfoValue>
+                    {isProject ? entry.supervisor || "—" : entry.student || "—"}
+                  </InfoValue>
+                </InfoBlock>
 
-              <InfoBlock>
-                <InfoLabel>{isProject ? "Department" : "Supervisor"}</InfoLabel>
-                <InfoValue>
-                  {isProject ? entry.department || "—" : entry.supervisor || "—"}
-                </InfoValue>
-              </InfoBlock>
+                <InfoBlock>
+                  <InfoLabel>
+                    {isProject ? "Department" : "Supervisor"}
+                  </InfoLabel>
+                  <InfoValue>
+                    {isProject
+                      ? entry.department || "—"
+                      : entry.supervisor || "—"}
+                  </InfoValue>
+                </InfoBlock>
 
-              <InfoBlock>
-                <InfoLabel>{isProject ? "Status" : "Department"}</InfoLabel>
-                <InfoValue>
-                  {isProject ? entry.status || "—" : entry.department || "—"}
-                </InfoValue>
-              </InfoBlock>
+                <InfoBlock>
+                  <InfoLabel>{isProject ? "Status" : "Department"}</InfoLabel>
+                  <InfoValue>
+                    {isProject ? entry.status || "—" : entry.department || "—"}
+                  </InfoValue>
+                </InfoBlock>
 
-              <InfoBlock>
-                <InfoLabel>{isProject ? "Project Status" : "Status"}</InfoLabel>
-                <InfoValue>
-                  {isProject ? entry.project_status || "—" : entry.status || "—"}
-                </InfoValue>
-              </InfoBlock>
-            </InfoGrid>
+                <InfoBlock>
+                  <InfoLabel>
+                    {isProject ? "Project Status" : "Status"}
+                  </InfoLabel>
+                  <InfoValue>
+                    {isProject
+                      ? entry.project_status || "—"
+                      : entry.status || "—"}
+                  </InfoValue>
+                </InfoBlock>
+              </InfoGrid>
 
-            <BodyText>{entry.overview || "No overview added."}</BodyText>
-          </Card>
+              <BodyText>{entry.overview || "No overview added."}</BodyText>
+            </Card>
 
-          {isProject ? (
-            <>
-              <Card>
-                <CardTitle>
-                  <FaCode />
-                  <span>Key Features</span>
-                </CardTitle>
+            {isProject ? (
+              <>
+                <Card>
+                  <CardTitle>
+                    <FaCode />
+                    <span>Key Features</span>
+                  </CardTitle>
 
-                {safeArray(entry.key_features).length ? (
-                  <BulletList>
-                    {entry.key_features.map((item, index) => (
-                      <li key={`${item}-${index}`}>{item}</li>
-                    ))}
-                  </BulletList>
-                ) : (
-                  <MutedText>No features added.</MutedText>
-                )}
-              </Card>
+                  {safeArray(entry.key_features).length ? (
+                    <BulletList>
+                      {entry.key_features.map((item, index) => (
+                        <li key={`${item}-${index}`}>{item}</li>
+                      ))}
+                    </BulletList>
+                  ) : (
+                    <MutedText>No features added.</MutedText>
+                  )}
+                </Card>
 
-              <Card>
-                <CardTitle>
-                  <FaFileAlt />
-                  <span>Challenges & Solutions</span>
-                </CardTitle>
+                <Card>
+                  <CardTitle>
+                    <FaFileAlt />
+                    <span>Challenges & Solutions</span>
+                  </CardTitle>
 
-                {safeArray(entry.challenges_solutions).length ? (
-                  <ChallengeList>
-                    {entry.challenges_solutions.map((item, index) => (
-                      <ChallengeCard key={index}>
-                        <MiniLabel>Challenge</MiniLabel>
-                        <ChallengeText>{item.challenge || "—"}</ChallengeText>
+                  {safeArray(entry.challenges_solutions).length ? (
+                    <ChallengeList>
+                      {entry.challenges_solutions.map((item, index) => (
+                        <ChallengeCard key={index}>
+                          <MiniLabel>Challenge</MiniLabel>
+                          <ChallengeText>{item.challenge || "—"}</ChallengeText>
 
-                        <MiniLabel>Solution</MiniLabel>
-                        <ChallengeText>{item.solution || "—"}</ChallengeText>
-                      </ChallengeCard>
-                    ))}
-                  </ChallengeList>
-                ) : (
-                  <MutedText>No challenges added.</MutedText>
-                )}
-              </Card>
+                          <MiniLabel>Solution</MiniLabel>
+                          <ChallengeText>{item.solution || "—"}</ChallengeText>
+                        </ChallengeCard>
+                      ))}
+                    </ChallengeList>
+                  ) : (
+                    <MutedText>No challenges added.</MutedText>
+                  )}
+                </Card>
 
-              <Card>
-                <CardTitle>
-                  <FaCode />
-                  <span>Achievements</span>
-                </CardTitle>
+                <Card>
+                  <CardTitle>
+                    <FaCode />
+                    <span>Achievements</span>
+                  </CardTitle>
 
-                {safeArray(entry.achievements).length ? (
-                  <BulletList>
-                    {entry.achievements.map((item, index) => (
-                      <li key={`${item}-${index}`}>{item}</li>
-                    ))}
-                  </BulletList>
-                ) : (
-                  <MutedText>No achievements added.</MutedText>
-                )}
-              </Card>
-            </>
-          ) : (
-            <>
-              <Card>
-                <CardTitle>
-                  <FaFlask />
-                  <span>Methodology</span>
-                </CardTitle>
-                <BodyText>{entry.methodology || "No methodology added."}</BodyText>
-              </Card>
+                  {safeArray(entry.achievements).length ? (
+                    <BulletList>
+                      {entry.achievements.map((item, index) => (
+                        <li key={`${item}-${index}`}>{item}</li>
+                      ))}
+                    </BulletList>
+                  ) : (
+                    <MutedText>No achievements added.</MutedText>
+                  )}
+                </Card>
+              </>
+            ) : (
+              <>
+                <Card>
+                  <CardTitle>
+                    <FaFlask />
+                    <span>Methodology</span>
+                  </CardTitle>
+                  <BodyText>
+                    {entry.methodology || "No methodology added."}
+                  </BodyText>
+                </Card>
 
-              <Card>
-                <CardTitle>
-                  <FaFileAlt />
-                  <span>Key Findings</span>
-                </CardTitle>
-                <BodyText>{entry.key_findings || "No key findings added."}</BodyText>
-              </Card>
+                <Card>
+                  <CardTitle>
+                    <FaFileAlt />
+                    <span>Key Findings</span>
+                  </CardTitle>
+                  <BodyText>
+                    {entry.key_findings || "No key findings added."}
+                  </BodyText>
+                </Card>
 
-              <Card>
-                <CardTitle>
-                  <FaCode />
-                  <span>Future Work</span>
-                </CardTitle>
-                <BodyText>{entry.future_work || "No future work added."}</BodyText>
-              </Card>
-            </>
-          )}
-        </LeftCol>
+                <Card>
+                  <CardTitle>
+                    <FaCode />
+                    <span>Future Work</span>
+                  </CardTitle>
+                  <BodyText>
+                    {entry.future_work || "No future work added."}
+                  </BodyText>
+                </Card>
+              </>
+            )}
+          </LeftCol>
 
-        <RightCol>
-          <Card>
-            <CardTitle>{pageTitle} Info</CardTitle>
+          <RightCol>
+            <Card>
+              <CardTitle>{pageTitle} Info</CardTitle>
 
-            <InfoStack>
-              <InfoRow>
-                <InfoLabel>Type</InfoLabel>
-                <Pill $isProject={isProject}>
-                  {isProject ? "Project" : "Thesis"}
-                </Pill>
-              </InfoRow>
+              <InfoStack>
+                <InfoRow>
+                  <InfoLabel>Type</InfoLabel>
+                  <Pill $isProject={isProject}>
+                    {isProject ? "Project" : "Thesis"}
+                  </Pill>
+                </InfoRow>
 
-              <InfoRow>
-                <InfoLabel>
-                  <FaCalendarAlt style={{ marginRight: 8 }} />
-                  Timeline
-                </InfoLabel>
-                <InfoValue>{timeline}</InfoValue>
-              </InfoRow>
-
-              {isProject ? (
                 <InfoRow>
                   <InfoLabel>
-                    <FaUserFriends style={{ marginRight: 8 }} />
-                    Team Members
+                    <FaCalendarAlt style={{ marginRight: 8 }} />
+                    Timeline
                   </InfoLabel>
-                  {safeArray(entry.team_members).length ? (
+                  <InfoValue>{timeline}</InfoValue>
+                </InfoRow>
+
+                {isProject ? (
+                  <InfoRow>
+                    <InfoLabel>
+                      <FaUserFriends style={{ marginRight: 8 }} />
+                      Team Members
+                    </InfoLabel>
+                    {safeArray(entry.team_members).length ? (
+                      <TagWrap>
+                        {entry.team_members.map((member, index) => (
+                          <Tag key={`${member}-${index}`}>{member}</Tag>
+                        ))}
+                      </TagWrap>
+                    ) : (
+                      <MutedText>No team members</MutedText>
+                    )}
+                  </InfoRow>
+                ) : (
+                  <InfoRow>
+                    <InfoLabel>Researcher</InfoLabel>
+                    <InfoValue>{entry.student || "—"}</InfoValue>
+                  </InfoRow>
+                )}
+
+                {isProject && entry.project_link ? (
+                  <LinkButton
+                    href={entry.project_link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FaExternalLinkAlt />
+                    <span>View Project</span>
+                  </LinkButton>
+                ) : null}
+
+                {isProject && entry.sourcecode_link ? (
+                  <LinkButton
+                    href={entry.sourcecode_link}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <FaCode />
+                    <span>View Source Code</span>
+                  </LinkButton>
+                ) : null}
+              </InfoStack>
+            </Card>
+
+            {isProject ? (
+              <>
+                <Card>
+                  <CardTitle>Tech Stack</CardTitle>
+                  {safeArray(entry.tech_stack).length ? (
                     <TagWrap>
-                      {entry.team_members.map((member, index) => (
-                        <Tag key={`${member}-${index}`}>{member}</Tag>
+                      {entry.tech_stack.map((item, index) => (
+                        <Tag key={`${item}-${index}`}>{item}</Tag>
                       ))}
                     </TagWrap>
                   ) : (
-                    <MutedText>No team members</MutedText>
+                    <MutedText>No tech stack added.</MutedText>
                   )}
-                </InfoRow>
-              ) : (
-                <InfoRow>
-                  <InfoLabel>Researcher</InfoLabel>
-                  <InfoValue>{entry.student || "—"}</InfoValue>
-                </InfoRow>
-              )}
+                </Card>
 
-              {isProject && entry.project_link ? (
-                <LinkButton href={entry.project_link} target="_blank" rel="noreferrer">
-                  <FaExternalLinkAlt />
-                  <span>View Project</span>
-                </LinkButton>
-              ) : null}
+                <Card>
+                  <CardTitle>Tags</CardTitle>
+                  {safeArray(entry.tags).length ? (
+                    <TagWrap>
+                      {entry.tags.map((item, index) => (
+                        <Tag key={`${item}-${index}`}>{item}</Tag>
+                      ))}
+                    </TagWrap>
+                  ) : (
+                    <MutedText>No tags added.</MutedText>
+                  )}
+                </Card>
+              </>
+            ) : (
+              <>
+                <Card>
+                  <CardTitle>Publications</CardTitle>
+                  {safeArray(entry.publications).length ? (
+                    <PublicationList>
+                      {entry.publications.map((pub, index) => (
+                        <PublicationCard key={index}>
+                          <PublicationTitle>
+                            {pub.title || "Untitled publication"}
+                          </PublicationTitle>
+                          {pub.link ? (
+                            <PublicationLink
+                              href={pub.link}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Open Publication
+                            </PublicationLink>
+                          ) : null}
+                          <PublicationDate>
+                            {pub.published_on
+                              ? new Date(pub.published_on).toLocaleDateString()
+                              : "No publish date"}
+                          </PublicationDate>
+                        </PublicationCard>
+                      ))}
+                    </PublicationList>
+                  ) : (
+                    <MutedText>No publications added.</MutedText>
+                  )}
+                </Card>
 
-              {isProject && entry.sourcecode_link ? (
-                <LinkButton
-                  href={entry.sourcecode_link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <FaCode />
-                  <span>View Source Code</span>
-                </LinkButton>
-              ) : null}
-            </InfoStack>
-          </Card>
-
-          {isProject ? (
-            <>
-              <Card>
-                <CardTitle>Tech Stack</CardTitle>
-                {safeArray(entry.tech_stack).length ? (
-                  <TagWrap>
-                    {entry.tech_stack.map((item, index) => (
-                      <Tag key={`${item}-${index}`}>{item}</Tag>
-                    ))}
-                  </TagWrap>
-                ) : (
-                  <MutedText>No tech stack added.</MutedText>
-                )}
-              </Card>
-
-              <Card>
-                <CardTitle>Tags</CardTitle>
-                {safeArray(entry.tags).length ? (
-                  <TagWrap>
-                    {entry.tags.map((item, index) => (
-                      <Tag key={`${item}-${index}`}>{item}</Tag>
-                    ))}
-                  </TagWrap>
-                ) : (
-                  <MutedText>No tags added.</MutedText>
-                )}
-              </Card>
-            </>
-          ) : (
-            <>
-              <Card>
-                <CardTitle>Publications</CardTitle>
-                {safeArray(entry.publications).length ? (
-                  <PublicationList>
-                    {entry.publications.map((pub, index) => (
-                      <PublicationCard key={index}>
-                        <PublicationTitle>
-                          {pub.title || "Untitled publication"}
-                        </PublicationTitle>
-                        {pub.link ? (
-                          <PublicationLink
-                            href={pub.link}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Open Publication
-                          </PublicationLink>
-                        ) : null}
-                        <PublicationDate>
-                          {pub.published_on
-                            ? new Date(pub.published_on).toLocaleDateString()
-                            : "No publish date"}
-                        </PublicationDate>
-                      </PublicationCard>
-                    ))}
-                  </PublicationList>
-                ) : (
-                  <MutedText>No publications added.</MutedText>
-                )}
-              </Card>
-
-              <Card>
-                <CardTitle>Tags</CardTitle>
-                {safeArray(entry.tags).length ? (
-                  <TagWrap>
-                    {entry.tags.map((item, index) => (
-                      <Tag key={`${item}-${index}`}>{item}</Tag>
-                    ))}
-                  </TagWrap>
-                ) : (
-                  <MutedText>No tags added.</MutedText>
-                )}
-              </Card>
-            </>
-          )}
-        </RightCol>
-      </ContentGrid>
+                <Card>
+                  <CardTitle>Tags</CardTitle>
+                  {safeArray(entry.tags).length ? (
+                    <TagWrap>
+                      {entry.tags.map((item, index) => (
+                        <Tag key={`${item}-${index}`}>{item}</Tag>
+                      ))}
+                    </TagWrap>
+                  ) : (
+                    <MutedText>No tags added.</MutedText>
+                  )}
+                </Card>
+              </>
+            )}
+          </RightCol>
+        </ContentGrid>
       </ScrollArea>
 
       {showDeleteModal ? (
-          <DeleteOverlay>
-            <DeleteModal>
-              <DeleteHeader>
-                <DeleteIconWrap>
-                  <FaTrash />
-                </DeleteIconWrap>
+        <DeleteOverlay>
+          <DeleteModal>
+            <DeleteHeader>
+              <DeleteIconWrap>
+                <FaTrash />
+              </DeleteIconWrap>
 
-                <div>
-                  <DeleteTitle>
-                    Delete {isProject ? "Project" : "Thesis"}?
-                  </DeleteTitle>
-                  <DeleteText>
-                    This action cannot be undone. This will permanently delete this{" "}
-                    {isProject ? "project" : "thesis"} from the system.
-                  </DeleteText>
-                  <DeleteName>{entry?.title || "Untitled entry"}</DeleteName>
-                </div>
-              </DeleteHeader>
+              <div>
+                <DeleteTitle>
+                  Delete {isProject ? "Project" : "Thesis"}?
+                </DeleteTitle>
+                <DeleteText>
+                  This action cannot be undone. This will permanently delete
+                  this {isProject ? "project" : "thesis"} from the system.
+                </DeleteText>
+                <DeleteName>{entry?.title || "Untitled entry"}</DeleteName>
+              </div>
+            </DeleteHeader>
 
-              {deleteError ? <DeleteError>{deleteError}</DeleteError> : null}
+            {deleteError ? <DeleteError>{deleteError}</DeleteError> : null}
 
-              <DeleteActions>
-                <CancelBtn
-                  type="button"
-                  disabled={isDeleting}
-                  onClick={() => {
-                    setShowDeleteModal(false);
-                    setDeleteError("");
-                  }}
-                >
-                  Cancel
-                </CancelBtn>
+            <DeleteActions>
+              <CancelBtn
+                type="button"
+                disabled={isDeleting}
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setDeleteError("");
+                }}
+              >
+                Cancel
+              </CancelBtn>
 
-                <ConfirmDeleteBtn
-                  type="button"
-                  disabled={isDeleting}
-                  onClick={handleDeleteConfirmed}
-                >
-                  {isDeleting ? "Deleting..." : "Delete"}
-                </ConfirmDeleteBtn>
-              </DeleteActions>
-            </DeleteModal>
-          </DeleteOverlay>
-        ) : null}
+              <ConfirmDeleteBtn
+                type="button"
+                disabled={isDeleting}
+                onClick={handleDeleteConfirmed}
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </ConfirmDeleteBtn>
+            </DeleteActions>
+          </DeleteModal>
+        </DeleteOverlay>
+      ) : null}
     </Page>
   );
 }

@@ -30,12 +30,19 @@ export default function AdminEntryEdit() {
       try {
         setLoading(true);
         setLoadError("");
+        const storedSession = sessionStorage.getItem("capstone_admin_session");
+        const session = storedSession ? JSON.parse(storedSession) : null;
+        const token = session?.access_token;
+
+        if (!token) {
+          throw new Error("No access token found in session storage");
+        }
 
         const endpoint = isProject
           ? `${API_BASE}/projects/${id}`
           : isThesis
-          ? `${API_BASE}/research/${id}`
-          : null;
+            ? `${API_BASE}/research/${id}`
+            : null;
 
         if (!endpoint) {
           throw new Error("Invalid entry type.");
@@ -44,10 +51,8 @@ export default function AdminEntryEdit() {
         const res = await fetch(endpoint, {
           signal: ac.signal,
           headers: {
+            Authorization: `Bearer ${token.trim()}`,
             Accept: "application/json",
-            ...(adminUser?.access_token
-              ? { Authorization: `Bearer ${adminUser.access_token}` }
-              : {}),
           },
         });
 
@@ -58,6 +63,8 @@ export default function AdminEntryEdit() {
         const data = await res.json();
         setEntry(data);
       } catch (err) {
+        console.log(err);
+
         if (err.name !== "AbortError") {
           setLoadError(err.message || "Failed to load entry.");
         }
@@ -71,6 +78,8 @@ export default function AdminEntryEdit() {
   }, [id, isProject, isThesis, adminUser]);
 
   async function handleSave(payload) {
+    console.log(payload);
+
     try {
       setSaving(true);
       setSaveError("");
@@ -93,12 +102,11 @@ export default function AdminEntryEdit() {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        const msg =
-          errData?.detail
-            ? Array.isArray(errData.detail)
-              ? errData.detail.map((d) => d.msg).join(", ")
-              : String(errData.detail)
-            : `Update failed (${res.status})`;
+        const msg = errData?.detail
+          ? Array.isArray(errData.detail)
+            ? errData.detail.map((d) => d.msg).join(", ")
+            : String(errData.detail)
+          : `Update failed (${res.status})`;
         throw new Error(msg);
       }
 
@@ -143,7 +151,8 @@ export default function AdminEntryEdit() {
               <div>
                 <Title>{isProject ? "Edit Project" : "Edit Thesis"}</Title>
                 <Subtitle>
-                  Update the existing {isProject ? "project" : "thesis"} details.
+                  Update the existing {isProject ? "project" : "thesis"}{" "}
+                  details.
                 </Subtitle>
               </div>
             </HeaderLeft>
@@ -156,8 +165,6 @@ export default function AdminEntryEdit() {
               <span>Back</span>
             </BackButton>
           </Header>
-
-          {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
 
           {isProject ? (
             <EditProjectForm
@@ -174,6 +181,7 @@ export default function AdminEntryEdit() {
               onSubmit={handleSave}
             />
           )}
+          {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
         </Card>
       </ScrollArea>
     </Page>

@@ -32,7 +32,18 @@ function safeLower(x) {
   return String(x ?? "").toLowerCase();
 }
 
-function formatDuration(start, end) {
+function formatDuration(start, end, projectStatus) {
+  const status = safeLower(projectStatus).trim();
+
+  // If status is specifically "Accepting Members", force "Ongoing"
+  if (status === "accepting members") {
+    return start ? `${start} – Ongoing` : "Ongoing";
+  }
+  if (status === "in progress") {
+    return start ? `${start} – Ongoing` : "Ongoing";
+  }
+
+  // Original logic for everything else
   if (start && end) return `${start} – ${end}`;
   if (start) return start;
   if (end) return end;
@@ -42,44 +53,46 @@ function formatDuration(start, end) {
 function isOngoingStatus(status) {
   const s = safeLower(status).trim();
   return (
-    s === "active" ||
-    s === "ongoing" ||
-    s === "current" ||
-    s === "in progress"
+    s === "active" || s === "ongoing" || s === "current" || s === "in progress"
   );
 }
 
 function normalizeProject(p) {
+  const currentStatus = p.project_status || p.status || "—";
   return {
     id: p.id,
     kind: "Project",
     title: p.title ?? "Untitled Project",
     author:
-      p.team_members && p.team_members.length
-        ? p.team_members.join(", ")
-        : "—",
+      p.team_members && p.team_members.length ? p.team_members.join(", ") : "—",
     advisor: p.supervisor ?? "—",
     year: p.year ?? "—",
     department: p.department ?? "—",
-    status: p.status ?? p.project_status ?? "—",
-    duration: formatDuration(p.duration_start, p.duration_end),
+    status: currentStatus,
+    // Pass the status here
+    duration: formatDuration(p.duration_start, p.duration_end, currentStatus),
     tags: Array.isArray(p.tags) ? p.tags : [],
     raw: p,
   };
 }
 
 function normalizeThesis(r) {
+  const currentStatus = r.research_status || r.status || "—";
   return {
     id: r.id,
     kind: "Thesis",
     title:
-      r.title ?? r.short_description ?? r.overview?.slice(0, 80) ?? "Untitled Thesis",
+      r.title ??
+      r.short_description ??
+      r.overview?.slice(0, 80) ??
+      "Untitled Thesis",
     author: r.student ?? "—",
     advisor: r.supervisor ?? "—",
     year: r.year ?? "—",
     department: r.department ?? "—",
-    status: r.status ?? r.research_status ?? "—",
-    duration: formatDuration(r.duration_start, r.duration_end),
+    status: currentStatus,
+   
+    duration: formatDuration(r.duration_start, r.duration_end, currentStatus),
     tags: Array.isArray(r.tags) ? r.tags : [],
     raw: r,
   };
@@ -173,12 +186,12 @@ export default function Projects() {
         filterBy === "All"
           ? true
           : filterBy === "Project"
-          ? r.kind === "Project"
-          : filterBy === "Thesis"
-          ? r.kind === "Thesis"
-          : filterBy === "Current/Ongoing"
-          ? isOngoingStatus(r.status)
-          : safeLower(r.status) === safeLower(filterBy);
+            ? r.kind === "Project"
+            : filterBy === "Thesis"
+              ? r.kind === "Thesis"
+              : filterBy === "Current/Ongoing"
+                ? isOngoingStatus(r.status)
+                : safeLower(r.status) === safeLower(filterBy);
 
       const matchesQuery = !q
         ? true
@@ -202,7 +215,7 @@ export default function Projects() {
     const projectCount = allRows.filter((x) => x.kind === "Project").length;
     const thesisCount = allRows.filter((x) => x.kind === "Thesis").length;
     const activeProjects = allRows.filter(
-      (x) => x.kind === "Project" && isOngoingStatus(x.status)
+      (x) => x.kind === "Project" && isOngoingStatus(x.status),
     ).length;
 
     return [
@@ -262,12 +275,11 @@ export default function Projects() {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        const msg =
-          errData?.detail
-            ? Array.isArray(errData.detail)
-              ? errData.detail.map((d) => d.msg).join(", ")
-              : String(errData.detail)
-            : `Delete failed (${res.status})`;
+        const msg = errData?.detail
+          ? Array.isArray(errData.detail)
+            ? errData.detail.map((d) => d.msg).join(", ")
+            : String(errData.detail)
+          : `Delete failed (${res.status})`;
         throw new Error(msg);
       }
 
@@ -327,15 +339,11 @@ export default function Projects() {
           { value: "All", label: "Filter By" },
           { value: "Project", label: "Project" },
           { value: "Thesis", label: "Thesis" },
-          { value: "Current/Ongoing", label: "Current / Ongoing" },
-          { value: "Active", label: "Active" },
+
           { value: "Completed", label: "Completed" },
           { value: "In Progress", label: "In Progress" },
-          { value: "Ongoing", label: "Ongoing" },
-          { value: "Current", label: "Current" },
+          { value: "Accepting Members", label: "Accepting Members" },
         ]}
-
-
         addLabel="Add New"
         onAdd={() => setShowCreateOptions(true)}
         columns={[
@@ -344,7 +352,6 @@ export default function Projects() {
           { key: "author", header: "Author / Team" },
           { key: "duration", header: "Duration" },
           { key: "advisor", header: "Advisor" },
-          { key: "year", header: "Year" },
         ]}
         rows={filtered}
         renderCell={(row, key) => {
@@ -380,7 +387,7 @@ export default function Projects() {
               title="View"
               onClick={() =>
                 navigate(
-                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}`
+                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}`,
                 )
               }
             >
@@ -391,7 +398,7 @@ export default function Projects() {
               title="Edit"
               onClick={() =>
                 navigate(
-                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}/edit`
+                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}/edit`,
                 )
               }
             >
@@ -422,8 +429,8 @@ export default function Projects() {
               <DeleteCopy>
                 <DeleteTitle>Are you sure?</DeleteTitle>
                 <DeleteText>
-                  This action cannot be undone. This will permanently delete this{" "}
-                  {deleteTarget.kind.toLowerCase()} from the system.
+                  This action cannot be undone. This will permanently delete
+                  this {deleteTarget.kind.toLowerCase()} from the system.
                 </DeleteText>
                 <DeleteName>{deleteTarget.title}</DeleteName>
               </DeleteCopy>
@@ -482,14 +489,16 @@ export default function Projects() {
             </CreateOptions>
 
             <CreateFooter>
-              <CancelBtn type="button" onClick={() => setShowCreateOptions(false)}>
+              <CancelBtn
+                type="button"
+                onClick={() => setShowCreateOptions(false)}
+              >
                 Cancel
               </CancelBtn>
             </CreateFooter>
           </CreateModal>
         </CreateOverlay>
       ) : null}
-
     </>
   );
 }
