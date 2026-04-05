@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Colors } from "../theme/Colors";
-
-const STORAGE_KEY = "capstone_admin_session";
-const API_BASE = "https://crpp-project.onrender.com";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import {
   Overlay,
   ModalCard,
@@ -27,9 +25,11 @@ import {
   InputWrapper,
   EyeButton,
   sharedInputStyles,
-  CloseActionButton,
 } from "../components/ModalStyles";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+
+const STORAGE_KEY = "capstone_admin_session";
+const API_BASE = "https://crpp-project.onrender.com";
+
 const departments = [
   "Computer Science",
   "Information Technology",
@@ -45,25 +45,34 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
     etsu_email: "",
     first_name: "",
     last_name: "",
+    fullname: "", // Added for Supervisor
+    speciality: "", // Added for Supervisor
     role: "",
     department: "",
     major: "",
     password: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [successOpen, setSuccessOpen] = useState(false);
+
+  // 1. Duck typing to figure out who we are editing
+  const isSupervisor = Boolean(user?.fullname || user?.speciality);
+
   useEffect(() => {
     if (user) {
       setForm({
         etsu_email: user?.etsu_email || user?.email || "",
         first_name: user?.first_name || "",
         last_name: user?.last_name || "",
+        fullname: user?.fullname || "",
+        speciality: user?.speciality || "",
         role: user?.role || "",
         department: user?.department || "",
         major: user?.major || "",
-        // password: user?.password || "••••••••",
+        password: "", // Kept blank so we don't accidentally save dots as a password!
       });
     }
   }, [user]);
@@ -90,14 +99,38 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
         throw new Error("No access token found in session storage");
       }
 
-      const res = await fetch(`${API_BASE}/users/${user.id}`, {
-        method: "PATCH",
+      // 2. Dynamically pick the right endpoint
+      const endpoint = isSupervisor
+        ? `${API_BASE}/supervisors/${user.id}`
+        : `${API_BASE}/users/${user.id}`;
+
+      const method = isSupervisor ? "PUT" : "PATCH";
+
+      // 4. Dynamically build the perfect payload so the backend doesn't crash with a 422
+      const payload = isSupervisor
+        ? {
+            fullname: form.fullname.trim(),
+            speciality: form.speciality.trim(),
+            designation: "",
+          }
+        : {
+            etsu_email: form.etsu_email.trim(),
+            first_name: form.first_name.trim(),
+            last_name: form.last_name.trim(),
+            role: form.role,
+            department: form.department,
+            major: form.major.trim(),
+            ...(form.password ? { password: form.password } : {}), // Only send password if they typed a new one
+          };
+
+      const res = await fetch(endpoint, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       let data = {};
@@ -115,10 +148,16 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
           throw new Error("A user with this email already exists.");
         }
 
-        throw new Error(
-          data?.message || `Failed to update user (${res.status})`,
-        );
+        // Grab the detailed error if the FastAPI backend throws a 422
+        const errorMsg = data?.detail
+          ? Array.isArray(data.detail)
+            ? data.detail[0].msg
+            : String(data.detail)
+          : data?.message;
+
+        throw new Error(errorMsg || `Failed to update (${res.status})`);
       }
+
       setSuccessOpen(true);
 
       setTimeout(() => {
@@ -126,7 +165,7 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
         if (onSuccess) onSuccess(data);
       }, 2000);
     } catch (err) {
-      setError(err.message || "Failed to update user.");
+      setError(err.message || "Failed to update details.");
     } finally {
       setSaving(false);
     }
@@ -139,8 +178,11 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
       <ModalCard onClick={(e) => e.stopPropagation()}>
         <Header>
           <HeaderTextWrap>
-            <Title>Edit User</Title>
-            <Subtitle>Update the selected user's information.</Subtitle>
+            <Title>{isSupervisor ? "Edit Supervisor" : "Edit User"}</Title>
+            <Subtitle>
+              Update the selected {isSupervisor ? "supervisor's" : "user's"}{" "}
+              information.
+            </Subtitle>
           </HeaderTextWrap>
 
           <CloseButton type="button" onClick={onClose}>
@@ -150,115 +192,142 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
 
         <FormBody>
           <Form onSubmit={handleSubmit}>
-            <TwoCol>
-              <Field>
-                <Label>
-                  First Name <Required>*</Required>
-                </Label>
-                <Input
-                  type="text"
-                  name="first_name"
-                  value={form.first_name}
-                  onChange={handleChange}
-                  required
-                />
-              </Field>
+            {/* --- CONDITIONAL RENDERING --- */}
+            {isSupervisor ? (
+              <>
+                <Field>
+                  <Label>
+                    Full Name <Required>*</Required>
+                  </Label>
+                  <Input
+                    type="text"
+                    name="fullname"
+                    value={form.fullname}
+                    onChange={handleChange}
+                    required
+                  />
+                </Field>
 
-              <Field>
-                <Label>
-                  Last Name <Required>*</Required>
-                </Label>
-                <Input
-                  type="text"
-                  name="last_name"
-                  value={form.last_name}
-                  onChange={handleChange}
-                  required
-                />
-              </Field>
-            </TwoCol>
+                <Field>
+                  <Label>Speciality</Label>
+                  <Input
+                    type="text"
+                    name="speciality"
+                    value={form.speciality}
+                    onChange={handleChange}
+                  />
+                </Field>
+              </>
+            ) : (
+              <>
+                <TwoCol>
+                  <Field>
+                    <Label>
+                      First Name <Required>*</Required>
+                    </Label>
+                    <Input
+                      type="text"
+                      name="first_name"
+                      value={form.first_name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Field>
 
-            <Field>
-              <Label>
-                ETSU Email <Required>*</Required>
-              </Label>
-              <Input
-                type="email"
-                name="etsu_email"
-                value={form.etsu_email}
-                onChange={handleChange}
-                required
-              />
-            </Field>
+                  <Field>
+                    <Label>
+                      Last Name <Required>*</Required>
+                    </Label>
+                    <Input
+                      type="text"
+                      name="last_name"
+                      value={form.last_name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </Field>
+                </TwoCol>
 
-            <Field>
-              <Label>
-                Password <Required>*</Required>
-              </Label>
+                <Field>
+                  <Label>
+                    ETSU Email <Required>*</Required>
+                  </Label>
+                  <Input
+                    type="email"
+                    name="etsu_email"
+                    value={form.etsu_email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Field>
 
-              <InputWrapper>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                />
+                <Field>
+                  <Label>New Password</Label>
+                  <InputWrapper>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      placeholder="Leave blank to keep current password"
+                    />
 
-                <EyeButton
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </EyeButton>
-              </InputWrapper>
-            </Field>
-            <TwoCol>
-              <Field>
-                <Label>
-                  Role <Required>*</Required>
-                </Label>
-                <Select
-                  name="role"
-                  value={form.role}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select role</option>
-                  {roles.map((role) => (
-                    <option key={role} value={role}>
-                      {role.charAt(0).toUpperCase() + role.slice(1)}
-                    </option>
-                  ))}
-                </Select>
-              </Field>
+                    <EyeButton
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </EyeButton>
+                  </InputWrapper>
+                </Field>
+                <TwoCol>
+                  <Field>
+                    <Label>
+                      Role <Required>*</Required>
+                    </Label>
+                    <Select
+                      name="role"
+                      value={form.role}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select role</option>
+                      {roles.map((role) => (
+                        <option key={role} value={role}>
+                          {role.charAt(0).toUpperCase() + role.slice(1)}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
 
-              <Field>
-                <Label>Program</Label>
-                <Select
-                  name="department"
-                  value={form.department}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Program</option>
-                  {departments.map((dept) => (
-                    <option key={dept} value={dept}>
-                      {dept}
-                    </option>
-                  ))}
-                </Select>
-              </Field>
-            </TwoCol>
+                  <Field>
+                    <Label>Program</Label>
+                    <Select
+                      name="department"
+                      value={form.department}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Program</option>
+                      {departments.map((dept) => (
+                        <option key={dept} value={dept}>
+                          {dept}
+                        </option>
+                      ))}
+                    </Select>
+                  </Field>
+                </TwoCol>
 
-            <Field>
-              <Label>Major</Label>
-              <Input
-                type="text"
-                name="major"
-                value={form.major}
-                onChange={handleChange}
-              />
-            </Field>
+                <Field>
+                  <Label>Major</Label>
+                  <Input
+                    type="text"
+                    name="major"
+                    value={form.major}
+                    onChange={handleChange}
+                  />
+                </Field>
+              </>
+            )}
 
             {error && <ErrorText>{error}</ErrorText>}
 
@@ -277,9 +346,12 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
         <SuccessOverlay>
           <SuccessCard>
             <SuccessIcon>✓</SuccessIcon>
-            <SuccessTitle>User Details Updated Successfully</SuccessTitle>
+            <SuccessTitle>
+              {isSupervisor ? "Supervisor" : "User"} Updated
+            </SuccessTitle>
             <SuccessText>
-              The user details has been updated to the database successfully.
+              The {isSupervisor ? "supervisor" : "user"} details have been
+              updated successfully.
             </SuccessText>
           </SuccessCard>
         </SuccessOverlay>

@@ -53,7 +53,7 @@ const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";
 const BORDER = "#E5E7EB";
-
+import etsuLogo from "../images/etsuE.png";
 const TOPBAR_H = 76;
 
 export default function AdminLayout() {
@@ -142,8 +142,8 @@ export default function AdminLayout() {
       <TopBar>
         <TopInner>
           <TopLeft>
-            <LogoCircle>Ξ</LogoCircle>
-
+            {/* <LogoCircle>Ξ</LogoCircle> */}
+            <LogoCircle src={etsuLogo} alt="ETSU logo" />
             <div>
               <TopTitle>Dashboard</TopTitle>
               <TopSubtitle>Project &amp; Thesis Management System</TopSubtitle>
@@ -164,6 +164,9 @@ export default function AdminLayout() {
             <SideLink to="/admin/projects">Projects</SideLink>
             {user.role === "admin" && (
               <SideLink to="/admin/users">Users</SideLink>
+            )}
+            {user.role === "admin" && (
+              <SideLink to="/admin/editsupervisors">Edit Supervisors</SideLink>
             )}
           </NavGroup>
 
@@ -224,16 +227,25 @@ const TopLeft = styled.div`
   gap: 14px;
 `;
 
-const LogoCircle = styled.div`
-  width: 46px;
-  height: 46px;
+// const LogoCircle = styled.div`
+//   width: 46px;
+//   height: 46px;
+//   border-radius: 999px;
+//   display: grid;
+//   place-items: center;
+//   background: ${ETSU_GOLD};
+//   color: ${ETSU_NAVY};
+//   font-weight: 900;
+//   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+// `;
+
+const LogoCircle = styled.img`
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: ${ETSU_GOLD};
-  color: ${ETSU_NAVY};
-  font-weight: 900;
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+  background: white;
+  padding: 4px;
 `;
 
 const TopTitle = styled.div`

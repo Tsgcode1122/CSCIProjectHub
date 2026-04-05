@@ -16,6 +16,15 @@ const DeleteUserModal = ({ user, onClose, onConfirm }) => {
 
   if (!user) return null;
 
+  // 1. Duck typing to figure out who we are deleting
+  const isSupervisor = Boolean(user?.fullname || user?.speciality);
+
+  // 2. Dynamically set the display name and entity type
+  const entityType = isSupervisor ? "Supervisor" : "User";
+  const displayName = isSupervisor
+    ? user.fullname
+    : `${user.first_name} ${user.last_name}`;
+
   const handleDelete = async () => {
     try {
       setLoading(true);
@@ -29,7 +38,7 @@ const DeleteUserModal = ({ user, onClose, onConfirm }) => {
         onClose();
       }, 3000);
     } catch (err) {
-      setError(err.message || "Failed to delete user.");
+      setError(err.message || `Failed to delete ${entityType.toLowerCase()}.`);
     } finally {
       setLoading(false);
     }
@@ -40,14 +49,10 @@ const DeleteUserModal = ({ user, onClose, onConfirm }) => {
       <ModalCard onClick={(e) => e.stopPropagation()}>
         {!success ? (
           <>
-            <Title>Delete User</Title>
+            <Title>Delete {entityType}</Title>
 
             <Message>
-              Are you sure you want to delete{" "}
-              <strong>
-                {user.first_name} {user.last_name}
-              </strong>
-              ?
+              Are you sure you want to delete <strong>{displayName}</strong>?
             </Message>
 
             <SubText>This action cannot be undone.</SubText>
@@ -66,9 +71,9 @@ const DeleteUserModal = ({ user, onClose, onConfirm }) => {
         ) : (
           <>
             <SuccessIcon>✓</SuccessIcon>
-            <SuccessTitle>User Deleted</SuccessTitle>
+            <SuccessTitle>{entityType} Deleted</SuccessTitle>
             <SuccessText>
-              {user.first_name} {user.last_name} has been successfully removed.
+              <strong>{displayName}</strong> has been successfully removed.
             </SuccessText>
           </>
         )}

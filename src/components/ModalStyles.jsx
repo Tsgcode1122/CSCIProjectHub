@@ -4,7 +4,8 @@ import { Colors } from "../theme/Colors";
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(4, 30, 66, 0.35);
+  background: rgba(0, 3, 6, 0.588);
+
   display: flex;
   justify-content: center;
   align-items: center;

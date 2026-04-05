@@ -31,6 +31,12 @@ import AdminLogin from "./admin/pages/AdminLogin";
 import AdminProjects from "./admin/pages/Projects";
 import AdminUsers from "./admin/pages/Users";
 
+import AddProject from "./admin/pages/AddProject";
+import AdminEntryView from "./admin/pages/AdminEntryView";
+import AdminEntryEdit from "./admin/pages/AdminEntryEdit";
+import AdminEntryCreate from "./admin/pages/AdminEntryCreate";
+import EditSupervisors from "./admin/pages/EditSupervisors";
+
 const StyledResult = styled(Result)`
   .ant-result-title {
     color: black !important;
@@ -106,6 +112,12 @@ const routes = [
 
           // /admin/projects
           { path: "projects", element: <AdminProjects /> },
+          { path: "editsupervisors", element: <EditSupervisors /> },
+          { path: "projects/new", element: <AddProject /> },
+
+          { path: "entries/:kind/:id", element: <AdminEntryView /> },
+          { path: "entries/:kind/:id/edit", element: <AdminEntryEdit /> },
+          { path: "create/:kind", element: <AdminEntryCreate /> },
 
           // /admin/users
           { path: "users", element: <AdminUsers /> },
