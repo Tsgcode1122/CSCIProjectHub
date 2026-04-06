@@ -6,6 +6,15 @@ import CreateUser from "../../components/CreateUser";
 import DeleteUserModal from "../../components/DeleteUserModal";
 import EditUserModal from "../../components/EditUserModal";
 import ViewUserModal from "../../components/ViewUserModal";
+import {
+  FaEye,
+  FaEdit,
+  FaTrash,
+  FaUsers,
+  FaUniversity,
+  FaUserShield,
+  FaUserGraduate,
+} from "react-icons/fa";
 
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
@@ -140,14 +149,14 @@ export default function Users() {
         label: "Total Users",
         value: loading ? "—" : total,
         accent: ETSU_NAVY,
-        icon: "👥",
+        icon: <FaUsers size={18} />,
         iconBg: "rgba(4,30,66,0.10)",
       },
       {
         label: "Admins",
         value: loading ? "—" : admins,
         accent: "#3B82F6",
-        icon: "🛡️",
+        icon: <FaUserShield size={18} />,
         iconBg: "rgba(59,130,246,0.12)",
         valueColor: "#3B82F6",
       },
@@ -155,14 +164,14 @@ export default function Users() {
         label: "Faculty",
         value: loading ? "—" : students,
         accent: "#111827",
-        icon: "🎓",
+        icon: <FaUserGraduate size={18} />,
         iconBg: "rgba(17,24,39,0.10)",
       },
       {
         label: "Departments",
         value: loading ? "—" : Math.max(0, deptOptions.length - 1),
         accent: "#FFC72C",
-        icon: "🏛️",
+        icon: <FaUniversity size={18} />,
         iconBg: "rgba(255,199,44,0.20)",
       },
     ];
@@ -312,7 +321,7 @@ export default function Users() {
                 setViewOpen(true);
               }}
             >
-              👁
+              <FaEye />
             </IconBtn>
             <IconBtn
               title="Edit"
@@ -322,7 +331,7 @@ export default function Users() {
                 setEditOpen(true);
               }}
             >
-              ✎
+              <FaEdit />
             </IconBtn>
             <IconBtn
               title="Delete"
@@ -331,7 +340,7 @@ export default function Users() {
                 setDeleteOpen(true);
               }}
             >
-              🗑
+              <FaTrash />
             </IconBtn>
           </>
         )}
