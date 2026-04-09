@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { Result, Button } from "antd";
+import { Result, Button, App as AntApp } from "antd";
 import Layout from "./fixedComponent/Layout";
 import Home from "./pages/Home";
 import ThesesGrid from "./pages/theses/ThesesGrid";
@@ -133,9 +133,11 @@ const App = () => (
   <>
     <GlobalStyle />
 
-    <AdminAuthProvider>
-      <RouterProvider router={router} />
-    </AdminAuthProvider>
+    <AntApp>
+      <AdminAuthProvider>
+        <RouterProvider router={router} />
+      </AdminAuthProvider>
+    </AntApp>
 
     {/* <RouterProvider router={router} /> */}
   </>

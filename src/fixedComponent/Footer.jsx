@@ -117,7 +117,10 @@ const Footer = () => {
 
           <Bottom>
             <Copyright>
-              © {new Date().getFullYear()} East Tennessee State University. All
+              <AdminTrigger to="/admin/login">
+                ©
+              </AdminTrigger>{" "}
+              {new Date().getFullYear()} East Tennessee State University. All
               rights reserved.
             </Copyright>
 
@@ -331,5 +334,15 @@ const BottomLinks = styled.div`
 
   @media ${media.tablet} {
     justify-content: flex-end;
+  }
+`;
+
+const AdminTrigger = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
   }
 `;

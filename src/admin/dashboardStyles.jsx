@@ -257,7 +257,7 @@ export const Right = styled.div`
 export const PageCol = styled.div`
   display: flex;
   flex-direction: column;
-  height: 95%;
+  height: 100%;
   gap: 14px;
   min-height: 0;
 `;

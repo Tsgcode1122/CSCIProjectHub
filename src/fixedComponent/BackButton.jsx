@@ -38,4 +38,6 @@ const Wrapper = styled.button`
   &:hover {
     text-decoration: underline;
   }
+
+  text-transform: capitalize;
 `;

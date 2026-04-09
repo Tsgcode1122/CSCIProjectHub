@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "../AdminAuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function AdminLogin() {
   const nav = useNavigate();
@@ -11,6 +12,8 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -62,12 +65,21 @@ export default function AdminLogin() {
 
             <Field>
               <Label>Password</Label>
-              <Input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <PasswordWrapper>
+                <PasswordInput
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              
+                <ToggleButton
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </ToggleButton>
+              </PasswordWrapper>
             </Field>
 
             {err ? <ErrorText>{err}</ErrorText> : null}
@@ -77,7 +89,7 @@ export default function AdminLogin() {
             </PrimaryButton>
           </form>
 
-          <DividerWrap>
+          {/* <DividerWrap>
             <Line />
             <DividerText>Or continue with</DividerText>
             <Line />
@@ -95,7 +107,7 @@ export default function AdminLogin() {
               <path d="M23 23H12V12h11v11z" fill="#FFB900" />
             </MicrosoftIcon>
             Sign in with Microsoft
-          </OutlineButton>
+          </OutlineButton> */}
 
           <Footnote>
             Authorized personnel only. All access is monitored.
@@ -126,12 +138,21 @@ const Bg = styled.div`
   );
 `;
 
+// const Card = styled.div`
+//   width: 100%;
+//   max-width: 430px;
+//   background: #ffffff;
+//   border-radius: 18px;
+//   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+//   overflow: hidden;
+// `;
+
 const Card = styled.div`
   width: 100%;
   max-width: 430px;
   background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
   overflow: hidden;
 `;
 
@@ -165,52 +186,127 @@ const Subtitle = styled.p`
   font-size: 13px;
 `;
 
+// const Body = styled.div`
+//   padding: 18px 22px 22px;
+// `;
+
 const Body = styled.div`
-  padding: 18px 22px 22px;
+  padding: 22px 24px 26px;
 `;
 
+// const Field = styled.div`
+//   display: grid;
+//   gap: 6px;
+//   margin-bottom: 12px;
+// `;
+
 const Field = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  width: 100%;
 `;
 
 const Label = styled.label`
-  font-size: 12px;
+  font-size: 13px;
   color: #111827;
-  font-weight: 600;
+  font-weight: 700;
 `;
 
+// const Input = styled.input`
+//   border: 1px solid #d1d5db;
+//   border-radius: 12px;
+//   padding: 10px 12px;
+//   outline: none;
+//   font-size: 14px;
+
+//   &:focus {
+//     border-color: ${ETSU_NAVY};
+//     box-shadow: 0 0 0 3px rgba(4, 30, 66, 0.15);
+//   }
+// `;
+
+// const Input = styled.input`
+//   width: 100%;
+//   border-sizing: border-box;
+//   border: 1px solid #d1d5db;
+//   border-radius: 12px;
+//   padding: 10px 40px 10px 12px;
+//   outline: none;
+//   font-size: 14px;
+
+//   &:focus {
+//     border-color: ${ETSU_NAVY};
+//     box-shadow: 0 0 0 3px rgba(4, 30, 66, 0.15);
+//   }
+// `;
+
 const Input = styled.input`
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 14px;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
+  background: #eef3fb;
+  color: #111827;
+  transition: all 0.2s ease;
 
   &:focus {
     border-color: ${ETSU_NAVY};
-    box-shadow: 0 0 0 3px rgba(4, 30, 66, 0.15);
+    box-shadow: 0 0 0 3px rgba(4, 30, 66, 0.12);
+    background: #fff;
+  }
+
+  &::placeholder {
+    color: #94a3b8;
   }
 `;
+
+// const PrimaryButton = styled.button`
+//   width: 100%;
+//   border: none;
+//   border-radius: 12px;
+//   padding: 11px 12px;
+//   font-weight: 700;
+//   color: white;
+//   background: ${ETSU_NAVY};
+//   cursor: pointer;
+//   margin-top: 6px;
+
+//   &:hover {
+//     filter: brightness(0.95);
+//   }
+//   &:disabled {
+//     opacity: 0.65;
+//     cursor: not-allowed;
+//   }
+// `;
 
 const PrimaryButton = styled.button`
   width: 100%;
   border: none;
-  border-radius: 12px;
-  padding: 11px 12px;
+  border-radius: 14px;
+  padding: 13px 16px;
   font-weight: 700;
+  font-size: 15px;
   color: white;
   background: ${ETSU_NAVY};
   cursor: pointer;
-  margin-top: 6px;
+  margin-top: 4px;
+  transition: 0.2s ease;
 
   &:hover {
-    filter: brightness(0.95);
+    filter: brightness(0.96);
+    transform: translateY(-1px);
   }
+
   &:disabled {
     opacity: 0.65;
     cursor: not-allowed;
+    transform: none;
   }
 `;
 
@@ -295,5 +391,39 @@ const BackLink = styled(Link)`
   &:hover {
     opacity: 1;
     text-decoration: underline;
+  }
+`;
+
+const PasswordWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const PasswordInput = styled(Input)`
+  padding-right: 44px;
+`;
+
+const ToggleButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: ${ETSU_NAVY};
   }
 `;
