@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "./AdminAuthContext";
-import etsuLogo from "../images/etsuE.png"
+import etsuLogo from "../images/etsuE.png";
 
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
@@ -11,7 +11,7 @@ const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";
 const BORDER = "#E5E7EB";
-import etsuLogo from "../images/etsuE.png";
+
 const TOPBAR_H = 76;
 
 export default function AdminLayout() {
