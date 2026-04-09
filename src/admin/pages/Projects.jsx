@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { flushSync } from "react-dom";
 import styled from "styled-components";
 import Dashboard from "../../components/Dashboard";
+import NoResultsState from "../../components/NoResultsState";
 import {
   TypeBadge,
   ChipRow,
@@ -35,15 +37,10 @@ function safeLower(x) {
 function formatDuration(start, end, projectStatus) {
   const status = safeLower(projectStatus).trim();
 
-  // If status is specifically "Accepting Members", force "Ongoing"
-  if (status === "accepting members") {
-    return start ? `${start} – Ongoing` : "Ongoing";
-  }
-  if (status === "in progress") {
+  if (status === "accepting members" || status === "in progress") {
     return start ? `${start} – Ongoing` : "Ongoing";
   }
 
-  // Original logic for everything else
   if (start && end) return `${start} – ${end}`;
   if (start) return start;
   if (end) return end;
@@ -59,6 +56,7 @@ function isOngoingStatus(status) {
 
 function normalizeProject(p) {
   const currentStatus = p.project_status || p.status || "—";
+
   return {
     id: p.id,
     kind: "Project",
@@ -69,7 +67,6 @@ function normalizeProject(p) {
     year: p.year ?? "—",
     department: p.department ?? "—",
     status: currentStatus,
-    // Pass the status here
     duration: formatDuration(p.duration_start, p.duration_end, currentStatus),
     tags: Array.isArray(p.tags) ? p.tags : [],
     raw: p,
@@ -78,6 +75,7 @@ function normalizeProject(p) {
 
 function normalizeThesis(r) {
   const currentStatus = r.research_status || r.status || "—";
+
   return {
     id: r.id,
     kind: "Thesis",
@@ -91,24 +89,30 @@ function normalizeThesis(r) {
     year: r.year ?? "—",
     department: r.department ?? "—",
     status: currentStatus,
-   
     duration: formatDuration(r.duration_start, r.duration_end, currentStatus),
     tags: Array.isArray(r.tags) ? r.tags : [],
     raw: r,
   };
 }
 
+function sortRows(rows) {
+  return [...rows].sort((a, b) => {
+    const ay = Number(a.year) || 0;
+    const by = Number(b.year) || 0;
+    if (by !== ay) return by - ay;
+    return safeLower(a.title).localeCompare(safeLower(b.title));
+  });
+}
+
 export default function Projects() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { adminUser } = useAdminAuth();
 
   const [query, setQuery] = useState("");
   const [filterBy, setFilterBy] = useState("All");
 
-  const [projects, setProjects] = useState([]);
-  const [thesis, setThesis] = useState([]);
-
-  const [loading, setLoading] = useState(true);
+  const [rows, setRows] = useState(null); // null = still loading page
   const [error, setError] = useState("");
 
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -119,28 +123,19 @@ export default function Projects() {
 
   async function loadData(signal) {
     try {
-      setLoading(true);
       setError("");
+      setRows(null);
+
+      const headers = {
+        Accept: "application/json",
+        ...(adminUser?.access_token
+          ? { Authorization: `Bearer ${adminUser.access_token}` }
+          : {}),
+      };
 
       const [pRes, rRes] = await Promise.all([
-        fetch(`${API_BASE}/projects/`, {
-          signal,
-          headers: {
-            Accept: "application/json",
-            ...(adminUser?.access_token
-              ? { Authorization: `Bearer ${adminUser.access_token}` }
-              : {}),
-          },
-        }),
-        fetch(`${API_BASE}/research/`, {
-          signal,
-          headers: {
-            Accept: "application/json",
-            ...(adminUser?.access_token
-              ? { Authorization: `Bearer ${adminUser.access_token}` }
-              : {}),
-          },
-        }),
+        fetch(`${API_BASE}/projects/`, { signal, headers }),
+        fetch(`${API_BASE}/research/`, { signal, headers }),
       ]);
 
       if (!pRes.ok) throw new Error(`Projects fetch failed (${pRes.status})`);
@@ -149,14 +144,19 @@ export default function Projects() {
       const pJson = await pRes.json();
       const rJson = await rRes.json();
 
-      setProjects(Array.isArray(pJson) ? pJson : []);
-      setThesis(Array.isArray(rJson) ? rJson : []);
+      const mergedRows = sortRows([
+        ...(Array.isArray(pJson) ? pJson : []).map(normalizeProject),
+        ...(Array.isArray(rJson) ? rJson : []).map(normalizeThesis),
+      ]);
+
+      flushSync(() => {
+        setRows(mergedRows);
+      });
     } catch (e) {
       if (e.name !== "AbortError") {
         setError(e.message || "Failed to load data.");
+        setRows([]);
       }
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -164,24 +164,14 @@ export default function Projects() {
     const ac = new AbortController();
     loadData(ac.signal);
     return () => ac.abort();
-  }, []);
+  }, [adminUser?.access_token, location.pathname]);
 
-  const allRows = useMemo(() => {
-    const pRows = projects.map(normalizeProject);
-    const tRows = thesis.map(normalizeThesis);
-
-    return [...pRows, ...tRows].sort((a, b) => {
-      const ay = Number(a.year) || 0;
-      const by = Number(b.year) || 0;
-      if (by !== ay) return by - ay;
-      return safeLower(a.title).localeCompare(safeLower(b.title));
-    });
-  }, [projects, thesis]);
+  const safeRows = rows ?? [];
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return allRows.filter((r) => {
+    return safeRows.filter((r) => {
       const matchesFilter =
         filterBy === "All"
           ? true
@@ -208,27 +198,43 @@ export default function Projects() {
 
       return matchesFilter && matchesQuery;
     });
-  }, [allRows, query, filterBy]);
+  }, [safeRows, query, filterBy]);
 
+  const isEmptyState = query.trim() && filtered.length === 0;
+
+  const displayRows = isEmptyState
+    ? [{ id: "no-results", isEmpty: true }]
+    : filtered;
+
+  const tableColumns = isEmptyState
+    ? [{ key: "empty", header: "" }]
+    : [
+        { key: "kind", header: "Type" },
+        { key: "title", header: "Title" },
+        { key: "author", header: "Author / Team" },
+        { key: "duration", header: "Duration" },
+        { key: "advisor", header: "Advisor" },
+      ];
+      
   const stats = useMemo(() => {
-    const total = allRows.length;
-    const projectCount = allRows.filter((x) => x.kind === "Project").length;
-    const thesisCount = allRows.filter((x) => x.kind === "Thesis").length;
-    const activeProjects = allRows.filter(
+    const total = safeRows.length;
+    const projectCount = safeRows.filter((x) => x.kind === "Project").length;
+    const thesisCount = safeRows.filter((x) => x.kind === "Thesis").length;
+    const activeProjects = safeRows.filter(
       (x) => x.kind === "Project" && isOngoingStatus(x.status),
     ).length;
 
     return [
       {
         label: "Total Entries",
-        value: loading ? "—" : total,
+        value: rows === null ? "—" : total,
         accent: ETSU_NAVY,
         icon: <FaFolderOpen size={18} />,
         iconBg: "rgba(4,30,66,0.10)",
       },
       {
         label: "Active Projects",
-        value: loading ? "—" : activeProjects,
+        value: rows === null ? "—" : activeProjects,
         accent: "#3B82F6",
         icon: <FaBolt size={18} />,
         iconBg: "rgba(59,130,246,0.12)",
@@ -236,20 +242,20 @@ export default function Projects() {
       },
       {
         label: "Projects",
-        value: loading ? "—" : projectCount,
+        value: rows === null ? "—" : projectCount,
         accent: ETSU_GOLD,
         icon: <FaFolder size={18} />,
         iconBg: "rgba(255,199,44,0.20)",
       },
       {
         label: "Thesis",
-        value: loading ? "—" : thesisCount,
+        value: rows === null ? "—" : thesisCount,
         accent: "#111827",
         icon: <FaBookOpen size={18} />,
         iconBg: "rgba(17,24,39,0.10)",
       },
     ];
-  }, [allRows, loading]);
+  }, [safeRows, rows]);
 
   async function handleDeleteConfirmed() {
     if (!deleteTarget) return;
@@ -292,11 +298,11 @@ export default function Projects() {
     }
   }
 
-  if (loading) {
+  if (rows === null) {
     return (
       <LoadingScreen
-        title="Loading entries"
-        subtitle="Fetching projects and theses from the repository."
+        title="Loading data"
+        subtitle="Fetching projects and thesis from the repository."
         compact
       />
     );
@@ -339,22 +345,90 @@ export default function Projects() {
           { value: "All", label: "Filter By" },
           { value: "Project", label: "Project" },
           { value: "Thesis", label: "Thesis" },
-
           { value: "Completed", label: "Completed" },
           { value: "In Progress", label: "In Progress" },
           { value: "Accepting Members", label: "Accepting Members" },
         ]}
         addLabel="Add New"
         onAdd={() => setShowCreateOptions(true)}
-        columns={[
-          { key: "kind", header: "Type" },
-          { key: "title", header: "Title" },
-          { key: "author", header: "Author / Team" },
-          { key: "duration", header: "Duration" },
-          { key: "advisor", header: "Advisor" },
-        ]}
-        rows={filtered}
+        // columns={[
+        //   { key: "kind", header: "Type" },
+        //   { key: "title", header: "Title" },
+        //   { key: "author", header: "Author / Team" },
+        //   { key: "duration", header: "Duration" },
+        //   { key: "advisor", header: "Advisor" },
+        // ]}
+        // rows={filtered}
+        columns={tableColumns}
+        rows={displayRows}
+        // renderCell={(row, key) => {
+        //   if (key === "kind") {
+        //     return (
+        //       <TypeBadge kind={row.kind}>
+        //         <span aria-hidden="true">▢</span> {row.kind}
+        //       </TypeBadge>
+        //     );
+        //   }
+
+        //   if (key === "title") {
+        //     if (row.isEmpty) {
+        //       return (
+        //         <div
+        //           style={{
+        //             width: "100%",
+        //             minHeight: 260,
+        //             display: "flex",
+        //             justifyContent: "center",
+        //             alignItems: "center",
+        //           }}
+        //         >
+        //           <NoResultsState
+        //             query={query}
+        //             title="No entries found"
+        //             subtitle={`Could not find anything matching "${query}"`}
+        //           />
+        //         </div>
+        //       );
+        //     }
+
+        //     return (
+        //       <>
+        //         <div style={{ fontWeight: 800 }}>{row.title}</div>
+        //         <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
+        //           {row.department} • {row.status}
+        //         </div>
+        //         <ChipRow>
+        //           {(row.tags || []).slice(0, 4).map((t) => (
+        //             <Chip key={t}>{t}</Chip>
+        //           ))}
+        //         </ChipRow>
+        //       </>
+        //     );
+        //   }
+
+        //   return row[key] ?? "—";
+        // }}
         renderCell={(row, key) => {
+          if (row.isEmpty) {
+            return (
+              <div
+                style={{
+                  width: "100%",
+                  minHeight: 260,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <NoResultsState
+                  query={query}
+                  title="No entries found"
+                  subtitle={`Could not find anything matching "${query}"`}
+                />
+              </div>
+            );
+          }
+
           if (key === "kind") {
             return (
               <TypeBadge kind={row.kind}>
@@ -381,7 +455,8 @@ export default function Projects() {
 
           return row[key] ?? "—";
         }}
-        renderActions={(row) => (
+        renderActions={
+          isEmptyState ? undefined : (row) => (
           <>
             <IconBtn
               title="View"
