@@ -21,7 +21,7 @@ export const ProjectProvider = ({ children }) => {
         const data = res.data ?? [];
         console.log(res.data);
 
-        setProjects(Array.isArray(data) ? data : []);
+        setProjects(Array.isArray(data) ? data.reverse() : []);
       } catch (err) {
         console.error("Error fetching projects:", err);
         setError(

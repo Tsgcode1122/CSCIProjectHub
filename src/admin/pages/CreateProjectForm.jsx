@@ -1,7 +1,15 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import styled from "styled-components";
 import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
+import ReactSelect from "react-select";
+import CreateUserModal from "../../components/CreateUser";
+import {
+  formatToMonthYear,
+  parseToMonthInput,
+} from "../components/dateHelpers";
+const API_BASE = "https://crpp-project.onrender.com";
+const STORAGE_KEY = "capstone_admin_session";
 
 export default function CreateProjectForm({
   saving = false,
@@ -15,11 +23,10 @@ export default function CreateProjectForm({
     supervisor: "",
     department: "",
     project_status: "",
-    status: "pending",
-    accepting_members: false,
+
     project_link: "",
     sourcecode_link: "",
-    thumbnail_url: "",
+
     duration_start: "",
     duration_end: "",
     team_members: [],
@@ -39,7 +46,115 @@ export default function CreateProjectForm({
     challenge: "",
     solution: "",
   });
+  // --- NEW SUPERVISOR & REACT-SELECT LOGIC ---
+  const [apiSupervisors, setApiSupervisors] = useState([]);
+  const [showAddSupervisor, setShowAddSupervisor] = useState(false);
 
+  const fetchSupervisors = async () => {
+    try {
+      const storedSession = sessionStorage.getItem(STORAGE_KEY);
+      const token = storedSession
+        ? JSON.parse(storedSession)?.access_token
+        : null;
+      if (!token) return;
+
+      const res = await fetch(`${API_BASE}/supervisors/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const sorted = (Array.isArray(data) ? data : []).sort((a, b) =>
+          (a.fullname || "").localeCompare(b.fullname || ""),
+        );
+        setApiSupervisors(sorted);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchSupervisors();
+  }, []);
+
+  const supervisorOptions = apiSupervisors.map((sup) => ({
+    value: sup.fullname,
+    label: sup.fullname,
+  }));
+
+  supervisorOptions.push({
+    value: "ADD_NEW",
+    label: "➕ Not in database? Add new supervisor",
+    isCustomAction: true,
+  });
+
+  const departmentOptions = [
+    { value: "Computer Science", label: "Computer Science" },
+    { value: "Information Systems", label: "Information Systems" },
+    { value: "Information Technology", label: "Information Technology" },
+    { value: "Data Science", label: "Data Science" },
+    { value: "Cybersecurity", label: "Cybersecurity" },
+  ];
+
+  const projectStatusOptions = [
+    { value: "Accepting Members", label: "Accepting Members" },
+    { value: "In Progress", label: "In Progress" },
+    { value: "Completed", label: "Completed" },
+  ];
+
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: "12px",
+      borderColor: "#e2e8f0",
+      padding: "2px",
+      boxShadow: "none",
+      "&:hover": { borderColor: "#cbd5e1" },
+    }),
+    option: (provided, state) => {
+      if (state.data.isCustomAction) {
+        return {
+          ...provided,
+          color: "#3B82F6",
+          fontWeight: "800",
+          backgroundColor: state.isFocused ? "#eff6ff" : "white",
+          cursor: "pointer",
+          borderTop: "1px solid #e2e8f0",
+        };
+      }
+      return {
+        ...provided,
+        color: ETSU_NAVY,
+        backgroundColor: state.isSelected
+          ? "#eef2f7"
+          : state.isFocused
+            ? "#f8fafc"
+            : "white",
+        cursor: "pointer",
+      };
+    },
+  };
+
+  const handleSupervisorChange = (selectedOption) => {
+    if (!selectedOption) {
+      updateField("supervisor", "");
+      return;
+    }
+    if (selectedOption.value === "ADD_NEW") setShowAddSupervisor(true);
+    else updateField("supervisor", selectedOption.value);
+  };
+
+  const handleSupervisorAdded = (newSupervisor) => {
+    setShowAddSupervisor(false);
+    fetchSupervisors();
+    if (newSupervisor?.fullname)
+      updateField("supervisor", newSupervisor.fullname);
+  };
+  // -------------------------------------------
   const canSubmit = useMemo(() => {
     return (
       form.title.trim() &&
@@ -63,7 +178,7 @@ export default function CreateProjectForm({
 
     setForm((prev) => {
       const exists = prev[listKey].some(
-        (item) => String(item).toLowerCase() === value.toLowerCase()
+        (item) => String(item).toLowerCase() === value.toLowerCase(),
       );
       if (exists) return prev;
       return { ...prev, [listKey]: [...prev[listKey], value] };
@@ -100,7 +215,7 @@ export default function CreateProjectForm({
     setForm((prev) => ({
       ...prev,
       challenges_solutions: prev.challenges_solutions.filter(
-        (_, i) => i !== index
+        (_, i) => i !== index,
       ),
     }));
   }
@@ -108,29 +223,32 @@ export default function CreateProjectForm({
   function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit?.({
+    // We build the object manually to ensure the Arrays are passed correctly
+    const payload = {
       title: form.title.trim(),
+      short_description: form.short_description.trim(),
       overview: form.overview.trim(),
-      key_features: form.key_features,
-      challenges_solutions: form.challenges_solutions,
-      team_members: form.team_members,
-      supervisor: form.supervisor.trim(),
+      supervisor: form.supervisor,
+      department: form.department,
+      project_status: form.project_status,
+
       project_link: form.project_link.trim(),
       sourcecode_link: form.sourcecode_link.trim(),
-      tech_stack: form.tech_stack,
-      achievements: form.achievements,
-      status: form.status.trim() || "pending",
-      department: form.department.trim(),
-      project_status: form.project_status.trim(),
-      accepting_members: form.accepting_members,
-      tags: form.tags,
-      thumbnail_url: form.thumbnail_url.trim(),
-      short_description: form.short_description.trim(),
-      duration_start: form.duration_start.trim(),
-      duration_end: form.duration_end.trim(),
-    });
-  }
 
+      duration_start: formatToMonthYear(form.duration_start),
+      duration_end: formatToMonthYear(form.duration_end),
+
+      team_members: form.team_members,
+      tags: form.tags,
+      tech_stack: form.tech_stack,
+      key_features: form.key_features,
+      achievements: form.achievements,
+      challenges_solutions: form.challenges_solutions,
+    };
+
+    console.log("DEBUG: Final Create Payload", payload); // Check your console to see the arrays!
+    onSubmit?.(payload);
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Section>
@@ -155,65 +273,57 @@ export default function CreateProjectForm({
         <Grid2>
           <Field>
             <Label>Supervisor *</Label>
-            <Input
-              value={form.supervisor}
-              onChange={(e) => updateField("supervisor", e.target.value)}
+            <ReactSelect
+              options={supervisorOptions}
+              styles={customSelectStyles}
+              onChange={handleSupervisorChange}
+              value={
+                supervisorOptions.find(
+                  (opt) => opt.value === form.supervisor,
+                ) || null
+              }
+              placeholder="Select a supervisor..."
+              isClearable={true}
             />
           </Field>
 
           <Field>
             <Label>Department *</Label>
-            <Input
-              value={form.department}
-              onChange={(e) => updateField("department", e.target.value)}
+            <ReactSelect
+              options={departmentOptions}
+              styles={customSelectStyles}
+              onChange={(selected) =>
+                updateField("department", selected ? selected.value : "")
+              }
+              value={
+                departmentOptions.find(
+                  (opt) => opt.value === form.department,
+                ) || null
+              }
+              placeholder="Select a department..."
+              isClearable={true}
             />
           </Field>
         </Grid2>
 
         <Grid2>
-          {/* <Field>
-            <Label>Status</Label>
-            <Input
-              value={form.status}
-              onChange={(e) => updateField("status", e.target.value)}
-              placeholder="pending"
-            />
-          </Field> */}
-
           <Field>
-            <Label>Status</Label>
-            <Select
-                value={form.status}
-                onChange={(e) => updateField("status", e.target.value)}
-            >
-                <option value="pending">Pending</option>
-                <option value="active">Active</option>
-                <option value="completed">Completed</option>
-                <option value="archived">Archived</option>
-            </Select>
+            <Label>Project Status</Label>
+            <ReactSelect
+              options={projectStatusOptions}
+              styles={customSelectStyles}
+              onChange={(selected) =>
+                updateField("project_status", selected ? selected.value : "")
+              }
+              value={
+                projectStatusOptions.find(
+                  (opt) => opt.value === form.project_status,
+                ) || null
+              }
+              placeholder="Select project status..."
+              isClearable={true}
+            />
           </Field>
-
-          {/* <Field>
-            <Label>Project Status</Label>
-            <Input
-              value={form.project_status}
-              onChange={(e) => updateField("project_status", e.target.value)}
-            />
-          </Field> */}
-
-          <Field>
-            <Label>Project Status</Label>
-                <Select
-                    value={form.project_status}
-                    onChange={(e) => updateField("project_status", e.target.value)}
-                >
-                    <option value="">Select status</option>
-                    <option value="planning">Planning</option>
-                    <option value="in progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                    <option value="on hold">On Hold</option>
-                </Select>
-            </Field>
         </Grid2>
 
         <Field>
@@ -247,18 +357,11 @@ export default function CreateProjectForm({
           </Field>
         </Grid2>
 
-        <Field>
-          <Label>Thumbnail URL</Label>
-          <Input
-            value={form.thumbnail_url}
-            onChange={(e) => updateField("thumbnail_url", e.target.value)}
-          />
-        </Field>
-
         <Grid2>
           <Field>
             <Label>Duration Start</Label>
             <Input
+              type="month"
               value={form.duration_start}
               onChange={(e) => updateField("duration_start", e.target.value)}
             />
@@ -267,23 +370,12 @@ export default function CreateProjectForm({
           <Field>
             <Label>Duration End</Label>
             <Input
+              type="month"
               value={form.duration_end}
               onChange={(e) => updateField("duration_end", e.target.value)}
             />
           </Field>
         </Grid2>
-
-        <CheckboxRow>
-          <input
-            id="accepting_members"
-            type="checkbox"
-            checked={form.accepting_members}
-            onChange={(e) => updateField("accepting_members", e.target.checked)}
-          />
-          <CheckboxLabel htmlFor="accepting_members">
-            Accepting Members
-          </CheckboxLabel>
-        </CheckboxRow>
       </Section>
 
       <Section>

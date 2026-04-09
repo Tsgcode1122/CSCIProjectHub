@@ -1,12 +1,31 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
-
+import { useProjectContext } from "../../context/ProjectContext";
+import CreateUserModal from "../../components/CreateUser";
+import ReactSelect from "react-select";
+import {
+  formatToMonthYear,
+  parseToMonthInput,
+} from "../components/dateHelpers";
 function safeArray(value) {
   return Array.isArray(value) ? value : [];
 }
-
+const statusOptions = [
+  { value: "Accepting Members", label: "Accepting Members" },
+  { value: "In Progress", label: "In Progress" },
+  { value: "Completed", label: "Completed" },
+];
+const departmentOptions = [
+  { value: "Computer Science", label: "Computer Science" },
+  { value: "Information Systems", label: "Information Systems" },
+  { value: "Information Technology", label: "Information Technology" },
+  { value: "Data Science", label: "Data Science" },
+  { value: "Cybersecurity", label: "Cybersecurity" },
+];
+const API_BASE = "https://crpp-project.onrender.com";
+const STORAGE_KEY = "capstone_admin_session";
 export default function EditProjectForm({
   initialData,
   saving,
@@ -21,12 +40,12 @@ export default function EditProjectForm({
     department: initialData.department ?? "",
     project_status: initialData.project_status ?? "",
     status: initialData.status ?? "",
-    accepting_members: Boolean(initialData.accepting_members),
+    // accepting_members: Boolean(initialData.accepting_members),
     project_link: initialData.project_link ?? "",
     sourcecode_link: initialData.sourcecode_link ?? "",
-    thumbnail_url: initialData.thumbnail_url ?? "",
-    duration_start: initialData.duration_start ?? "",
-    duration_end: initialData.duration_end ?? "",
+    // thumbnail_url: initialData.thumbnail_url ?? "",
+    duration_start: parseToMonthInput(initialData.duration_start),
+    duration_end: parseToMonthInput(initialData.duration_end),
     team_members: safeArray(initialData.team_members),
     tags: safeArray(initialData.tags),
     tech_stack: safeArray(initialData.tech_stack),
@@ -34,6 +53,7 @@ export default function EditProjectForm({
     achievements: safeArray(initialData.achievements),
     challenges_solutions: safeArray(initialData.challenges_solutions),
   });
+  const { projects, loading, error } = useProjectContext();
 
   const [inputs, setInputs] = useState({
     team_members: "",
@@ -44,7 +64,114 @@ export default function EditProjectForm({
     challenge: "",
     solution: "",
   });
+  // --- NEW SUPERVISOR LOGIC ---
+  const [apiSupervisors, setApiSupervisors] = useState([]);
+  const [showAddSupervisor, setShowAddSupervisor] = useState(false);
 
+  const fetchSupervisors = async () => {
+    try {
+      const storedSession = sessionStorage.getItem(STORAGE_KEY);
+      const token = storedSession
+        ? JSON.parse(storedSession)?.access_token
+        : null;
+      if (!token) return;
+
+      const res = await fetch(`${API_BASE}/supervisors/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const sorted = (Array.isArray(data) ? data : []).sort((a, b) =>
+          (a.fullname || "").localeCompare(b.fullname || ""),
+        );
+        setApiSupervisors(sorted);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchSupervisors();
+  }, []);
+
+  // 1. Format options for React-Select
+  const supervisorOptions = apiSupervisors.map((sup) => ({
+    value: sup.fullname,
+    label: sup.fullname,
+  }));
+
+  // Append our brightly styled custom option at the bottom
+  supervisorOptions.push({
+    value: "ADD_NEW",
+    label: "➕ Not in database? Add new supervisor",
+    isCustomAction: true, // We use this flag to style it differently!
+  });
+
+  // 2. Add custom CSS styles for the dropdown
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: "12px",
+      borderColor: "#e2e8f0", // Matches your standard BORDER color
+      padding: "2px",
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: "#cbd5e1",
+      },
+    }),
+    option: (provided, state) => {
+      // If this is our custom "Add New" option, make it bright blue!
+      if (state.data.isCustomAction) {
+        return {
+          ...provided,
+          color: "#3B82F6",
+          fontWeight: "800",
+          backgroundColor: state.isFocused ? "#eff6ff" : "white",
+          cursor: "pointer",
+          borderTop: "1px solid #e2e8f0", // Adds a nice divider line above it
+        };
+      }
+
+      // Standard options
+      return {
+        ...provided,
+        color: ETSU_NAVY,
+        backgroundColor: state.isSelected
+          ? "#eef2f7"
+          : state.isFocused
+            ? "#f8fafc"
+            : "white",
+        cursor: "pointer",
+      };
+    },
+  };
+
+  // 3. Update the change handler (React-Select passes an object, not an event)
+  const handleSupervisorChange = (selectedOption) => {
+    if (!selectedOption) {
+      updateField("supervisor", "");
+      return;
+    }
+
+    if (selectedOption.value === "ADD_NEW") {
+      setShowAddSupervisor(true);
+    } else {
+      updateField("supervisor", selectedOption.value);
+    }
+  };
+
+  const handleSupervisorAdded = (newSupervisor) => {
+    setShowAddSupervisor(false);
+    fetchSupervisors();
+    if (newSupervisor?.fullname)
+      updateField("supervisor", newSupervisor.fullname);
+  };
+  // ----------------------------
   const canSubmit = useMemo(() => {
     return (
       form.title.trim() &&
@@ -68,7 +195,7 @@ export default function EditProjectForm({
 
     setForm((prev) => {
       const exists = prev[listKey].some(
-        (item) => String(item).toLowerCase() === value.toLowerCase()
+        (item) => String(item).toLowerCase() === value.toLowerCase(),
       );
       if (exists) return prev;
       return { ...prev, [listKey]: [...prev[listKey], value] };
@@ -105,7 +232,7 @@ export default function EditProjectForm({
     setForm((prev) => ({
       ...prev,
       challenges_solutions: prev.challenges_solutions.filter(
-        (_, i) => i !== index
+        (_, i) => i !== index,
       ),
     }));
   }
@@ -113,7 +240,7 @@ export default function EditProjectForm({
   function handleSubmit(e) {
     e.preventDefault();
 
-    onSubmit({
+    const payload = {
       title: form.title.trim(),
       overview: form.overview.trim(),
       key_features: form.key_features,
@@ -124,363 +251,399 @@ export default function EditProjectForm({
       sourcecode_link: form.sourcecode_link.trim(),
       tech_stack: form.tech_stack,
       achievements: form.achievements,
-      status: form.status.trim(),
+
       department: form.department.trim(),
       project_status: form.project_status.trim(),
-      accepting_members: form.accepting_members,
+
       tags: form.tags,
-      thumbnail_url: form.thumbnail_url.trim(),
+
       short_description: form.short_description.trim(),
-      duration_start: form.duration_start.trim(),
-      duration_end: form.duration_end.trim(),
-    });
+      duration_start: formatToMonthYear(form.duration_start),
+      duration_end: formatToMonthYear(form.duration_end),
+    };
+
+    onSubmit(payload);
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Section>
-        <SectionTitle>Basic Information</SectionTitle>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Section>
+          <SectionTitle>Basic Information</SectionTitle>
 
-        <Field>
-          <Label>Title *</Label>
-          <Input
-            value={form.title}
-            onChange={(e) => updateField("title", e.target.value)}
-          />
-        </Field>
-
-        <Field>
-          <Label>Short Description</Label>
-          <Input
-            value={form.short_description}
-            onChange={(e) => updateField("short_description", e.target.value)}
-          />
-        </Field>
-
-        <Grid2>
           <Field>
-            <Label>Supervisor *</Label>
+            <Label>Title *</Label>
             <Input
-              value={form.supervisor}
-              onChange={(e) => updateField("supervisor", e.target.value)}
+              value={form.title}
+              onChange={(e) => updateField("title", e.target.value)}
             />
           </Field>
 
           <Field>
-            <Label>Department *</Label>
-            <Input
-              value={form.department}
-              onChange={(e) => updateField("department", e.target.value)}
+            <Label>Short Description</Label>
+            <TextArea
+              rows={3}
+              value={form.short_description}
+              onChange={(e) => updateField("short_description", e.target.value)}
             />
           </Field>
-        </Grid2>
-
-        <Grid2>
-          <Field>
-            <Label>Status</Label>
-            <Input
-              value={form.status}
-              onChange={(e) => updateField("status", e.target.value)}
-            />
-          </Field>
-
-          <Field>
-            <Label>Project Status</Label>
-            <Input
-              value={form.project_status}
-              onChange={(e) => updateField("project_status", e.target.value)}
-            />
-          </Field>
-        </Grid2>
-
-        <Field>
-          <Label>Overview *</Label>
-          <TextArea
-            rows={6}
-            value={form.overview}
-            onChange={(e) => updateField("overview", e.target.value)}
-          />
-        </Field>
-      </Section>
-
-      <Section>
-        <SectionTitle>Links & Timeline</SectionTitle>
-
-        <Grid2>
-          <Field>
-            <Label>Project Link</Label>
-            <Input
-              value={form.project_link}
-              onChange={(e) => updateField("project_link", e.target.value)}
-            />
-          </Field>
-
-          <Field>
-            <Label>Source Code Link</Label>
-            <Input
-              value={form.sourcecode_link}
-              onChange={(e) => updateField("sourcecode_link", e.target.value)}
-            />
-          </Field>
-        </Grid2>
-
-        <Field>
-          <Label>Thumbnail URL</Label>
-          <Input
-            value={form.thumbnail_url}
-            onChange={(e) => updateField("thumbnail_url", e.target.value)}
-          />
-        </Field>
-
-        <Grid2>
-          <Field>
-            <Label>Duration Start</Label>
-            <Input
-              value={form.duration_start}
-              onChange={(e) => updateField("duration_start", e.target.value)}
-            />
-          </Field>
-
-          <Field>
-            <Label>Duration End</Label>
-            <Input
-              value={form.duration_end}
-              onChange={(e) => updateField("duration_end", e.target.value)}
-            />
-          </Field>
-        </Grid2>
-
-        <CheckboxRow>
-          <input
-            id="accepting_members"
-            type="checkbox"
-            checked={form.accepting_members}
-            onChange={(e) => updateField("accepting_members", e.target.checked)}
-          />
-          <CheckboxLabel htmlFor="accepting_members">
-            Accepting Members
-          </CheckboxLabel>
-        </CheckboxRow>
-      </Section>
-
-      <Section>
-        <SectionTitle>Project Lists</SectionTitle>
-
-        <ListCard>
-          <ListTitle>Team Members</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.team_members}
-              onChange={(e) => updateInput("team_members", e.target.value)}
-              placeholder="Add team member"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("team_members", "team_members")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.team_members.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("team_members", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Tags</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.tags}
-              onChange={(e) => updateInput("tags", e.target.value)}
-              placeholder="Add tag"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("tags", "tags")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.tags.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("tags", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Tech Stack</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.tech_stack}
-              onChange={(e) => updateInput("tech_stack", e.target.value)}
-              placeholder="Add tech stack item"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("tech_stack", "tech_stack")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.tech_stack.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("tech_stack", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Key Features</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.key_features}
-              onChange={(e) => updateInput("key_features", e.target.value)}
-              placeholder="Add key feature"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("key_features", "key_features")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.key_features.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("key_features", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Achievements</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.achievements}
-              onChange={(e) => updateInput("achievements", e.target.value)}
-              placeholder="Add achievement"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("achievements", "achievements")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.achievements.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("achievements", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Challenges & Solutions</ListTitle>
 
           <Grid2>
             <Field>
-              <Label>Challenge</Label>
-              <Input
-                value={inputs.challenge}
-                onChange={(e) => updateInput("challenge", e.target.value)}
+              <Label>Supervisor *</Label>
+              <ReactSelect
+                options={supervisorOptions}
+                styles={customSelectStyles}
+                onChange={handleSupervisorChange}
+                // React-Select needs the full object to display the current value
+                value={
+                  supervisorOptions.find(
+                    (opt) => opt.value === form.supervisor,
+                  ) || null
+                }
+                placeholder="Select a supervisor..."
+                isClearable={true} // Adds a nice little 'x' to clear the field!
               />
             </Field>
 
             <Field>
-              <Label>Solution</Label>
-              <Input
-                value={inputs.solution}
-                onChange={(e) => updateInput("solution", e.target.value)}
+              <Label>Department *</Label>
+              <ReactSelect
+                options={departmentOptions}
+                styles={customSelectStyles} // Keeps it perfectly matching!
+                onChange={(selectedOption) => {
+                  updateField(
+                    "department",
+                    selectedOption ? selectedOption.value : "",
+                  );
+                }}
+                value={
+                  departmentOptions.find(
+                    (opt) => opt.value === form.department,
+                  ) || null
+                }
+                placeholder="Select a department..."
+                isClearable={true}
               />
             </Field>
           </Grid2>
 
-          <RightRow>
-            <MiniButton type="button" onClick={addChallengeSolution}>
-              <FaPlus />
-              <span>Add Pair</span>
-            </MiniButton>
-          </RightRow>
+          <Grid2>
+            <Field>
+              <Label>Project Status</Label>
+              <ReactSelect
+                options={statusOptions}
+                styles={customSelectStyles} // Reusing your beautiful custom styles!
+                // react-select passes the object, not an event (e)
+                onChange={(selectedOption) => {
+                  updateField(
+                    "project_status",
+                    selectedOption ? selectedOption.value : "",
+                  );
+                }}
+                // Match the string in your form state back to the object array
+                value={
+                  statusOptions.find(
+                    (opt) => opt.value === form.project_status,
+                  ) || null
+                }
+                placeholder="Select a status..."
+                isClearable={true}
+              />
+            </Field>
+          </Grid2>
 
-          <Stack>
-            {form.challenges_solutions.map((item, index) => (
-              <PairCard key={index}>
-                <PairLabel>Challenge</PairLabel>
-                <PairText>{item.challenge}</PairText>
+          <Field>
+            <Label>Overview *</Label>
+            <TextArea
+              rows={8}
+              value={form.overview}
+              onChange={(e) => updateField("overview", e.target.value)}
+            />
+          </Field>
+        </Section>
 
-                <PairLabel>Solution</PairLabel>
-                <PairText>{item.solution}</PairText>
+        <Section>
+          <SectionTitle>Links & Timeline</SectionTitle>
 
-                <PairRemove
-                  type="button"
-                  onClick={() => removeChallengeSolution(index)}
-                >
-                  Remove
-                </PairRemove>
-              </PairCard>
-            ))}
-          </Stack>
-        </ListCard>
-      </Section>
+          <Grid2>
+            <Field>
+              <Label>Project Link</Label>
+              <Input
+                value={form.project_link}
+                onChange={(e) => updateField("project_link", e.target.value)}
+              />
+            </Field>
 
-      <Footer>
-        <GhostButton type="button" onClick={onCancel} disabled={saving}>
-          <FaTimes />
-          <span>Cancel</span>
-        </GhostButton>
+            <Field>
+              <Label>Source Code Link</Label>
+              <Input
+                value={form.sourcecode_link}
+                onChange={(e) => updateField("sourcecode_link", e.target.value)}
+              />
+            </Field>
+          </Grid2>
 
-        <PrimaryButton type="submit" disabled={!canSubmit || saving}>
-          <FaSave />
-          <span>{saving ? "Saving..." : "Save Changes"}</span>
-        </PrimaryButton>
-      </Footer>
-    </Form>
+          <Grid2>
+            <Field>
+              <Label>Duration Start</Label>
+              <Input
+                type="month"
+                value={form.duration_start}
+                onChange={(e) => updateField("duration_start", e.target.value)}
+              />
+            </Field>
+
+            <Field>
+              <Label>Duration End</Label>
+
+              <Input
+                type="month"
+                value={form.duration_end}
+                onChange={(e) => updateField("duration_end", e.target.value)}
+              />
+            </Field>
+          </Grid2>
+        </Section>
+
+        <Section>
+          <SectionTitle>Project Lists</SectionTitle>
+
+          <ListCard>
+            <ListTitle>Team Members</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.team_members}
+                onChange={(e) => updateInput("team_members", e.target.value)}
+                placeholder="Add team member"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("team_members", "team_members")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.team_members.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("team_members", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Tags</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.tags}
+                onChange={(e) => updateInput("tags", e.target.value)}
+                placeholder="Add tag"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("tags", "tags")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.tags.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("tags", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Tech Stack</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.tech_stack}
+                onChange={(e) => updateInput("tech_stack", e.target.value)}
+                placeholder="Add tech stack item"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("tech_stack", "tech_stack")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.tech_stack.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("tech_stack", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Key Features</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.key_features}
+                onChange={(e) => updateInput("key_features", e.target.value)}
+                placeholder="Add key feature"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("key_features", "key_features")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.key_features.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("key_features", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Achievements</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.achievements}
+                onChange={(e) => updateInput("achievements", e.target.value)}
+                placeholder="Add achievement"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("achievements", "achievements")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.achievements.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("achievements", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Challenges & Solutions</ListTitle>
+
+            <Grid2>
+              <Field>
+                <Label>Challenge</Label>
+                <Input
+                  value={inputs.challenge}
+                  onChange={(e) => updateInput("challenge", e.target.value)}
+                />
+              </Field>
+
+              <Field>
+                <Label>Solution</Label>
+                <Input
+                  value={inputs.solution}
+                  onChange={(e) => updateInput("solution", e.target.value)}
+                />
+              </Field>
+            </Grid2>
+
+            <RightRow>
+              <MiniButton type="button" onClick={addChallengeSolution}>
+                <FaPlus />
+                <span>Add Pair</span>
+              </MiniButton>
+            </RightRow>
+
+            <Stack>
+              {form.challenges_solutions.map((item, index) => (
+                <PairCard key={index}>
+                  <PairLabel>Challenge</PairLabel>
+                  <PairText>{item.challenge}</PairText>
+
+                  <PairLabel>Solution</PairLabel>
+                  <PairText>{item.solution}</PairText>
+
+                  <PairRemove
+                    type="button"
+                    onClick={() => removeChallengeSolution(index)}
+                  >
+                    Remove
+                  </PairRemove>
+                </PairCard>
+              ))}
+            </Stack>
+          </ListCard>
+        </Section>
+
+        <Footer>
+          <GhostButton type="button" onClick={onCancel} disabled={saving}>
+            <FaTimes />
+            <span>Cancel</span>
+          </GhostButton>
+
+          <PrimaryButton type="submit" disabled={!canSubmit || saving}>
+            <FaSave />
+            <span>{saving ? "Saving..." : "Save Changes"}</span>
+          </PrimaryButton>
+        </Footer>
+      </Form>
+      {showAddSupervisor && (
+        <CreateUserModal
+          isSupervisor={true}
+          onClose={() => setShowAddSupervisor(false)}
+          onSuccess={handleSupervisorAdded}
+        />
+      )}
+    </>
   );
 }
 
 const Form = styled.form``;
+const Select = styled.select`
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid ${BORDER};
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  cursor: pointer;
+`;
 
 const Section = styled.section`
   border: 1px solid ${BORDER};
@@ -691,4 +854,26 @@ const PrimaryButton = styled.button`
   align-items: center;
   gap: 8px;
   cursor: pointer;
+`;
+const AddNewLink = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: -6px; /* Pulls it slightly closer to the dropdown */
+  text-align: left;
+  font-size: 13px;
+  color: ${MUTED};
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  transition: opacity 0.2s;
+
+  span {
+    color: #3b82f6; /* A bright, modern blue */
+    font-weight: 700;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;

@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { Result, Button } from "antd";
+import { Result, Button, App as AntApp } from "antd";
 import Layout from "./fixedComponent/Layout";
 import Home from "./pages/Home";
 import ThesesGrid from "./pages/theses/ThesesGrid";
@@ -35,6 +35,7 @@ import AddProject from "./admin/pages/AddProject";
 import AdminEntryView from "./admin/pages/AdminEntryView";
 import AdminEntryEdit from "./admin/pages/AdminEntryEdit";
 import AdminEntryCreate from "./admin/pages/AdminEntryCreate";
+import EditSupervisors from "./admin/pages/EditSupervisors";
 
 const StyledResult = styled(Result)`
   .ant-result-title {
@@ -111,10 +112,12 @@ const routes = [
 
           // /admin/projects
           { path: "projects", element: <AdminProjects /> },
-          { path: "projects/new", element: <AddProject />},
-          { path: "entries/:kind/:id", element: <AdminEntryView />},
+          { path: "editsupervisors", element: <EditSupervisors /> },
+          { path: "projects/new", element: <AddProject /> },
+
+          { path: "entries/:kind/:id", element: <AdminEntryView /> },
           { path: "entries/:kind/:id/edit", element: <AdminEntryEdit /> },
-          { path: "create/:kind", element: <AdminEntryCreate />},
+          { path: "create/:kind", element: <AdminEntryCreate /> },
 
           // /admin/users
           { path: "users", element: <AdminUsers /> },
@@ -130,9 +133,11 @@ const App = () => (
   <>
     <GlobalStyle />
 
-    <AdminAuthProvider>
-      <RouterProvider router={router} />
-    </AdminAuthProvider>
+    <AntApp>
+      <AdminAuthProvider>
+        <RouterProvider router={router} />
+      </AdminAuthProvider>
+    </AntApp>
 
     {/* <RouterProvider router={router} /> */}
   </>

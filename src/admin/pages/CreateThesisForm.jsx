@@ -4,9 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import { useAdminAuth } from "../AdminAuthContext";
-
+import {
+  formatToMonthYear,
+  parseToMonthInput,
+} from "../components/dateHelpers";
 const API_BASE = "https://crpp-project.onrender.com";
-
+import SupervisorSelect from "../components/SupervisorSelect";
+import FormSelect from "../components/FormSelect";
+const statusOptions = [
+  { value: "In Progress", label: "In Progress" },
+  { value: "Completed", label: "Completed" },
+];
+const departmentOptions = [
+  { value: "Computer Science", label: "Computer Science" },
+  { value: "Information Systems", label: "Information Systems" },
+  { value: "Information Technology", label: "Information Technology" },
+  { value: "Data Science", label: "Data Science" },
+  { value: "Cybersecurity", label: "Cybersecurity" },
+];
 export default function CreateThesisForm() {
   const navigate = useNavigate();
   const { adminUser } = useAdminAuth();
@@ -62,7 +77,7 @@ export default function CreateThesisForm() {
 
     setForm((prev) => {
       const exists = prev.tags.some(
-        (item) => String(item).toLowerCase() === value.toLowerCase()
+        (item) => String(item).toLowerCase() === value.toLowerCase(),
       );
       if (exists) return prev;
       return { ...prev, tags: [...prev.tags, value] };
@@ -119,8 +134,8 @@ export default function CreateThesisForm() {
       status: form.status.trim() || "Draft",
       tags: form.tags,
       short_description: form.short_description.trim(),
-      duration_start: form.duration_start.trim(),
-      duration_end: form.duration_end.trim(),
+      duration_start: formatToMonthYear(form.duration_start),
+      duration_end: formatToMonthYear(form.duration_end),
     };
 
     try {
@@ -140,12 +155,11 @@ export default function CreateThesisForm() {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        const msg =
-          errData?.detail
-            ? Array.isArray(errData.detail)
-              ? errData.detail.map((d) => d.msg).join(", ")
-              : String(errData.detail)
-            : `Create failed (${res.status})`;
+        const msg = errData?.detail
+          ? Array.isArray(errData.detail)
+            ? errData.detail.map((d) => d.msg).join(", ")
+            : String(errData.detail)
+          : `Create failed (${res.status})`;
         throw new Error(msg);
       }
 
@@ -191,9 +205,9 @@ export default function CreateThesisForm() {
 
           <Field>
             <Label>Supervisor *</Label>
-            <Input
+            <SupervisorSelect
               value={form.supervisor}
-              onChange={(e) => updateField("supervisor", e.target.value)}
+              onChange={(val) => updateField("supervisor", val)}
             />
           </Field>
         </Grid2>
@@ -201,18 +215,21 @@ export default function CreateThesisForm() {
         <Grid2>
           <Field>
             <Label>Department *</Label>
-            <Input
+            <FormSelect
+              options={departmentOptions}
               value={form.department}
-              onChange={(e) => updateField("department", e.target.value)}
+              onChange={(val) => updateField("department", val)}
+              placeholder="Select Department..."
             />
           </Field>
 
           <Field>
             <Label>Status</Label>
-            <Input
+            <FormSelect
+              options={statusOptions}
               value={form.status}
-              onChange={(e) => updateField("status", e.target.value)}
-              placeholder="Draft"
+              onChange={(val) => updateField("status", val)}
+              placeholder="Select Status..."
             />
           </Field>
         </Grid2>
@@ -265,6 +282,7 @@ export default function CreateThesisForm() {
           <Field>
             <Label>Duration Start</Label>
             <Input
+              type="month"
               value={form.duration_start}
               onChange={(e) => updateField("duration_start", e.target.value)}
             />
@@ -273,6 +291,7 @@ export default function CreateThesisForm() {
           <Field>
             <Label>Duration End</Label>
             <Input
+              type="month"
               value={form.duration_end}
               onChange={(e) => updateField("duration_end", e.target.value)}
             />
@@ -312,18 +331,15 @@ export default function CreateThesisForm() {
           <AddRow3>
             <Input
               value={inputs.publications_title}
-              onChange={(e) => updateInput("publications_title", e.target.value)}
+              onChange={(e) =>
+                updateInput("publications_title", e.target.value)
+              }
               placeholder="Publication title"
             />
             <Input
               value={inputs.publications_link}
               onChange={(e) => updateInput("publications_link", e.target.value)}
               placeholder="Publication link"
-            />
-            <Input
-              value={inputs.publications_date}
-              onChange={(e) => updateInput("publications_date", e.target.value)}
-              placeholder="Published on"
             />
           </AddRow3>
 
@@ -343,10 +359,10 @@ export default function CreateThesisForm() {
                 <PairLabel>Link</PairLabel>
                 <PairText>{item.link || "—"}</PairText>
 
-                <PairLabel>Published On</PairLabel>
-                <PairText>{item.published_on || "—"}</PairText>
-
-                <PairRemove type="button" onClick={() => removePublication(index)}>
+                <PairRemove
+                  type="button"
+                  onClick={() => removePublication(index)}
+                >
                   Remove
                 </PairRemove>
               </PairCard>
@@ -460,7 +476,7 @@ const AddRow = styled.div`
 
 const AddRow3 = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 12px;
 

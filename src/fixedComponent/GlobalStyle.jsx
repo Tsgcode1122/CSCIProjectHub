@@ -1,91 +1,306 @@
+// import { createGlobalStyle } from "styled-components";
+// import { media } from "../theme/Breakpoints";
+// import { Colors } from "../theme/Colors";
+
+// const GlobalStyle = createGlobalStyle`
+//   body {
+// font-family: "Inter", sans-serif;
+//   font-optical-sizing: auto;
+
+//   background: ${Colors.softBlue} ;
+//     margin: 0;
+//     padding: 0;
+//   }
+
+//   /* H1 */
+//   h1 {
+//     font-size: 1.8rem;
+//     line-height: 2.2rem;
+//     @media ${media.mobileXS} { font-size: 1.5rem; line-height: 2rem; }
+//     @media ${media.mobileS} { font-size: 1.9rem; line-height: 2.4rem; }
+//     @media ${media.tablet} { font-size: 2.4rem; line-height: 2.8rem; }
+//     @media ${media.laptop} { font-size: 2.6rem; line-height: 3rem; }
+//     @media ${media.desktop} { font-size: 3rem; line-height: 3.4rem; }
+//     @media ${media.desktopXL} { font-size: 3.2rem; line-height: 3.6rem; }
+//   }
+
+//   /* H2 */
+//   h2 {
+//     font-size: 1.6rem;
+//     line-height: 2rem;
+//     @media ${media.mobileS} { font-size: 1.8rem; line-height: 2.2rem; }
+//     @media ${media.tablet} { font-size: 2.2rem; line-height: 2.6rem; }
+//     @media ${media.laptop} { font-size: 2.4rem; line-height: 2.8rem; }
+//     @media ${media.desktop} { font-size: 2.6rem; line-height: 3rem; }
+//     @media ${media.desktopXL} { font-size: 2.8rem; line-height: 3.2rem; }
+//   }
+
+//   /* H3 */
+//   h3 {
+//     font-size: 1.4rem;
+//     line-height: 1.8rem;
+//     @media ${media.mobileS} { font-size: 1.6rem; line-height: 2rem; }
+//     @media ${media.tablet} { font-size: 2rem; line-height: 2.4rem; }
+//     @media ${media.laptop} { font-size: 2.2rem; line-height: 2.6rem; }
+//     @media ${media.desktop} { font-size: 2.4rem; line-height: 2.8rem; }
+//     @media ${media.desktopXL} { font-size: 2.6rem; line-height: 3rem; }
+//   }
+
+//   /* H4 */
+//   h4 {
+//     font-size: 1.2rem;
+//     line-height: 1.6rem;
+//     @media ${media.mobileS} { font-size: 1.4rem; line-height: 1.8rem; }
+//     @media ${media.tablet} { font-size: 1.6rem; line-height: 2rem; }
+//     @media ${media.laptop} { font-size: 1.6rem; line-height: 2.2rem; }
+//     @media ${media.desktop} { font-size: 1.8rem; line-height: 2.4rem; }
+//     @media ${media.desktopXL} { font-size: 2rem; line-height: 2.6rem; }
+//   }
+
+//   /* H5 */
+//   h5 {
+//     font-size: 1.3rem;
+//     line-height: 1.4rem;
+//     @media ${media.mobileS} { font-size: 1.1rem; line-height: 1.4rem; }
+//     @media ${media.tablet} { font-size: 1.4rem; line-height: 1.6rem; }
+//     @media ${media.laptop} { font-size: 1.4rem; line-height: 1.8rem; }
+//     @media ${media.desktop} { font-size: 1.5rem; line-height: 2rem; }
+//     @media ${media.desktopXL} { font-size: 1.8rem; line-height: 2.4rem; }
+//   }
+
+//   /* Paragraph */
+//   p {
+//     /* font-size: 0.875rem; */
+//     line-height: 1.55rem;
+   
+//     @media ${media.mobileXS} { font-size: 0.9rem; line-height: 1.5rem; }
+//     @media ${media.mobileS} { font-size: 1rem; line-height: 1.2rem; }
+//     @media ${media.tablet} { font-size: 1.0rem; line-height: 1.1rem; }
+//     @media ${media.laptop} { font-size: 1.1rem; line-height: 1.7rem; }
+//     @media ${media.desktopXL} { font-size: 1.375rem; line-height: 2rem; }
+//   }
+
+//   /* Small text */
+//   small {
+//     font-size: 0.75rem;
+//     line-height: 1rem;
+//     @media ${media.laptop} { font-size: 0.875rem; line-height: 1.25rem; }
+//     @media ${media.desktop} { font-size: 1rem; line-height: 1.5rem; }
+//   }
+// `;
+
+// export default GlobalStyle;
+
+
 import { createGlobalStyle } from "styled-components";
 import { media } from "../theme/Breakpoints";
 import { Colors } from "../theme/Colors";
 
 const GlobalStyle = createGlobalStyle`
+  html,
   body {
-font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
+    scrollbar-gutter: auto !important;
+  }
+    
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
 
-  background: ${Colors.softBlue} ;
+  body {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    background: ${Colors.softBlue};
     margin: 0;
     padding: 0;
+    color: #0f172a;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* H1 */
+  * {
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3, h4, h5, p, small {
+    margin-top: 0;
+  }
+
   h1 {
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    @media ${media.mobileXS} { font-size: 1.5rem; line-height: 2rem; }
-    @media ${media.mobileS} { font-size: 1.9rem; line-height: 2.4rem; }
-    @media ${media.tablet} { font-size: 2.4rem; line-height: 2.8rem; }
-    @media ${media.laptop} { font-size: 2.6rem; line-height: 3rem; }
-    @media ${media.desktop} { font-size: 3rem; line-height: 3.4rem; }
-    @media ${media.desktopXL} { font-size: 3.2rem; line-height: 3.6rem; }
+    font-size: 2rem;
+    line-height: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+
+    @media ${media.mobileS} {
+      font-size: 2.2rem;
+      line-height: 2.6rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 2.6rem;
+      line-height: 3rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 3rem;
+      line-height: 3.4rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 3.2rem;
+      line-height: 3.6rem;
+    }
   }
 
-  /* H2 */
   h2 {
     font-size: 1.6rem;
     line-height: 2rem;
-    @media ${media.mobileS} { font-size: 1.8rem; line-height: 2.2rem; }
-    @media ${media.tablet} { font-size: 2.2rem; line-height: 2.6rem; }
-    @media ${media.laptop} { font-size: 2.4rem; line-height: 2.8rem; }
-    @media ${media.desktop} { font-size: 2.6rem; line-height: 3rem; }
-    @media ${media.desktopXL} { font-size: 2.8rem; line-height: 3.2rem; }
+    font-weight: 800;
+    letter-spacing: -0.02em;
+
+    @media ${media.mobileS} {
+      font-size: 1.8rem;
+      line-height: 2.2rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 2.1rem;
+      line-height: 2.5rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 2.6rem;
+      line-height: 3rem;
+    }
   }
 
-  /* H3 */
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     line-height: 1.8rem;
-    @media ${media.mobileS} { font-size: 1.6rem; line-height: 2rem; }
-    @media ${media.tablet} { font-size: 2rem; line-height: 2.4rem; }
-    @media ${media.laptop} { font-size: 2.2rem; line-height: 2.6rem; }
-    @media ${media.desktop} { font-size: 2.4rem; line-height: 2.8rem; }
-    @media ${media.desktopXL} { font-size: 2.6rem; line-height: 3rem; }
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    @media ${media.mobileS} {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 1.75rem;
+      line-height: 2.2rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 2.15rem;
+      line-height: 2.65rem;
+    }
   }
 
-  /* H4 */
   h4 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     line-height: 1.6rem;
-    @media ${media.mobileS} { font-size: 1.4rem; line-height: 1.8rem; }
-    @media ${media.tablet} { font-size: 1.6rem; line-height: 2rem; }
-    @media ${media.laptop} { font-size: 1.6rem; line-height: 2.2rem; }
-    @media ${media.desktop} { font-size: 1.8rem; line-height: 2.4rem; }
-    @media ${media.desktopXL} { font-size: 2rem; line-height: 2.6rem; }
+    font-weight: 700;
+
+    @media ${media.mobileS} {
+      font-size: 1.25rem;
+      line-height: 1.7rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 1.4rem;
+      line-height: 1.9rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 1.55rem;
+      line-height: 2rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 1.7rem;
+      line-height: 2.2rem;
+    }
   }
 
-  /* H5 */
   h5 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     line-height: 1.4rem;
-    @media ${media.mobileS} { font-size: 1.1rem; line-height: 1.4rem; }
-    @media ${media.tablet} { font-size: 1.4rem; line-height: 1.6rem; }
-    @media ${media.laptop} { font-size: 1.4rem; line-height: 1.8rem; }
-    @media ${media.desktop} { font-size: 1.5rem; line-height: 2rem; }
-    @media ${media.desktopXL} { font-size: 1.8rem; line-height: 2.4rem; }
+    font-weight: 700;
+
+    @media ${media.mobileS} {
+      font-size: 1.05rem;
+      line-height: 1.45rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 1.1rem;
+      line-height: 1.5rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 1.3rem;
+      line-height: 1.75rem;
+    }
   }
 
-  /* Paragraph */
   p {
-    /* font-size: 0.875rem; */
-    line-height: 1.55rem;
-   
-    @media ${media.mobileXS} { font-size: 0.9rem; line-height: 1.5rem; }
-    @media ${media.mobileS} { font-size: 1rem; line-height: 1.2rem; }
-    @media ${media.tablet} { font-size: 1.0rem; line-height: 1.1rem; }
-    @media ${media.laptop} { font-size: 1.1rem; line-height: 1.7rem; }
-    @media ${media.desktopXL} { font-size: 1.375rem; line-height: 2rem; }
+    font-size: 0.98rem;
+    line-height: 1.7rem;
+    font-weight: 400;
+    color: white;
+
+    @media ${media.mobileS} {
+      font-size: 1rem;
+      line-height: 1.75rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 1rem;
+      line-height: 1.8rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 1.05rem;
+      line-height: 1.9rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 1.1rem;
+      line-height: 2rem;
+    }
   }
 
-  /* Small text */
   small {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    @media ${media.laptop} { font-size: 0.875rem; line-height: 1.25rem; }
-    @media ${media.desktop} { font-size: 1rem; line-height: 1.5rem; }
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    color: #64748b;
+
+    @media ${media.laptop} {
+      font-size: 0.875rem;
+      line-height: 1.3rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 0.95rem;
+      line-height: 1.4rem;
+    }
   }
 `;
 

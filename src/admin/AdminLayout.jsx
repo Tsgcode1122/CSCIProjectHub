@@ -11,7 +11,6 @@ const ETSU_NAVY = "#041E42";
 const ETSU_GOLD = "#FFC72C";
 const BG = "#F3F4F6";
 const BORDER = "#E5E7EB";
-
 const TOPBAR_H = 76;
 
 export default function AdminLayout() {
@@ -123,6 +122,9 @@ export default function AdminLayout() {
             {user.role === "admin" && (
               <SideLink to="/admin/users">Users</SideLink>
             )}
+            {user.role === "admin" && (
+              <SideLink to="/admin/editsupervisors">Supervisors</SideLink>
+            )}
           </NavGroup>
 
           <SideBottom>
@@ -182,17 +184,6 @@ const TopLeft = styled.div`
   gap: 14px;
 `;
 
-// const LogoCircle = styled.div`
-//   width: 46px;
-//   height: 46px;
-//   border-radius: 999px;
-//   display: grid;
-//   place-items: center;
-//   background: ${ETSU_GOLD};
-//   color: ${ETSU_NAVY};
-//   font-weight: 900;
-//   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
-// `;
 
 const LogoCircle = styled.img`
   width: 44px;
@@ -237,7 +228,7 @@ const PublicLink = styled(Link)`
 
 const Body = styled.div`
   flex: 1 1 auto;
-  min-height: 0; /* required for scroll container */
+  min-height: 0; 
   display: grid;
   grid-template-columns: 260px 1fr;
   overflow: hidden; /* stops any inner overflow from causing page scroll */

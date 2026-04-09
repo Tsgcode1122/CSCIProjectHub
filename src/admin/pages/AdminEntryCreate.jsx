@@ -19,6 +19,9 @@ export default function AdminEntryCreate() {
 
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const storedSession = sessionStorage.getItem("capstone_admin_session");
+  const session = storedSession ? JSON.parse(storedSession) : null;
+  const token = session?.access_token;
 
   async function handleCreate(payload) {
     try {
@@ -32,28 +35,34 @@ export default function AdminEntryCreate() {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${token.trim()}`,
           "Content-Type": "application/json",
           Accept: "application/json",
-          ...(adminUser?.access_token
-            ? { Authorization: `Bearer ${adminUser.access_token}` }
-            : {}),
         },
+        // headers: {
+        //   "Content-Type": "application/json",
+        //   Accept: "application/json",
+        //   ...(adminUser?.access_token
+        //     ? { Authorization: `Bearer ${adminUser.access_token}` }
+        //     : {}),
+        // },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        const msg =
-          errData?.detail
-            ? Array.isArray(errData.detail)
-              ? errData.detail.map((d) => d.msg).join(", ")
-              : String(errData.detail)
-            : `Create failed (${res.status})`;
+        const msg = errData?.detail
+          ? Array.isArray(errData.detail)
+            ? errData.detail.map((d) => d.msg).join(", ")
+            : String(errData.detail)
+          : `Create failed (${res.status})`;
         throw new Error(msg);
       }
 
       navigate("/admin/projects");
     } catch (err) {
+      console.log(err);
+
       setSaveError(err.message || "Failed to create entry.");
     } finally {
       setSaving(false);
@@ -66,7 +75,10 @@ export default function AdminEntryCreate() {
         <ScrollArea>
           <Card>
             <ErrorBanner>Invalid entry type.</ErrorBanner>
-            <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+            <BackButton
+              type="button"
+              onClick={() => navigate(-1)}
+            >
               <FaArrowLeft />
               <span>Back</span>
             </BackButton>
@@ -87,7 +99,9 @@ export default function AdminEntryCreate() {
               </HeaderIcon>
 
               <div>
-                <Title>{isProject ? "Add New Project" : "Add New Thesis"}</Title>
+                <Title>
+                  {isProject ? "Add New Project" : "Add New Thesis"}
+                </Title>
                 <Subtitle>
                   Fill in the details below to create a new{" "}
                   {isProject ? "project" : "thesis"}.
@@ -104,8 +118,6 @@ export default function AdminEntryCreate() {
             </BackButton>
           </Header>
 
-          {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
-
           {isProject ? (
             <CreateProjectForm
               saving={saving}
@@ -119,6 +131,7 @@ export default function AdminEntryCreate() {
               onSubmit={handleCreate}
             />
           )}
+          {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
         </Card>
       </ScrollArea>
     </Page>
