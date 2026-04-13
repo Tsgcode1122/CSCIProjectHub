@@ -58,8 +58,8 @@ export default function AdminEntryCreate() {
           : `Create failed (${res.status})`;
         throw new Error(msg);
       }
-
-      navigate("/admin/projects");
+      return true;
+      // navigate("/admin/projects");
     } catch (err) {
       console.log(err);
 
@@ -75,10 +75,7 @@ export default function AdminEntryCreate() {
         <ScrollArea>
           <Card>
             <ErrorBanner>Invalid entry type.</ErrorBanner>
-            <BackButton
-              type="button"
-              onClick={() => navigate(-1)}
-            >
+            <BackButton type="button" onClick={() => navigate(-1)}>
               <FaArrowLeft />
               <span>Back</span>
             </BackButton>

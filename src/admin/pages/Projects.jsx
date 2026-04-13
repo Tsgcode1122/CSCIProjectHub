@@ -25,6 +25,13 @@ import {
   FaExclamationTriangle,
   FaTimes,
 } from "react-icons/fa";
+import {
+  SuccessTitle,
+  SuccessIcon,
+  SuccessCard,
+  SuccessOverlay,
+  SuccessText,
+} from "../../components/ModalStyles";
 import { useAdminAuth } from "../AdminAuthContext";
 import LoadingScreen from "../components/LoadingScreen";
 
@@ -111,7 +118,7 @@ export default function Projects() {
 
   const [query, setQuery] = useState("");
   const [filterBy, setFilterBy] = useState("All");
-
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
   const [rows, setRows] = useState(null); // null = still loading page
   const [error, setError] = useState("");
 
@@ -215,7 +222,7 @@ export default function Projects() {
         { key: "duration", header: "Duration" },
         { key: "advisor", header: "Advisor" },
       ];
-      
+
   const stats = useMemo(() => {
     const total = safeRows.length;
     const projectCount = safeRows.filter((x) => x.kind === "Project").length;
@@ -289,8 +296,19 @@ export default function Projects() {
         throw new Error(msg);
       }
 
+      // 1. Close the warning modal
+
+      // 2. Open the success modal
+      setDeleteSuccess(true);
       setDeleteTarget(null);
+      setDeleteTarget(null);
+      // 3. Refresh the table data
       await loadData();
+
+      // 4. Close success modal after 2 seconds
+      setTimeout(() => {
+        setDeleteSuccess(false);
+      }, 2000);
     } catch (err) {
       setDeleteError(err.message || "Failed to delete entry.");
     } finally {
@@ -456,41 +474,44 @@ export default function Projects() {
           return row[key] ?? "—";
         }}
         renderActions={
-          isEmptyState ? undefined : (row) => (
-          <>
-            <IconBtn
-              title="View"
-              onClick={() =>
-                navigate(
-                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}`,
-                )
-              }
-            >
-              <FaEye />
-            </IconBtn>
+          isEmptyState
+            ? undefined
+            : (row) => (
+                <>
+                  <IconBtn
+                    title="View"
+                    onClick={() =>
+                      navigate(
+                        `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}`,
+                      )
+                    }
+                  >
+                    <FaEye />
+                  </IconBtn>
 
-            <IconBtn
-              title="Edit"
-              onClick={() =>
-                navigate(
-                  `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}/edit`,
-                )
-              }
-            >
-              <FaEdit />
-            </IconBtn>
+                  <IconBtn
+                    title="Edit"
+                    onClick={() =>
+                      navigate(
+                        `/admin/entries/${row.kind === "Project" ? "project" : "thesis"}/${row.id}/edit`,
+                      )
+                    }
+                  >
+                    <FaEdit />
+                  </IconBtn>
 
-            <IconBtn
-              title="Delete"
-              onClick={() => {
-                setDeleteError("");
-                setDeleteTarget(row);
-              }}
-            >
-              <FaTrash />
-            </IconBtn>
-          </>
-        )}
+                  <IconBtn
+                    title="Delete"
+                    onClick={() => {
+                      setDeleteError("");
+                      setDeleteTarget(row);
+                    }}
+                  >
+                    <FaTrash />
+                  </IconBtn>
+                </>
+              )
+        }
       />
 
       {deleteTarget ? (
@@ -542,8 +563,8 @@ export default function Projects() {
       {showCreateOptions ? (
         <CreateOverlay>
           <CreateModal>
-            <CreateTitle>Add New Entry</CreateTitle>
-            <CreateText>Select what you want to create.</CreateText>
+            {/* <CreateTitle>Add New Entry</CreateTitle>
+            <CreateText>Select what you want to create.</CreateText> */}
 
             <CreateOptions>
               <CreateOptionButton
@@ -574,6 +595,18 @@ export default function Projects() {
           </CreateModal>
         </CreateOverlay>
       ) : null}
+      {/* Success Deletion Modal */}
+      {deleteSuccess && (
+        <SuccessOverlay>
+          <SuccessCard>
+            <SuccessIcon>✓</SuccessIcon>
+            <SuccessTitle>Deleted Successfully</SuccessTitle>
+            <SuccessText>
+              The record has been permanently removed from the system.
+            </SuccessText>
+          </SuccessCard>
+        </SuccessOverlay>
+      )}
     </>
   );
 }

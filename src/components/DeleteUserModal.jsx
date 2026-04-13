@@ -87,7 +87,8 @@ export default DeleteUserModal;
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(4, 30, 66, 0.35);
+  backdrop-filter: blur(2px);
+  background: rgba(4, 30, 66, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

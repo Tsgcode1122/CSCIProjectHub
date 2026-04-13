@@ -141,7 +141,7 @@ const PageWrap = styled.div`
 const OverviewSection = styled.div`
   display: grid;
   gap: 2.5rem;
-
+  color: black !important;
   @media ${media.laptop} {
     grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
@@ -157,6 +157,7 @@ const TextCol = styled.div`
 
 const LeadText = styled.p`
   margin: 0;
+  color: black;
   /* font-size: 1.15rem; */
   line-height: 1.6;
 `;
@@ -164,6 +165,7 @@ const LeadText = styled.p`
 const Paragraph = styled.p`
   margin: 0;
   line-height: 1.7;
+  color: black;
 `;
 
 const InfoBox = styled.div`

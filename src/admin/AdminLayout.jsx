@@ -123,7 +123,7 @@ export default function AdminLayout() {
               <SideLink to="/admin/users">Users</SideLink>
             )}
             {user.role === "admin" && (
-              <SideLink to="/admin/editsupervisors">Supervisors</SideLink>
+              <SideLink to="/admin/editsupervisors">Faculty</SideLink>
             )}
           </NavGroup>
 

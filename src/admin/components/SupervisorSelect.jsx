@@ -45,7 +45,7 @@ export default function SupervisorSelect({ value, onChange }) {
   }));
   options.push({
     value: "ADD_NEW",
-    label: "➕ Add New Supervisor",
+    label: "➕ Not in list? Add New Supervisor",
     isCustomAction: true,
   });
 

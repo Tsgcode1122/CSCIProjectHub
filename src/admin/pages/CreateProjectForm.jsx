@@ -3,11 +3,18 @@ import styled from "styled-components";
 import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import ReactSelect from "react-select";
-import CreateUserModal from "../../components/CreateUser";
+import {
+  SuccessTitle,
+  SuccessIcon,
+  SuccessCard,
+  SuccessOverlay,
+  SuccessText,
+} from "../../components/ModalStyles";
 import {
   formatToMonthYear,
   parseToMonthInput,
 } from "../components/dateHelpers";
+import SupervisorSelect from "../components/SupervisorSelect";
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
 
@@ -48,8 +55,7 @@ export default function CreateProjectForm({
   });
   // --- NEW SUPERVISOR & REACT-SELECT LOGIC ---
   const [apiSupervisors, setApiSupervisors] = useState([]);
-  const [showAddSupervisor, setShowAddSupervisor] = useState(false);
-
+  const [successOpen, setSuccessOpen] = useState(false);
   const fetchSupervisors = async () => {
     try {
       const storedSession = sessionStorage.getItem(STORAGE_KEY);
@@ -139,21 +145,6 @@ export default function CreateProjectForm({
     },
   };
 
-  const handleSupervisorChange = (selectedOption) => {
-    if (!selectedOption) {
-      updateField("supervisor", "");
-      return;
-    }
-    if (selectedOption.value === "ADD_NEW") setShowAddSupervisor(true);
-    else updateField("supervisor", selectedOption.value);
-  };
-
-  const handleSupervisorAdded = (newSupervisor) => {
-    setShowAddSupervisor(false);
-    fetchSupervisors();
-    if (newSupervisor?.fullname)
-      updateField("supervisor", newSupervisor.fullname);
-  };
   // -------------------------------------------
   const canSubmit = useMemo(() => {
     return (
@@ -220,10 +211,9 @@ export default function CreateProjectForm({
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    // We build the object manually to ensure the Arrays are passed correctly
     const payload = {
       title: form.title.trim(),
       short_description: form.short_description.trim(),
@@ -231,13 +221,10 @@ export default function CreateProjectForm({
       supervisor: form.supervisor,
       department: form.department,
       project_status: form.project_status,
-
       project_link: form.project_link.trim(),
       sourcecode_link: form.sourcecode_link.trim(),
-
       duration_start: formatToMonthYear(form.duration_start),
       duration_end: formatToMonthYear(form.duration_end),
-
       team_members: form.team_members,
       tags: form.tags,
       tech_stack: form.tech_stack,
@@ -246,352 +233,374 @@ export default function CreateProjectForm({
       challenges_solutions: form.challenges_solutions,
     };
 
-    console.log("DEBUG: Final Create Payload", payload); // Check your console to see the arrays!
-    onSubmit?.(payload);
+    try {
+      // Call the onSubmit prop passed from the parent
+      const success = await onSubmit?.(payload);
+
+      if (success) {
+        // 2. Open your success modal
+        setSuccessOpen(true);
+
+        // 3. Wait 2.5 seconds, then go home
+        setTimeout(() => {
+          setSuccessOpen(false);
+          onCancel?.(); // This triggers navigate("/admin/projects") from parent props
+        }, 2500);
+      }
+    } catch (err) {
+      console.error("Failed to create project:", err);
+      // You could add an error state here if you wanted to show a failure message
+    }
   }
   return (
-    <Form onSubmit={handleSubmit}>
-      <Section>
-        <SectionTitle>Basic Information</SectionTitle>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Section>
+          <SectionTitle>Basic Information</SectionTitle>
 
-        <Field>
-          <Label>Title *</Label>
-          <Input
-            value={form.title}
-            onChange={(e) => updateField("title", e.target.value)}
-          />
-        </Field>
-
-        <Field>
-          <Label>Short Description</Label>
-          <Input
-            value={form.short_description}
-            onChange={(e) => updateField("short_description", e.target.value)}
-          />
-        </Field>
-
-        <Grid2>
           <Field>
-            <Label>Supervisor *</Label>
-            <ReactSelect
-              options={supervisorOptions}
-              styles={customSelectStyles}
-              onChange={handleSupervisorChange}
-              value={
-                supervisorOptions.find(
-                  (opt) => opt.value === form.supervisor,
-                ) || null
-              }
-              placeholder="Select a supervisor..."
-              isClearable={true}
+            <Label>Title *</Label>
+            <Input
+              value={form.title}
+              onChange={(e) => updateField("title", e.target.value)}
             />
           </Field>
 
           <Field>
-            <Label>Department *</Label>
-            <ReactSelect
-              options={departmentOptions}
-              styles={customSelectStyles}
-              onChange={(selected) =>
-                updateField("department", selected ? selected.value : "")
-              }
-              value={
-                departmentOptions.find(
-                  (opt) => opt.value === form.department,
-                ) || null
-              }
-              placeholder="Select a department..."
-              isClearable={true}
+            <Label>Short Description</Label>
+            <Input
+              value={form.short_description}
+              onChange={(e) => updateField("short_description", e.target.value)}
             />
           </Field>
-        </Grid2>
-
-        <Grid2>
-          <Field>
-            <Label>Project Status</Label>
-            <ReactSelect
-              options={projectStatusOptions}
-              styles={customSelectStyles}
-              onChange={(selected) =>
-                updateField("project_status", selected ? selected.value : "")
-              }
-              value={
-                projectStatusOptions.find(
-                  (opt) => opt.value === form.project_status,
-                ) || null
-              }
-              placeholder="Select project status..."
-              isClearable={true}
-            />
-          </Field>
-        </Grid2>
-
-        <Field>
-          <Label>Overview *</Label>
-          <TextArea
-            rows={6}
-            value={form.overview}
-            onChange={(e) => updateField("overview", e.target.value)}
-          />
-        </Field>
-      </Section>
-
-      <Section>
-        <SectionTitle>Links & Timeline</SectionTitle>
-
-        <Grid2>
-          <Field>
-            <Label>Project Link</Label>
-            <Input
-              value={form.project_link}
-              onChange={(e) => updateField("project_link", e.target.value)}
-            />
-          </Field>
-
-          <Field>
-            <Label>Source Code Link</Label>
-            <Input
-              value={form.sourcecode_link}
-              onChange={(e) => updateField("sourcecode_link", e.target.value)}
-            />
-          </Field>
-        </Grid2>
-
-        <Grid2>
-          <Field>
-            <Label>Duration Start</Label>
-            <Input
-              type="month"
-              value={form.duration_start}
-              onChange={(e) => updateField("duration_start", e.target.value)}
-            />
-          </Field>
-
-          <Field>
-            <Label>Duration End</Label>
-            <Input
-              type="month"
-              value={form.duration_end}
-              onChange={(e) => updateField("duration_end", e.target.value)}
-            />
-          </Field>
-        </Grid2>
-      </Section>
-
-      <Section>
-        <SectionTitle>Project Lists</SectionTitle>
-
-        <ListCard>
-          <ListTitle>Team Members</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.team_members}
-              onChange={(e) => updateInput("team_members", e.target.value)}
-              placeholder="Add team member"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("team_members", "team_members")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.team_members.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("team_members", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Tags</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.tags}
-              onChange={(e) => updateInput("tags", e.target.value)}
-              placeholder="Add tag"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("tags", "tags")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.tags.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("tags", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Tech Stack</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.tech_stack}
-              onChange={(e) => updateInput("tech_stack", e.target.value)}
-              placeholder="Add tech stack item"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("tech_stack", "tech_stack")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.tech_stack.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("tech_stack", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Key Features</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.key_features}
-              onChange={(e) => updateInput("key_features", e.target.value)}
-              placeholder="Add key feature"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("key_features", "key_features")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.key_features.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("key_features", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Achievements</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.achievements}
-              onChange={(e) => updateInput("achievements", e.target.value)}
-              placeholder="Add achievement"
-            />
-            <MiniButton
-              type="button"
-              onClick={() => addUniqueItem("achievements", "achievements")}
-            >
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
-          <ChipWrap>
-            {form.achievements.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove
-                  type="button"
-                  onClick={() => removeListItem("achievements", index)}
-                >
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-
-        <ListCard>
-          <ListTitle>Challenges & Solutions</ListTitle>
 
           <Grid2>
             <Field>
-              <Label>Challenge</Label>
-              <Input
-                value={inputs.challenge}
-                onChange={(e) => updateInput("challenge", e.target.value)}
+              <Label>Supervisor *</Label>
+              <SupervisorSelect
+                value={form.supervisor}
+                onChange={(val) => updateField("supervisor", val)}
               />
             </Field>
 
             <Field>
-              <Label>Solution</Label>
-              <Input
-                value={inputs.solution}
-                onChange={(e) => updateInput("solution", e.target.value)}
+              <Label>Department *</Label>
+              <ReactSelect
+                options={departmentOptions}
+                styles={customSelectStyles}
+                onChange={(selected) =>
+                  updateField("department", selected ? selected.value : "")
+                }
+                value={
+                  departmentOptions.find(
+                    (opt) => opt.value === form.department,
+                  ) || null
+                }
+                placeholder="Select a department..."
+                isClearable={true}
               />
             </Field>
           </Grid2>
 
-          <RightRow>
-            <MiniButton type="button" onClick={addChallengeSolution}>
-              <FaPlus />
-              <span>Add Pair</span>
-            </MiniButton>
-          </RightRow>
+          <Grid2>
+            <Field>
+              <Label>Project Status</Label>
+              <ReactSelect
+                options={projectStatusOptions}
+                styles={customSelectStyles}
+                onChange={(selected) =>
+                  updateField("project_status", selected ? selected.value : "")
+                }
+                value={
+                  projectStatusOptions.find(
+                    (opt) => opt.value === form.project_status,
+                  ) || null
+                }
+                placeholder="Select project status..."
+                isClearable={true}
+              />
+            </Field>
+          </Grid2>
 
-          <Stack>
-            {form.challenges_solutions.map((item, index) => (
-              <PairCard key={index}>
-                <PairLabel>Challenge</PairLabel>
-                <PairText>{item.challenge}</PairText>
+          <Field>
+            <Label>Overview *</Label>
+            <TextArea
+              rows={6}
+              value={form.overview}
+              onChange={(e) => updateField("overview", e.target.value)}
+            />
+          </Field>
+        </Section>
 
-                <PairLabel>Solution</PairLabel>
-                <PairText>{item.solution}</PairText>
+        <Section>
+          <SectionTitle>Links & Timeline</SectionTitle>
 
-                <PairRemove
-                  type="button"
-                  onClick={() => removeChallengeSolution(index)}
-                >
-                  Remove
-                </PairRemove>
-              </PairCard>
-            ))}
-          </Stack>
-        </ListCard>
-      </Section>
+          <Grid2>
+            <Field>
+              <Label>Project Link</Label>
+              <Input
+                value={form.project_link}
+                onChange={(e) => updateField("project_link", e.target.value)}
+              />
+            </Field>
 
-      <Footer>
-        <GhostButton type="button" onClick={onCancel} disabled={saving}>
-          <FaTimes />
-          <span>Cancel</span>
-        </GhostButton>
+            <Field>
+              <Label>Source Code Link</Label>
+              <Input
+                value={form.sourcecode_link}
+                onChange={(e) => updateField("sourcecode_link", e.target.value)}
+              />
+            </Field>
+          </Grid2>
 
-        <PrimaryButton type="submit" disabled={!canSubmit || saving}>
-          <FaSave />
-          <span>{saving ? "Creating..." : "Create Project"}</span>
-        </PrimaryButton>
-      </Footer>
-    </Form>
+          <Grid2>
+            <Field>
+              <Label>Duration Start</Label>
+              <Input
+                type="month"
+                value={form.duration_start}
+                onChange={(e) => updateField("duration_start", e.target.value)}
+              />
+            </Field>
+
+            <Field>
+              <Label>Duration End</Label>
+              <Input
+                type="month"
+                value={form.duration_end}
+                onChange={(e) => updateField("duration_end", e.target.value)}
+              />
+            </Field>
+          </Grid2>
+        </Section>
+
+        <Section>
+          <SectionTitle>Project Lists</SectionTitle>
+
+          <ListCard>
+            <ListTitle>Team Members</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.team_members}
+                onChange={(e) => updateInput("team_members", e.target.value)}
+                placeholder="Add team member"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("team_members", "team_members")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.team_members.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("team_members", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Tags</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.tags}
+                onChange={(e) => updateInput("tags", e.target.value)}
+                placeholder="Add tag"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("tags", "tags")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.tags.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("tags", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Tech Stack</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.tech_stack}
+                onChange={(e) => updateInput("tech_stack", e.target.value)}
+                placeholder="Add tech stack item"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("tech_stack", "tech_stack")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.tech_stack.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("tech_stack", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Key Features</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.key_features}
+                onChange={(e) => updateInput("key_features", e.target.value)}
+                placeholder="Add key feature"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("key_features", "key_features")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.key_features.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("key_features", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Achievements</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.achievements}
+                onChange={(e) => updateInput("achievements", e.target.value)}
+                placeholder="Add achievement"
+              />
+              <MiniButton
+                type="button"
+                onClick={() => addUniqueItem("achievements", "achievements")}
+              >
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
+            <ChipWrap>
+              {form.achievements.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove
+                    type="button"
+                    onClick={() => removeListItem("achievements", index)}
+                  >
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+
+          <ListCard>
+            <ListTitle>Challenges & Solutions</ListTitle>
+
+            <Grid2>
+              <Field>
+                <Label>Challenge</Label>
+                <Input
+                  value={inputs.challenge}
+                  onChange={(e) => updateInput("challenge", e.target.value)}
+                />
+              </Field>
+
+              <Field>
+                <Label>Solution</Label>
+                <Input
+                  value={inputs.solution}
+                  onChange={(e) => updateInput("solution", e.target.value)}
+                />
+              </Field>
+            </Grid2>
+
+            <RightRow>
+              <MiniButton type="button" onClick={addChallengeSolution}>
+                <FaPlus />
+                <span>Add Pair</span>
+              </MiniButton>
+            </RightRow>
+
+            <Stack>
+              {form.challenges_solutions.map((item, index) => (
+                <PairCard key={index}>
+                  <PairLabel>Challenge</PairLabel>
+                  <PairText>{item.challenge}</PairText>
+
+                  <PairLabel>Solution</PairLabel>
+                  <PairText>{item.solution}</PairText>
+
+                  <PairRemove
+                    type="button"
+                    onClick={() => removeChallengeSolution(index)}
+                  >
+                    Remove
+                  </PairRemove>
+                </PairCard>
+              ))}
+            </Stack>
+          </ListCard>
+        </Section>
+
+        <Footer>
+          <GhostButton type="button" onClick={onCancel} disabled={saving}>
+            <FaTimes />
+            <span>Cancel</span>
+          </GhostButton>
+
+          <PrimaryButton type="submit" disabled={!canSubmit || saving}>
+            <FaSave />
+            <span>{saving ? "Creating..." : "Create Project"}</span>
+          </PrimaryButton>
+        </Footer>
+      </Form>
+      {successOpen && (
+        <SuccessOverlay>
+          <SuccessCard>
+            <SuccessIcon>✓</SuccessIcon>
+            <SuccessTitle>Project Created</SuccessTitle>
+            <SuccessText>
+              "{form.title}" has been successfully added to the ETSU Project
+              Hub.
+            </SuccessText>
+          </SuccessCard>
+        </SuccessOverlay>
+      )}
+    </>
   );
 }
 

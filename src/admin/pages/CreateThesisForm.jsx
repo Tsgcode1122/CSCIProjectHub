@@ -5,6 +5,13 @@ import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import { useAdminAuth } from "../AdminAuthContext";
 import {
+  SuccessTitle,
+  SuccessIcon,
+  SuccessCard,
+  SuccessOverlay,
+  SuccessText,
+} from "../../components/ModalStyles";
+import {
   formatToMonthYear,
   parseToMonthInput,
 } from "../components/dateHelpers";
@@ -22,11 +29,11 @@ const departmentOptions = [
   { value: "Data Science", label: "Data Science" },
   { value: "Cybersecurity", label: "Cybersecurity" },
 ];
-export default function CreateThesisForm() {
+export default function CreateThesisForm({ saving, onCancel, onSubmit }) {
+  const [successOpen, setSuccessOpen] = useState(false);
   const navigate = useNavigate();
   const { adminUser } = useAdminAuth();
 
-  const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
 
   const [form, setForm] = useState({
@@ -119,7 +126,6 @@ export default function CreateThesisForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setSaveError("");
 
     const payload = {
       title: form.title.trim(),
@@ -129,9 +135,9 @@ export default function CreateThesisForm() {
       publications: form.publications,
       future_work: form.future_work.trim(),
       student: form.student.trim(),
-      supervisor: form.supervisor.trim(),
-      department: form.department.trim(),
-      status: form.status.trim() || "Draft",
+      supervisor: form.supervisor,
+      department: form.department,
+      status: form.status,
       tags: form.tags,
       short_description: form.short_description.trim(),
       duration_start: formatToMonthYear(form.duration_start),
@@ -139,254 +145,250 @@ export default function CreateThesisForm() {
     };
 
     try {
-      setSaving(true);
-
-      const res = await fetch(`${API_BASE}/research/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          ...(adminUser?.access_token
-            ? { Authorization: `Bearer ${adminUser.access_token}` }
-            : {}),
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => null);
-        const msg = errData?.detail
-          ? Array.isArray(errData.detail)
-            ? errData.detail.map((d) => d.msg).join(", ")
-            : String(errData.detail)
-          : `Create failed (${res.status})`;
-        throw new Error(msg);
+      const success = await onSubmit?.(payload);
+      if (success) {
+        setSuccessOpen(true);
+        setTimeout(() => {
+          setSuccessOpen(false);
+          onCancel?.();
+        }, 2500);
       }
-
-      navigate("/admin/projects");
     } catch (err) {
-      setSaveError(err.message || "Failed to create thesis.");
-    } finally {
-      setSaving(false);
+      console.error("Thesis creation failed", err);
     }
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
+    <>
+      <Form onSubmit={handleSubmit}>
+        {saveError ? <ErrorBanner>{saveError}</ErrorBanner> : null}
 
-      <Section>
-        <SectionTitle>Basic Information</SectionTitle>
+        <Section>
+          <SectionTitle>Basic Information</SectionTitle>
 
-        <Field>
-          <Label>Title *</Label>
-          <Input
-            value={form.title}
-            onChange={(e) => updateField("title", e.target.value)}
-          />
-        </Field>
-
-        <Field>
-          <Label>Short Description</Label>
-          <Input
-            value={form.short_description}
-            onChange={(e) => updateField("short_description", e.target.value)}
-          />
-        </Field>
-
-        <Grid2>
           <Field>
-            <Label>Student *</Label>
+            <Label>Title *</Label>
             <Input
-              value={form.student}
-              onChange={(e) => updateField("student", e.target.value)}
+              value={form.title}
+              onChange={(e) => updateField("title", e.target.value)}
             />
           </Field>
 
           <Field>
-            <Label>Supervisor *</Label>
-            <SupervisorSelect
-              value={form.supervisor}
-              onChange={(val) => updateField("supervisor", val)}
-            />
-          </Field>
-        </Grid2>
-
-        <Grid2>
-          <Field>
-            <Label>Department *</Label>
-            <FormSelect
-              options={departmentOptions}
-              value={form.department}
-              onChange={(val) => updateField("department", val)}
-              placeholder="Select Department..."
-            />
-          </Field>
-
-          <Field>
-            <Label>Status</Label>
-            <FormSelect
-              options={statusOptions}
-              value={form.status}
-              onChange={(val) => updateField("status", val)}
-              placeholder="Select Status..."
-            />
-          </Field>
-        </Grid2>
-
-        <Field>
-          <Label>Overview *</Label>
-          <TextArea
-            rows={6}
-            value={form.overview}
-            onChange={(e) => updateField("overview", e.target.value)}
-          />
-        </Field>
-      </Section>
-
-      <Section>
-        <SectionTitle>Research Content</SectionTitle>
-
-        <Field>
-          <Label>Methodology</Label>
-          <TextArea
-            rows={5}
-            value={form.methodology}
-            onChange={(e) => updateField("methodology", e.target.value)}
-          />
-        </Field>
-
-        <Field>
-          <Label>Key Findings</Label>
-          <TextArea
-            rows={5}
-            value={form.key_findings}
-            onChange={(e) => updateField("key_findings", e.target.value)}
-          />
-        </Field>
-
-        <Field>
-          <Label>Future Work</Label>
-          <TextArea
-            rows={5}
-            value={form.future_work}
-            onChange={(e) => updateField("future_work", e.target.value)}
-          />
-        </Field>
-      </Section>
-
-      <Section>
-        <SectionTitle>Timeline & Tags</SectionTitle>
-
-        <Grid2>
-          <Field>
-            <Label>Duration Start</Label>
+            <Label>Short Description</Label>
             <Input
-              type="month"
-              value={form.duration_start}
-              onChange={(e) => updateField("duration_start", e.target.value)}
+              value={form.short_description}
+              onChange={(e) => updateField("short_description", e.target.value)}
+            />
+          </Field>
+
+          <Grid2>
+            <Field>
+              <Label>Student *</Label>
+              <Input
+                value={form.student}
+                onChange={(e) => updateField("student", e.target.value)}
+              />
+            </Field>
+
+            <Field>
+              <Label>Supervisor *</Label>
+              <SupervisorSelect
+                value={form.supervisor}
+                onChange={(val) => updateField("supervisor", val)}
+              />
+            </Field>
+          </Grid2>
+
+          <Grid2>
+            <Field>
+              <Label>Department *</Label>
+              <FormSelect
+                options={departmentOptions}
+                value={form.department}
+                onChange={(val) => updateField("department", val)}
+                placeholder="Select Department..."
+              />
+            </Field>
+
+            <Field>
+              <Label>Status</Label>
+              <FormSelect
+                options={statusOptions}
+                value={form.status}
+                onChange={(val) => updateField("status", val)}
+                placeholder="Select Status..."
+              />
+            </Field>
+          </Grid2>
+
+          <Field>
+            <Label>Overview *</Label>
+            <TextArea
+              rows={6}
+              value={form.overview}
+              onChange={(e) => updateField("overview", e.target.value)}
+            />
+          </Field>
+        </Section>
+
+        <Section>
+          <SectionTitle>Research Content</SectionTitle>
+
+          <Field>
+            <Label>Methodology</Label>
+            <TextArea
+              rows={5}
+              value={form.methodology}
+              onChange={(e) => updateField("methodology", e.target.value)}
             />
           </Field>
 
           <Field>
-            <Label>Duration End</Label>
-            <Input
-              type="month"
-              value={form.duration_end}
-              onChange={(e) => updateField("duration_end", e.target.value)}
+            <Label>Key Findings</Label>
+            <TextArea
+              rows={5}
+              value={form.key_findings}
+              onChange={(e) => updateField("key_findings", e.target.value)}
             />
           </Field>
-        </Grid2>
 
-        <ListCard>
-          <ListTitle>Tags</ListTitle>
-          <AddRow>
-            <Input
-              value={inputs.tags}
-              onChange={(e) => updateInput("tags", e.target.value)}
-              placeholder="Add tag"
+          <Field>
+            <Label>Future Work</Label>
+            <TextArea
+              rows={5}
+              value={form.future_work}
+              onChange={(e) => updateField("future_work", e.target.value)}
             />
-            <MiniButton type="button" onClick={addTag}>
-              <FaPlus />
-            </MiniButton>
-          </AddRow>
+          </Field>
+        </Section>
 
-          <ChipWrap>
-            {form.tags.map((item, index) => (
-              <Chip key={`${item}-${index}`}>
-                {item}
-                <ChipRemove type="button" onClick={() => removeTag(index)}>
-                  ×
-                </ChipRemove>
-              </Chip>
-            ))}
-          </ChipWrap>
-        </ListCard>
-      </Section>
+        <Section>
+          <SectionTitle>Timeline & Tags</SectionTitle>
 
-      <Section>
-        <SectionTitle>Publications</SectionTitle>
+          <Grid2>
+            <Field>
+              <Label>Duration Start</Label>
+              <Input
+                type="month"
+                value={form.duration_start}
+                onChange={(e) => updateField("duration_start", e.target.value)}
+              />
+            </Field>
 
-        <ListCard>
-          <AddRow3>
-            <Input
-              value={inputs.publications_title}
-              onChange={(e) =>
-                updateInput("publications_title", e.target.value)
-              }
-              placeholder="Publication title"
-            />
-            <Input
-              value={inputs.publications_link}
-              onChange={(e) => updateInput("publications_link", e.target.value)}
-              placeholder="Publication link"
-            />
-          </AddRow3>
+            <Field>
+              <Label>Duration End</Label>
+              <Input
+                type="month"
+                value={form.duration_end}
+                onChange={(e) => updateField("duration_end", e.target.value)}
+              />
+            </Field>
+          </Grid2>
 
-          <RightRow>
-            <MiniButton type="button" onClick={addPublication}>
-              <FaPlus />
-              <span>Add Publication</span>
-            </MiniButton>
-          </RightRow>
+          <ListCard>
+            <ListTitle>Tags</ListTitle>
+            <AddRow>
+              <Input
+                value={inputs.tags}
+                onChange={(e) => updateInput("tags", e.target.value)}
+                placeholder="Add tag"
+              />
+              <MiniButton type="button" onClick={addTag}>
+                <FaPlus />
+              </MiniButton>
+            </AddRow>
 
-          <Stack>
-            {form.publications.map((item, index) => (
-              <PairCard key={index}>
-                <PairLabel>Title</PairLabel>
-                <PairText>{item.title || "—"}</PairText>
+            <ChipWrap>
+              {form.tags.map((item, index) => (
+                <Chip key={`${item}-${index}`}>
+                  {item}
+                  <ChipRemove type="button" onClick={() => removeTag(index)}>
+                    ×
+                  </ChipRemove>
+                </Chip>
+              ))}
+            </ChipWrap>
+          </ListCard>
+        </Section>
 
-                <PairLabel>Link</PairLabel>
-                <PairText>{item.link || "—"}</PairText>
+        <Section>
+          <SectionTitle>Publications</SectionTitle>
 
-                <PairRemove
-                  type="button"
-                  onClick={() => removePublication(index)}
-                >
-                  Remove
-                </PairRemove>
-              </PairCard>
-            ))}
-          </Stack>
-        </ListCard>
-      </Section>
+          <ListCard>
+            <AddRow3>
+              <Input
+                value={inputs.publications_title}
+                onChange={(e) =>
+                  updateInput("publications_title", e.target.value)
+                }
+                placeholder="Publication title"
+              />
+              <Input
+                value={inputs.publications_link}
+                onChange={(e) =>
+                  updateInput("publications_link", e.target.value)
+                }
+                placeholder="Publication link"
+              />
+            </AddRow3>
 
-      <Footer>
-        <GhostButton
-          type="button"
-          onClick={() => navigate("/admin/projects")}
-          disabled={saving}
-        >
-          <FaTimes />
-          <span>Cancel</span>
-        </GhostButton>
+            <RightRow>
+              <MiniButton type="button" onClick={addPublication}>
+                <FaPlus />
+                <span>Add Publication</span>
+              </MiniButton>
+            </RightRow>
 
-        <PrimaryButton type="submit" disabled={!canSubmit || saving}>
-          <FaSave />
-          <span>{saving ? "Creating..." : "Create Thesis"}</span>
-        </PrimaryButton>
-      </Footer>
-    </Form>
+            <Stack>
+              {form.publications.map((item, index) => (
+                <PairCard key={index}>
+                  <PairLabel>Title</PairLabel>
+                  <PairText>{item.title || "—"}</PairText>
+
+                  <PairLabel>Link</PairLabel>
+                  <PairText>{item.link || "—"}</PairText>
+
+                  <PairRemove
+                    type="button"
+                    onClick={() => removePublication(index)}
+                  >
+                    Remove
+                  </PairRemove>
+                </PairCard>
+              ))}
+            </Stack>
+          </ListCard>
+        </Section>
+
+        <Footer>
+          <GhostButton
+            type="button"
+            onClick={() => navigate("/admin/projects")}
+            disabled={saving}
+          >
+            <FaTimes />
+            <span>Cancel</span>
+          </GhostButton>
+
+          <PrimaryButton type="submit" disabled={!canSubmit || saving}>
+            <FaSave />
+            <span>{saving ? "Creating..." : "Create Thesis"}</span>
+          </PrimaryButton>
+        </Footer>
+      </Form>
+      {successOpen && (
+        <SuccessOverlay>
+          <SuccessCard>
+            <SuccessIcon>✓</SuccessIcon>
+            <SuccessTitle>Thesis Created</SuccessTitle>
+            <SuccessText>
+              "{form.title}" has been successfully added to the repository.
+            </SuccessText>
+          </SuccessCard>
+        </SuccessOverlay>
+      )}
+    </>
   );
 }
 

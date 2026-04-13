@@ -1,14 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 import { FiArrowLeft } from "react-icons/fi";
 import { Colors } from "../theme/Colors";
 
 const BackButton = ({ label }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBack = () => {
+    const path = location.pathname;
+
+    // 1. Check if we are on a Thesis details page (e.g., /theses/id)
+    if (path.startsWith("/theses/") && path !== "/theses") {
+      navigate("/theses");
+    }
+
+    // 2. Check if we are on a Project details page (e.g., /projects/id)
+    else if (path.startsWith("/projects/") && path !== "/projects") {
+      navigate("/projects");
+    }
+
+    // 3. Default behavior for main listing pages or other screens
+    else {
+      navigate(-1);
+    }
+  };
 
   return (
-    <Wrapper onClick={() => navigate(-1)}>
+    <Wrapper onClick={handleBack}>
       <FiArrowLeft />
       <span>{label}</span>
     </Wrapper>
