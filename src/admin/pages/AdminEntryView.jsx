@@ -18,7 +18,7 @@ import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import LoadingScreen from "../components/LoadingScreen";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
 function safeArray(value) {
   return Array.isArray(value) ? value : [];
@@ -178,7 +178,7 @@ export default function AdminEntryView() {
 
   const pageTitle = isProject ? "Project" : "Thesis";
   const overviewTitle = isProject ? "Project Overview" : "Thesis Overview";
-  
+
   if (loading || entry === undefined) {
     return (
       <Page>

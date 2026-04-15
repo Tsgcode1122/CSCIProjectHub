@@ -15,7 +15,7 @@ import {
   parseToMonthInput,
 } from "../components/dateHelpers";
 import SupervisorSelect from "../components/SupervisorSelect";
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 const STORAGE_KEY = "capstone_admin_session";
 
 export default function CreateProjectForm({

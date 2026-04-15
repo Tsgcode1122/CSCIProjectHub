@@ -15,7 +15,7 @@ import {
   formatToMonthYear,
   parseToMonthInput,
 } from "../components/dateHelpers";
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 import SupervisorSelect from "../components/SupervisorSelect";
 import FormSelect from "../components/FormSelect";
 const statusOptions = [

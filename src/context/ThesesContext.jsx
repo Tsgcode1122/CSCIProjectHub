@@ -16,7 +16,7 @@ export const ThesesProvider = ({ children }) => {
       try {
         // NOTE: Update this URL if your thesis endpoint is different
         const res = await axios.get(
-          "https://crpp-project.onrender.com/research/",
+          "https://csciprojecthub.etsu.edu/api/research/",
         );
         const data = res.data ?? [];
         console.log(res.data);

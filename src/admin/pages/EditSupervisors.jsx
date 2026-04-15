@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import NoResultsState from "../../components/NoResultsState";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 const STORAGE_KEY = "capstone_admin_session";
 
 function safeLower(x) {

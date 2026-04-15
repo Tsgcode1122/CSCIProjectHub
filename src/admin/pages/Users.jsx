@@ -18,7 +18,7 @@
 //   FaUserGraduate,
 // } from "react-icons/fa";
 
-// const API_BASE = "https://crpp-project.onrender.com";
+// const API_BASE = "https://csciprojecthub.etsu.edu/api";
 // const STORAGE_KEY = "capstone_admin_session";
 
 // function safeLower(x) {
@@ -396,7 +396,6 @@
 //   );
 // }
 
-
 import React, { useEffect, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
 import LoadingScreen from "../components/LoadingScreen";
@@ -417,7 +416,7 @@ import {
   FaUserGraduate,
 } from "react-icons/fa";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 const STORAGE_KEY = "capstone_admin_session";
 
 function safeLower(x) {
@@ -552,7 +551,9 @@ export default function Users() {
   const stats = useMemo(() => {
     const total = allRows.length;
     const admins = allRows.filter((u) => safeLower(u.role) === "admin").length;
-    const faculty = allRows.filter((u) => safeLower(u.role) === "faculty").length;
+    const faculty = allRows.filter(
+      (u) => safeLower(u.role) === "faculty",
+    ).length;
 
     return [
       {
@@ -713,41 +714,48 @@ export default function Users() {
           return row[key] ?? "—";
         }}
         renderActions={
-          isEmptyState ? undefined : (row) => (
-          <>
-            <IconBtn
-              title="View"
-              onClick={() => {
-                const matchedUser = users.find((u) => u.id === row.raw.id);
-                setSelectedUser(matchedUser || row.raw);
-                setViewOpen(true);
-              }}
-            >
-              <FaEye />
-            </IconBtn>
+          isEmptyState
+            ? undefined
+            : (row) => (
+                <>
+                  <IconBtn
+                    title="View"
+                    onClick={() => {
+                      const matchedUser = users.find(
+                        (u) => u.id === row.raw.id,
+                      );
+                      setSelectedUser(matchedUser || row.raw);
+                      setViewOpen(true);
+                    }}
+                  >
+                    <FaEye />
+                  </IconBtn>
 
-            <IconBtn
-              title="Edit"
-              onClick={() => {
-                const matchedUser = users.find((u) => u.id === row.raw.id);
-                setSelectedUser(matchedUser || row.raw);
-                setEditOpen(true);
-              }}
-            >
-              <FaEdit />
-            </IconBtn>
+                  <IconBtn
+                    title="Edit"
+                    onClick={() => {
+                      const matchedUser = users.find(
+                        (u) => u.id === row.raw.id,
+                      );
+                      setSelectedUser(matchedUser || row.raw);
+                      setEditOpen(true);
+                    }}
+                  >
+                    <FaEdit />
+                  </IconBtn>
 
-            <IconBtn
-              title="Delete"
-              onClick={() => {
-                setSelectedUser(row.raw);
-                setDeleteOpen(true);
-              }}
-            >
-              <FaTrash />
-            </IconBtn>
-          </>
-        )}
+                  <IconBtn
+                    title="Delete"
+                    onClick={() => {
+                      setSelectedUser(row.raw);
+                      setDeleteOpen(true);
+                    }}
+                  >
+                    <FaTrash />
+                  </IconBtn>
+                </>
+              )
+        }
       />
 
       {openModal && (

@@ -35,7 +35,7 @@ import {
 import { useAdminAuth } from "../AdminAuthContext";
 import LoadingScreen from "../components/LoadingScreen";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
 function safeLower(x) {
   return String(x ?? "").toLowerCase();

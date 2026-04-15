@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAdminAuth } from "./AdminAuthContext";
 import etsuLogo from "../images/etsuE.png";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 const STORAGE_KEY = "capstone_admin_session";
 
 const ETSU_NAVY = "#041E42";

@@ -7,7 +7,7 @@ import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import EditProjectForm from "./EditProjectForm";
 import EditThesisForm from "./EditThesisForm";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
 export default function AdminEntryEdit() {
   const { kind, id } = useParams();

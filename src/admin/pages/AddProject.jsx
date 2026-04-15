@@ -12,7 +12,7 @@ import {
 import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 
-const API_BASE = "https://crpp-project.onrender.com";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
 export default function AddProject() {
   const navigate = useNavigate();
