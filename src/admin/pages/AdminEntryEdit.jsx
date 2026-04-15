@@ -109,8 +109,8 @@ export default function AdminEntryEdit() {
           : `Update failed (${res.status})`;
         throw new Error(msg);
       }
-
-      navigate(`/admin/entries/${kind}/${id}`);
+      return true;
+      // navigate(`/admin/entries/${kind}/${id}`);
     } catch (err) {
       setSaveError(err.message || "Failed to update entry.");
     } finally {

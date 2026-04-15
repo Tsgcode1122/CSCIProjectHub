@@ -6,6 +6,13 @@ import { useProjectContext } from "../../context/ProjectContext";
 import CreateUserModal from "../../components/CreateUser";
 import ReactSelect from "react-select";
 import {
+  SuccessTitle,
+  SuccessIcon,
+  SuccessCard,
+  SuccessOverlay,
+  SuccessText,
+} from "../../components/ModalStyles";
+import {
   formatToMonthYear,
   parseToMonthInput,
 } from "../components/dateHelpers";
@@ -54,7 +61,7 @@ export default function EditProjectForm({
     challenges_solutions: safeArray(initialData.challenges_solutions),
   });
   const { projects, loading, error } = useProjectContext();
-
+  const [successOpen, setSuccessOpen] = useState(false);
   const [inputs, setInputs] = useState({
     team_members: "",
     tags: "",
@@ -237,7 +244,7 @@ export default function EditProjectForm({
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const payload = {
@@ -262,7 +269,18 @@ export default function EditProjectForm({
       duration_end: formatToMonthYear(form.duration_end),
     };
 
-    onSubmit(payload);
+    try {
+      const success = await onSubmit?.(payload);
+      if (success) {
+        setSuccessOpen(true);
+        setTimeout(() => {
+          setSuccessOpen(false);
+          onCancel?.(); // Redirects back to dashboard
+        }, 2200);
+      }
+    } catch (err) {
+      console.error("Failed to update thesis", err);
+    }
   }
 
   return (
@@ -626,6 +644,17 @@ export default function EditProjectForm({
           onClose={() => setShowAddSupervisor(false)}
           onSuccess={handleSupervisorAdded}
         />
+      )}
+      {successOpen && (
+        <SuccessOverlay>
+          <SuccessCard>
+            <SuccessIcon>✓</SuccessIcon>
+            <SuccessTitle>Changes Saved</SuccessTitle>
+            <SuccessText>
+              The project record has been updated successfully.
+            </SuccessText>
+          </SuccessCard>
+        </SuccessOverlay>
       )}
     </>
   );

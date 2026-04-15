@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "./AdminAuthContext";
-import etsuLogo from "../images/etsuE.png"
+import etsuLogo from "../images/etsuE.png";
 
 const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
@@ -123,7 +123,7 @@ export default function AdminLayout() {
               <SideLink to="/admin/users">Users</SideLink>
             )}
             {user.role === "admin" && (
-              <SideLink to="/admin/editsupervisors">Supervisors</SideLink>
+              <SideLink to="/admin/editsupervisors">Faculty</SideLink>
             )}
           </NavGroup>
 
@@ -184,7 +184,6 @@ const TopLeft = styled.div`
   gap: 14px;
 `;
 
-
 const LogoCircle = styled.img`
   width: 44px;
   height: 44px;
@@ -228,7 +227,7 @@ const PublicLink = styled(Link)`
 
 const Body = styled.div`
   flex: 1 1 auto;
-  min-height: 0; 
+  min-height: 0;
   display: grid;
   grid-template-columns: 260px 1fr;
   overflow: hidden; /* stops any inner overflow from causing page scroll */
