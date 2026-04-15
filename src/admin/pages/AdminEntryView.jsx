@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useLayoutEffect, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
+import LoadingScreen from "../components/LoadingScreen";
 
 const API_BASE = "https://crpp-project.onrender.com";
 
@@ -23,21 +24,23 @@ function safeArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
-function formatTimeline(start, end) {
-  if (start && end) return `${start} – ${end}`;
-  if (start) return start;
-  if (end) return end;
-  return "No timeline provided";
-}
+// function formatTimeline(start, end) {
+//   if (start && end) return `${start} – ${end}`;
+//   if (start) return start;
+//   if (end) return end;
+//   return "No timeline provided";
+// }
 
 export default function AdminEntryView() {
   const { kind, id } = useParams();
   const navigate = useNavigate();
   const { adminUser } = useAdminAuth();
 
-  const [entry, setEntry] = useState(null);
+  // const [entry, setEntry] = useState(null);
+  const [entry, setEntry] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // const [hasFetched, setHasFetched] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -83,13 +86,15 @@ export default function AdminEntryView() {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ac = new AbortController();
 
     async function loadEntry() {
       try {
         setLoading(true);
         setError("");
+        setEntry(undefined);
+        // setHasFetched(false)
 
         const endpoint = isProject
           ? `${API_BASE}/projects/${id}`
@@ -111,11 +116,21 @@ export default function AdminEntryView() {
           },
         });
 
+        // if (!res.ok) {
+        //   throw new Error(`Failed to load entry (${res.status})`);
+        // }
+
+        if (res.status === 404) {
+          setEntry(null);
+          return;
+        }
+
         if (!res.ok) {
           throw new Error(`Failed to load entry (${res.status})`);
         }
 
         const data = await res.json();
+
         setEntry(data);
       } catch (err) {
         if (err.name !== "AbortError") {
@@ -123,6 +138,7 @@ export default function AdminEntryView() {
         }
       } finally {
         setLoading(false);
+        // setHasFetched(true)
       }
     }
 
@@ -162,21 +178,55 @@ export default function AdminEntryView() {
 
   const pageTitle = isProject ? "Project" : "Thesis";
   const overviewTitle = isProject ? "Project Overview" : "Thesis Overview";
-
-  if (loading) {
+  
+  if (loading || entry === undefined) {
     return (
       <Page>
-        <StateCard>Loading details...</StateCard>
+        <LoadingScreen
+          title="Loading entry"
+          subtitle="Fetching project or thesis details."
+          compact
+        />
       </Page>
     );
   }
 
-  if (error || !entry) {
+  // if (error || !entry) {
+  //   return (
+  //     <Page>
+  //       <StateCard>
+  //         <div style={{ fontWeight: 800, color: "#b91c1c", marginBottom: 10 }}>
+  //           {error || "Entry not found."}
+  //         </div>
+  //         <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+  //           Back to Projects
+  //         </BackButton>
+  //       </StateCard>
+  //     </Page>
+  //   );
+  // }
+
+  if (error) {
     return (
       <Page>
         <StateCard>
           <div style={{ fontWeight: 800, color: "#b91c1c", marginBottom: 10 }}>
-            {error || "Entry not found."}
+            {error}
+          </div>
+          <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+            Back to Projects
+          </BackButton>
+        </StateCard>
+      </Page>
+    );
+  }
+
+  if (entry === null) {
+    return (
+      <Page>
+        <StateCard>
+          <div style={{ fontWeight: 800, color: "#b91c1c", marginBottom: 10 }}>
+            Entry not found.
           </div>
           <BackButton type="button" onClick={() => navigate("/admin/projects")}>
             Back to Projects
