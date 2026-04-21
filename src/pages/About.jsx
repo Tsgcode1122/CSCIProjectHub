@@ -76,7 +76,7 @@ const About = () => {
               platform to life."
             />
 
-            {/*            
+                       
             <TeamGrid>
      
               <RoleCard>
@@ -87,8 +87,8 @@ const About = () => {
                 <DetailHighlight>UI & Content Management</DetailHighlight>
                 <CardDivider />
                 <RoleDetails>
-                  <DetailText>Joshua</DetailText>
-                  <DetailText>Tosin</DetailText>
+                  <DetailText>Joshua Adade Ayoola</DetailText>
+                  <DetailText>Tosin Falola</DetailText>
                 </RoleDetails>
               </RoleCard>
 
@@ -101,13 +101,13 @@ const About = () => {
                 <DetailHighlight>Server & Environment</DetailHighlight>
                 <CardDivider />
                 <RoleDetails>
-                  <DetailText>Liz</DetailText>
-                  <DetailText>Hassan</DetailText>
+                  <DetailText>Liz Jennings</DetailText>
+                  <DetailText>Hassan Olugbile</DetailText>
                 </RoleDetails>
               </RoleCard>
 
            
-              <RoleCard>
+              <RoleCard $featured>
                 <IconWrapper>
                   <FiAward />
                 </IconWrapper>
@@ -118,7 +118,7 @@ const About = () => {
                   <DetailText>Rezwana Tahsin</DetailText>
                 </RoleDetails>
               </RoleCard>
-            </TeamGrid> */}
+            </TeamGrid>
           </TeamSection>
         </PageWrap>
       </SectionDiv>
@@ -289,11 +289,36 @@ const TeamGrid = styled.div`
   }
 `;
 
+// const RoleCard = styled.div`
+//   background: ${Colors.white};
+//   border: 1px solid rgba(4, 30, 66, 0.12);
+//   border-radius: 16px;
+//   padding: 2rem 1.5rem;
+//   box-shadow: ${Shadows.light};
+
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   text-align: center;
+
+//   transition:
+//     transform 160ms ease,
+//     box-shadow 160ms ease;
+
+//   &:hover {
+//     transform: translateY(-4px);
+//     box-shadow: ${Shadows.medium};
+//   }
+// `;
+
 const RoleCard = styled.div`
-  background: ${Colors.white};
-  border: 1px solid rgba(4, 30, 66, 0.12);
+  background: ${({ $featured }) =>
+    $featured ? "rgba(255, 199, 44, 0.08)" : Colors.white};
+  border: 1px solid
+    ${({ $featured }) =>
+      $featured ? "rgba(255, 199, 44, 0.35)" : "rgba(4, 30, 66, 0.12)"};
   border-radius: 16px;
-  padding: 2.5rem 1.5rem;
+  padding: 2rem 1.5rem;
   box-shadow: ${Shadows.light};
 
   display: flex;
@@ -312,24 +337,24 @@ const RoleCard = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: ${Colors.etsuGold};
   color: ${Colors.white};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.4rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
   box-shadow: 0 4px 12px rgba(255, 184, 28, 0.3);
 `;
 
 const RoleTitle = styled.h4`
   margin: 0;
   color: ${Colors.etsuGold};
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
 `;
 
 const RoleSubtitle = styled.div`
@@ -358,12 +383,13 @@ const RoleDetails = styled.div`
 const DetailHighlight = styled.div`
   color: ${Colors.etsuBlue};
   font-weight: 600;
-  font-size: 1.05rem;
-  margin-bottom: 0.2rem;
+  font-size: 0.98rem;
+  margin-top: 0.35rem;
 `;
 
 const DetailText = styled.div`
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 0.95rem;
-  line-height: 1.4;
+  color: ${Colors.etsuBlue};
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
 `;

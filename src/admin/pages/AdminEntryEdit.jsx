@@ -6,6 +6,7 @@ import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import EditProjectForm from "./EditProjectForm";
 import EditThesisForm from "./EditThesisForm";
+import LoadingScreen from "../components/LoadingScreen";
 
 const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
@@ -30,6 +31,7 @@ export default function AdminEntryEdit() {
       try {
         setLoading(true);
         setLoadError("");
+        setEntry(undefined);
         const storedSession = sessionStorage.getItem("capstone_admin_session");
         const session = storedSession ? JSON.parse(storedSession) : null;
         const token = session?.access_token;
@@ -55,6 +57,11 @@ export default function AdminEntryEdit() {
             Accept: "application/json",
           },
         });
+
+        if (res.status === 404) {
+            setEntry(null);
+            return;
+        }
 
         if (!res.ok) {
           throw new Error(`Failed to load entry (${res.status})`);
@@ -118,26 +125,56 @@ export default function AdminEntryEdit() {
     }
   }
 
-  if (loading) {
-    return (
-      <Page>
-        <StateCard>Loading editor...</StateCard>
-      </Page>
-    );
-  }
+    if (loading || entry === undefined) {
+        return (
+            <Page>
+            <LoadingScreen
+                title="Loading entry detail"
+                compact
+            />
+            </Page>
+        );
+        }
+        if (loadError) {
+        return (
+            <Page>
+            <StateCard>
+                <ErrorText>{loadError}</ErrorText>
+                <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+                Back
+                </BackButton>
+            </StateCard>
+            </Page>
+        );
+        }
 
-  if (loadError || !entry) {
-    return (
-      <Page>
-        <StateCard>
-          <ErrorText>{loadError || "Entry not found."}</ErrorText>
-          <BackButton type="button" onClick={() => navigate("/admin/projects")}>
-            Back
-          </BackButton>
-        </StateCard>
-      </Page>
-    );
-  }
+        if (entry === null) {
+        return (
+            <Page>
+            <StateCard>Entry not found.</StateCard>
+            </Page>
+        );
+    }
+//   if (loading) {
+//     return (
+//       <Page>
+//         <StateCard>Loading editor...</StateCard>
+//       </Page>
+//     );
+//   }
+
+//   if (loadError || !entry) {
+//     return (
+//       <Page>
+//         <StateCard>
+//           <ErrorText>{loadError || "Entry not found."}</ErrorText>
+//           <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+//             Back
+//           </BackButton>
+//         </StateCard>
+//       </Page>
+//     );
+//   }
 
   return (
     <Page>
