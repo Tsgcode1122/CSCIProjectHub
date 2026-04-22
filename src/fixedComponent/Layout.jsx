@@ -7,10 +7,15 @@ import Footer from "./Footer";
 import ScrollToTopButton from "./ScrollToTopButton";
 
 const Layout = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [location.pathname]);
 
   return (
     <>

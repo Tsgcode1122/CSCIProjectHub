@@ -12,6 +12,13 @@ const customStyles = {
     boxShadow: "none",
     fontSize: "14px",
     "&:hover": { borderColor: "#cbd5e1" },
+    // Ensure the control itself stays above the table lines
+    zIndex: 3,
+  }),
+  // ✅ Add the menu style here
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 3, // This ensures the dropdown list floats over the table
   }),
   option: (provided, state) => ({
     ...provided,

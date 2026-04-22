@@ -202,12 +202,12 @@ export default function CreateThesisForm({ saving, onCancel, onSubmit }) {
 
           <Grid2>
             <Field>
-              <Label>Department *</Label>
+              <Label>Discipline *</Label>
               <FormSelect
                 options={departmentOptions}
                 value={form.department}
                 onChange={(val) => updateField("department", val)}
-                placeholder="Select Department..."
+                placeholder="Select Discipline..."
               />
             </Field>
 

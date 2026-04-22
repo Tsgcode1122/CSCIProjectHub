@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   PageCol,
   StickyTop,
@@ -12,7 +13,6 @@ import {
   SearchWrap,
   Search,
   SearchIcon,
-  Select,
   AddBtn,
   TableWrap,
   TableScroll,
@@ -22,24 +22,28 @@ import {
   Actions,
 } from "../admin/dashboardStyles";
 import { FaSearch } from "react-icons/fa";
+import FormSelect from "../admin/components/FormSelect";
 
 export default function Dashboard({
-    stats = [],
-    query,
-    onQueryChange,
-    filterValue,
-    onFilterChange,
-    filterOptions = [],
-    addLabel = "Add New",
-    onAdd,
-    columns = [],
-    rows = [],
-    renderCell,
-    renderActions,
-  }) {
+  stats = [],
+  query,
+  onQueryChange,
+  filterValue,
+  onFilterChange,
+  filterOptions = [],
+  sortValue,
+  variant,
+  onSortChange,
+  sortOptions = [],
+  addLabel = "Add New",
+  onAdd,
+  columns = [],
+  rows = [],
+  renderCell,
+  renderActions,
+}) {
   return (
     <PageCol>
-      {/* ✅ Everything above table stays static */}
       <StickyTop>
         <StatsRow>
           {stats.map((s) => (
@@ -56,7 +60,7 @@ export default function Dashboard({
         </StatsRow>
 
         <Panel>
-          <Toolbar>
+          <Toolbar variant={variant}>
             <SearchWrap>
               <SearchIcon>
                 <FaSearch size={14} />
@@ -68,18 +72,24 @@ export default function Dashboard({
               />
             </SearchWrap>
 
-            {/* Only render the Select if filterOptions exist AND have at least 1 item */}
+            {/* ✅ Custom Sort with ReactSelect */}
+            {sortOptions && sortOptions.length > 0 && (
+              <FormSelect
+                options={sortOptions}
+                value={sortValue}
+                onChange={onSortChange}
+                placeholder="Sort By"
+              />
+            )}
+
+            {/* ✅ Custom Filter with ReactSelect */}
             {filterOptions && filterOptions.length > 0 && (
-              <Select
+              <FormSelect
+                options={filterOptions}
                 value={filterValue}
-                onChange={(e) => onFilterChange?.(e.target.value)}
-              >
-                {filterOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </Select>
+                onChange={onFilterChange}
+                placeholder="Filter By"
+              />
             )}
 
             <AddBtn onClick={onAdd}>
@@ -89,7 +99,6 @@ export default function Dashboard({
         </Panel>
       </StickyTop>
 
-      {/* ✅ Table fills remaining height; ONLY body scrolls */}
       <TableWrap>
         <TableScroll>
           <Table>
@@ -101,7 +110,6 @@ export default function Dashboard({
                 <TH style={{ textAlign: "right" }}>Actions</TH>
               </tr>
             </thead>
-
             <tbody>
               {rows.map((row) => (
                 <tr key={row.id || row.title}>
@@ -110,7 +118,6 @@ export default function Dashboard({
                       {renderCell ? renderCell(row, c.key) : row[c.key]}
                     </TD>
                   ))}
-
                   <TD>
                     <Actions>{renderActions?.(row)}</Actions>
                   </TD>

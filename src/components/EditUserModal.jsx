@@ -301,13 +301,13 @@ const EditUserModal = ({ user, onClose, onSuccess }) => {
                   </Field>
 
                   <Field>
-                    <Label>Program</Label>
+                    <Label>Discipline</Label>
                     <Select
                       name="department"
                       value={form.department}
                       onChange={handleChange}
                     >
-                      <option value="">Select Program</option>
+                      <option value="">Select Discipline</option>
                       {departments.map((dept) => (
                         <option key={dept} value={dept}>
                           {dept}

@@ -201,7 +201,7 @@ const CreateUserModal = ({ onClose, onSuccess, isSupervisor = false }) => {
                       name="fullname"
                       value={form.fullname}
                       onChange={handleChange}
-                      placeholder="e.g. Dr. Jane Doe"
+                      placeholder="e.g. Dr. name"
                       required
                     />
                   </Field>
@@ -307,13 +307,13 @@ const CreateUserModal = ({ onClose, onSuccess, isSupervisor = false }) => {
                     </Field>
 
                     <Field>
-                      <Label>Program</Label>
+                      <Label>Discipline</Label>
                       <Select
                         name="department"
                         value={form.department}
                         onChange={handleChange}
                       >
-                        <option value="">Select Program</option>
+                        <option value="">Select Discipline</option>
                         {departments.map((dept) => (
                           <option key={dept} value={dept}>
                             {dept}
@@ -322,17 +322,6 @@ const CreateUserModal = ({ onClose, onSuccess, isSupervisor = false }) => {
                       </Select>
                     </Field>
                   </TwoCol>
-
-                  <Field>
-                    <Label>Major</Label>
-                    <Input
-                      type="text"
-                      name="major"
-                      value={form.major}
-                      onChange={handleChange}
-                      placeholder="Enter major"
-                    />
-                  </Field>
                 </>
               )}
 

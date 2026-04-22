@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAdminAuth } from "../AdminAuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -7,7 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 export default function AdminLogin() {
   const nav = useNavigate();
   const { login } = useAdminAuth();
-
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -21,7 +21,11 @@ export default function AdminLogin() {
     setBusy(true);
     try {
       await login({ email, password });
-      nav("/admin/projects");
+
+      // ✅ LOGIC: Get 'next' from URL, or default to '/admin/projects'
+      const redirectTo = searchParams.get("next") || "/admin/projects";
+
+      nav(redirectTo, { replace: true });
     } catch (ex) {
       setErr(ex?.message || "Login failed");
     } finally {
@@ -72,7 +76,7 @@ export default function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-              
+
                 <ToggleButton
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}

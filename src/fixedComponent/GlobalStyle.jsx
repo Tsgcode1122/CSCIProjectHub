@@ -34,8 +34,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: 2rem;
-    line-height: 2.4rem;
+   font-size: 2.25rem; 
+    line-height: 1.1;
     font-weight: 800;
     letter-spacing: -0.02em;
 
@@ -45,17 +45,17 @@ const GlobalStyle = createGlobalStyle`
     }
 
     @media ${media.tablet} {
-      font-size: 2.6rem;
-      line-height: 3rem;
+      font-size: 2.8rem; 
+      line-height: 1.15;
     }
 
     @media ${media.laptop} {
-      font-size: 3rem;
+      font-size: 3.2rem;
       line-height: 3.4rem;
     }
 
     @media ${media.desktopXL} {
-      font-size: 3.2rem;
+    font-size: 4rem;
       line-height: 3.6rem;
     }
   }
@@ -115,12 +115,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h4 {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     line-height: 1.6rem;
     font-weight: 700;
 
     @media ${media.mobileS} {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       line-height: 1.7rem;
     }
 
@@ -130,12 +130,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     @media ${media.laptop} {
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       line-height: 2rem;
     }
 
     @media ${media.desktopXL} {
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       line-height: 2.2rem;
     }
   }
@@ -167,29 +167,29 @@ const GlobalStyle = createGlobalStyle`
   }
 
   p {
-    font-size: 0.98rem;
+    font-size: 1rem;
     line-height: 1.7rem;
     font-weight: 400;
     color: white;
 
     @media ${media.mobileS} {
-      font-size: 1rem;
+      font-size: 1.02rem;
       line-height: 1.75rem;
     }
 
     @media ${media.tablet} {
-      font-size: 1rem;
+      font-size: 1.05rem;
       line-height: 1.8rem;
     }
 
     @media ${media.laptop} {
-      font-size: 1.05rem;
-      line-height: 1.9rem;
+      font-size: 1.1rem;
+      line-height: 1.8rem;
     }
 
     @media ${media.desktopXL} {
-      font-size: 1.1rem;
-      line-height: 2rem;
+      font-size: 1.2rem;
+      line-height: 1.9rem;
     }
   }
 
@@ -199,12 +199,12 @@ const GlobalStyle = createGlobalStyle`
     color: #64748b;
 
     @media ${media.laptop} {
-      font-size: 0.875rem;
+      font-size: 0.95rem;
       line-height: 1.3rem;
     }
 
     @media ${media.desktopXL} {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       line-height: 1.4rem;
     }
   }

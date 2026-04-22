@@ -42,6 +42,7 @@ export function AdminAuthProvider({ children }) {
 
     setAdminUser(user);
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    return user;
   };
 
   const logout = () => {

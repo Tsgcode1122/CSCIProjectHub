@@ -6,6 +6,7 @@ import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import EditProjectForm from "./EditProjectForm";
 import EditThesisForm from "./EditThesisForm";
+import LoadingScreen from "../components/LoadingScreen";
 
 const API_BASE = "https://csciprojecthub.etsu.edu/api";
 
@@ -118,6 +119,7 @@ export default function AdminEntryEdit() {
     }
   }
 
+  // 1. First, check if we are still fetching
   if (loading) {
     return (
       <Page>
@@ -125,19 +127,42 @@ export default function AdminEntryEdit() {
       </Page>
     );
   }
-
-  if (loadError || !entry) {
+  if (loading || (!entry && !loadError)) {
+    return (
+      <LoadingScreen
+        title="Loading Editor"
+        subtitle="Fetching the latest details from the repository..."
+        compact
+      />
+    );
+  }
+  // 2. Second, check if there was an actual error during fetch
+  if (loadError) {
     return (
       <Page>
         <StateCard>
-          <ErrorText>{loadError || "Entry not found."}</ErrorText>
+          <ErrorText>{loadError}</ErrorText>
           <BackButton type="button" onClick={() => navigate("/admin/projects")}>
-            Back
+            Back to Projects
           </BackButton>
         </StateCard>
       </Page>
     );
   }
+
+  // 3. Finally, check if the entry is missing after loading finished without error
+  // if (!entry) {
+  //   return (
+  //     <Page>
+  //       <StateCard>
+  //         <ErrorText>Entry not found.</ErrorText>
+  //         <BackButton type="button" onClick={() => navigate(-1)}>
+  //           Back
+  //         </BackButton>
+  //       </StateCard>
+  //     </Page>
+  //   );
+  // }
 
   return (
     <Page>
@@ -157,10 +182,7 @@ export default function AdminEntryEdit() {
               </div>
             </HeaderLeft>
 
-            <BackButton
-              type="button"
-              onClick={() => navigate(`/admin/entries/${kind}/${id}`)}
-            >
+            <BackButton type="button" onClick={() => navigate(-1)}>
               <FaArrowLeft />
               <span>Back</span>
             </BackButton>

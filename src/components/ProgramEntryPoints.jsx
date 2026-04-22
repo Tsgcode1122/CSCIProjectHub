@@ -4,31 +4,50 @@ import { useNavigate } from "react-router-dom";
 import { Colors, Shadows } from "../theme/Colors";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import { FiArrowUpRight } from "react-icons/fi";
+
+import { HiOutlineDesktopComputer } from "react-icons/hi"; // CS
+import { LuComputer } from "react-icons/lu"; // IT
+import { FaComputer } from "react-icons/fa6"; // IS
+import { RiShieldKeyholeLine } from "react-icons/ri"; // Cybersecurity
+import { IoBarChartOutline } from "react-icons/io5"; // Data Science
 import { media } from "../theme/Breakpoints";
 
 const ProgramEntryPoints = () => {
   const navigate = useNavigate();
 
-  // 1. Add a 'path' property to each program object
   const programs = [
-    { key: "cs", label: "Computer Science", icon: "💻", path: "/projects" },
+    {
+      key: "cs",
+      label: "Computer Science",
+      icon: <HiOutlineDesktopComputer />,
+      path: "/projects",
+    },
     {
       key: "it",
       label: "Information Technology",
-      icon: "🖧",
+      icon: <LuComputer />,
       path: "/projects",
     },
-    { key: "is", label: "Information Systems", icon: "🗂️", path: "/projects" },
+    {
+      key: "is",
+      label: "Information Systems",
+      icon: <FaComputer />,
+      path: "/projects",
+    },
     {
       key: "cybersecurity",
       label: "Cybersecurity",
-      icon: "🛡️",
+      icon: <RiShieldKeyholeLine />,
       path: "/theses",
     },
-    { key: "datascience", label: "Data Science", icon: "📊", path: "/theses" },
+    {
+      key: "datascience",
+      label: "Data Science",
+      icon: <IoBarChartOutline />,
+      path: "/theses",
+    },
   ];
 
-  // 2. Accept the whole program object to get both the path and the label
   const handleNavigate = (program) => {
     navigate(`${program.path}?department=${encodeURIComponent(program.label)}`);
   };
@@ -39,11 +58,11 @@ const ProgramEntryPoints = () => {
         <Wrapper>
           <ScrollRow>
             {programs.map((program) => (
-              // 3. Pass the entire program object to the handler
               <Card key={program.key} onClick={() => handleNavigate(program)}>
                 <Arrow>
                   <FiArrowUpRight />
                 </Arrow>
+                {/* 3. Render the icon component directly */}
                 <Icon>{program.icon}</Icon>
                 <Label>{program.label}</Label>
               </Card>
@@ -54,7 +73,6 @@ const ProgramEntryPoints = () => {
     </ProgramWrap>
   );
 };
-
 export default ProgramEntryPoints;
 
 const ProgramWrap = styled.div`
@@ -64,6 +82,7 @@ const ProgramWrap = styled.div`
 const Wrapper = styled.div`
   display: grid;
   gap: 1.2rem;
+  margin-bottom: 2rem;
 `;
 const Arrow = styled.div`
   position: absolute;
@@ -100,7 +119,7 @@ const ScrollRow = styled.div`
   justify-content: flex-start;
 
   @media (min-width: 1080px) {
-    justify-content: center;
+    justify-content: safe center;
   }
 `;
 const Card = styled.button`
@@ -147,9 +166,13 @@ const Icon = styled.div`
   color: ${Colors.etsuBlue};
   display: grid;
   place-items: center;
-  font-size: 1.35rem;
-`;
 
+  font-size: 1.5rem;
+
+  svg {
+    display: block;
+  }
+`;
 const Label = styled.small`
   color: ${Colors.etsuBlue};
   font-weight: 600;
