@@ -21,7 +21,6 @@ const Wrapper = styled.div`
 const Title = styled.h4`
   margin: 0;
   color: ${Colors.brightBlue};
-  /* font-weight: 600; */
 `;
 
 const Underline = styled.div`
@@ -36,6 +35,6 @@ const Subtitle = styled.small`
   display: block;
   max-width: 620px;
   margin: 0 auto;
-  opacity: 0.75;
+  /* opacity: 0.95; */
   line-height: 1.3rem;
 `;

@@ -284,7 +284,7 @@ export default function CreateProjectForm({
             </Field>
 
             <Field>
-              <Label>Department *</Label>
+              <Label>Discipline *</Label>
               <ReactSelect
                 options={departmentOptions}
                 styles={customSelectStyles}
@@ -296,7 +296,7 @@ export default function CreateProjectForm({
                     (opt) => opt.value === form.department,
                   ) || null
                 }
-                placeholder="Select a department..."
+                placeholder="Select a discipline..."
                 isClearable={true}
               />
             </Field>

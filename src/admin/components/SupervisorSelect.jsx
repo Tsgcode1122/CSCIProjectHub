@@ -55,6 +55,12 @@ export default function SupervisorSelect({ value, onChange }) {
       borderRadius: "12px",
       padding: "2px",
       border: "1px solid #e2e8f0",
+      zIndex: 10,
+    }),
+    // ✅ Add the menu style here
+    menu: (provided) => ({
+      ...provided,
+      zIndex: 30, // This ensures the dropdown list floats over the table
     }),
     option: (base, state) => ({
       ...base,

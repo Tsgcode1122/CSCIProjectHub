@@ -125,7 +125,7 @@ export default function Projects() {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState("");
-
+  const [sortBy, setSortBy] = useState("");
   const [showCreateOptions, setShowCreateOptions] = useState(false);
 
   async function loadData(signal) {
@@ -178,7 +178,8 @@ export default function Projects() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return safeRows.filter((r) => {
+    // 1. First, perform the filtering
+    let result = safeRows.filter((r) => {
       const matchesFilter =
         filterBy === "All"
           ? true
@@ -205,7 +206,30 @@ export default function Projects() {
 
       return matchesFilter && matchesQuery;
     });
-  }, [safeRows, query, filterBy]);
+
+    // 2. Then, perform the sorting based on 'created_at'
+    return result.sort((a, b) => {
+      if (sortBy === "az") {
+        return safeLower(a.title).localeCompare(safeLower(b.title));
+      }
+      if (sortBy === "za") {
+        return safeLower(b.title).localeCompare(safeLower(a.title));
+      }
+
+      if (sortBy === "latest") {
+        return (
+          new Date(b.raw.created_at || 0) - new Date(a.raw.created_at || 0)
+        );
+      }
+      if (sortBy === "oldest") {
+        return (
+          new Date(a.raw.created_at || 0) - new Date(b.raw.created_at || 0)
+        );
+      }
+
+      return 0;
+    });
+  }, [safeRows, query, filterBy, sortBy]); // Make sure sortBy is in this dependency array!
 
   const isEmptyState = query.trim() && filtered.length === 0;
 
@@ -227,9 +251,13 @@ export default function Projects() {
     const total = safeRows.length;
     const projectCount = safeRows.filter((x) => x.kind === "Project").length;
     const thesisCount = safeRows.filter((x) => x.kind === "Thesis").length;
-    const activeProjects = safeRows.filter(
-      (x) => x.kind === "Project" && isOngoingStatus(x.status),
-    ).length;
+    const activeProjects = safeRows.filter((x) => {
+      const s = safeLower(x.status).trim();
+      return (
+        (x.kind === "Project" || x.kind === "Thesis") &&
+        (s === "in progress" || s === "accepting members")
+      );
+    }).length;
 
     return [
       {
@@ -240,7 +268,7 @@ export default function Projects() {
         iconBg: "rgba(4,30,66,0.10)",
       },
       {
-        label: "Active Projects",
+        label: "Active Projects / Theses",
         value: rows === null ? "—" : activeProjects,
         accent: "#3B82F6",
         icon: <FaBolt size={18} />,
@@ -255,7 +283,7 @@ export default function Projects() {
         iconBg: "rgba(255,199,44,0.20)",
       },
       {
-        label: "Thesis",
+        label: "Theses",
         value: rows === null ? "—" : thesisCount,
         accent: "#111827",
         icon: <FaBookOpen size={18} />,
@@ -330,7 +358,7 @@ export default function Projects() {
     return (
       <div style={{ padding: 16 }}>
         <div style={{ fontWeight: 900, color: ETSU_NAVY, marginBottom: 6 }}>
-          Couldn’t load Projects / Thesis
+          Couldn’t load Projects / Theses
         </div>
         <div style={{ color: "#b91c1c", marginBottom: 12 }}>{error}</div>
         <button
@@ -358,9 +386,14 @@ export default function Projects() {
         query={query}
         onQueryChange={setQuery}
         filterValue={filterBy}
-        onFilterChange={setFilterBy}
+        onFilterChange={(val) => setFilterBy(val || "All")}
+        sortValue={sortBy}
+        onSortChange={setSortBy}
+        sortOptions={[
+          { value: "latest", label: "Latest" },
+          { value: "oldest", label: "Oldest " },
+        ]}
         filterOptions={[
-          { value: "All", label: "Filter By" },
           { value: "Project", label: "Project" },
           { value: "Thesis", label: "Thesis" },
           { value: "Completed", label: "Completed" },
@@ -369,63 +402,8 @@ export default function Projects() {
         ]}
         addLabel="Add New"
         onAdd={() => setShowCreateOptions(true)}
-        // columns={[
-        //   { key: "kind", header: "Type" },
-        //   { key: "title", header: "Title" },
-        //   { key: "author", header: "Author / Team" },
-        //   { key: "duration", header: "Duration" },
-        //   { key: "advisor", header: "Advisor" },
-        // ]}
-        // rows={filtered}
         columns={tableColumns}
         rows={displayRows}
-        // renderCell={(row, key) => {
-        //   if (key === "kind") {
-        //     return (
-        //       <TypeBadge kind={row.kind}>
-        //         <span aria-hidden="true">▢</span> {row.kind}
-        //       </TypeBadge>
-        //     );
-        //   }
-
-        //   if (key === "title") {
-        //     if (row.isEmpty) {
-        //       return (
-        //         <div
-        //           style={{
-        //             width: "100%",
-        //             minHeight: 260,
-        //             display: "flex",
-        //             justifyContent: "center",
-        //             alignItems: "center",
-        //           }}
-        //         >
-        //           <NoResultsState
-        //             query={query}
-        //             title="No entries found"
-        //             subtitle={`Could not find anything matching "${query}"`}
-        //           />
-        //         </div>
-        //       );
-        //     }
-
-        //     return (
-        //       <>
-        //         <div style={{ fontWeight: 800 }}>{row.title}</div>
-        //         <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
-        //           {row.department} • {row.status}
-        //         </div>
-        //         <ChipRow>
-        //           {(row.tags || []).slice(0, 4).map((t) => (
-        //             <Chip key={t}>{t}</Chip>
-        //           ))}
-        //         </ChipRow>
-        //       </>
-        //     );
-        //   }
-
-        //   return row[key] ?? "—";
-        // }}
         renderCell={(row, key) => {
           if (row.isEmpty) {
             return (
@@ -731,7 +709,8 @@ const ConfirmDeleteBtn = styled.button`
 const CreateOverlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(0, 3, 6, 0.7);
+  backdrop-filter: blur(2px);
   display: grid;
   place-items: center;
   z-index: 9999;

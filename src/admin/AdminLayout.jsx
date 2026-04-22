@@ -31,11 +31,10 @@ export default function AdminLayout() {
         const session = storedSession ? JSON.parse(storedSession) : null;
         const token = session?.access_token;
 
-        console.log("Stored session:", session);
-        console.log("Token:", token);
-
         if (!token) {
-          throw new Error("No access token found in session storage");
+          // If no token, redirect immediately
+          window.location.href = `/login`;
+          return;
         }
 
         const res = await fetch(`${API_BASE}/users/me`, {
@@ -46,21 +45,21 @@ export default function AdminLayout() {
           },
         });
 
-        console.log("Status:", res.status);
-        console.log("Response object:", res);
-
-        if (!res.ok) {
-          throw new Error(`Users fetch failed (${res.status})`);
+        // ✅ AUTO-REDIRECT LOGIC: If token is expired (401)
+        if (res.status === 401) {
+          sessionStorage.removeItem("capstone_admin_session");
+          window.location.href = `/admin/login?next=${encodeURIComponent(currentPath)}`;
+          return;
         }
 
-        const json = await res.json();
-        console.log("Response body:", json);
+        if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
 
+        const json = await res.json();
         setUser(json);
       } catch (e) {
         if (e.name !== "AbortError") {
           console.error("LOAD ERROR:", e);
-          setError(e.message || "Failed to load users.");
+          setError(e.message || "Failed to load profile.");
         }
       } finally {
         setLoading(false);
@@ -136,9 +135,7 @@ export default function AdminLayout() {
 
         {/* MAIN is the ONLY scroll container */}
         <Main>
-          <MainInner>
-            <Outlet />
-          </MainInner>
+          <MainInner>{user ? <Outlet context={{ user }} /> : null}</MainInner>
         </Main>
       </Body>
     </Shell>

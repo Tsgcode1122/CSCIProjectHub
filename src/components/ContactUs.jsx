@@ -7,8 +7,6 @@ import { Colors, Shadows } from "../theme/Colors";
 import { media } from "../theme/Breakpoints";
 import { Form, Input, Button, message } from "antd";
 
-const { TextArea } = Input;
-
 // 1. Pass hideHeader as a prop, defaulting to false
 const ContactUs = ({ hideHeader = false }) => {
   const [form] = Form.useForm();
@@ -43,48 +41,6 @@ const ContactUs = ({ hideHeader = false }) => {
         )}
 
         <Grid>
-          {/* <FormCard>
-            <StyledForm form={form} layout="vertical" onFinish={onFinish}>
-              <TwoCol>
-                <Form.Item name="name" label="Your Name (optional)">
-                  <StyledInput placeholder="Enter your name" />
-                </Form.Item>
-
-                <Form.Item
-                  name="email"
-                  label="Email"
-                  rules={[
-                    { required: true, message: "Email is required." },
-                    { type: "email", message: "Enter a valid email address." },
-                  ]}
-                >
-                  <StyledInput placeholder="you@example.com" />
-                </Form.Item>
-              </TwoCol>
-              <Form.Item
-                name="comment"
-                label="Comment"
-                rules={[{ required: true, message: "Comment is required." }]}
-              >
-                <StyledTextArea
-                  placeholder="Tell us how we can help..."
-                  rows={6}
-                />
-              </Form.Item>
-
-              <ButtonRow>
-                <SubmitBtn
-                  type="primary"
-                  htmlType="submit"
-                  loading={isSubmitting}
-                >
-                  Send
-                  <FiArrowRight size={18} />
-                </SubmitBtn>
-              </ButtonRow>
-            </StyledForm>
-          </FormCard> */}
-
           <InfoCol>
             <InfoCard>
               <Icon>
@@ -147,97 +103,6 @@ const Grid = styled.div`
   }
 `;
 
-const FormCard = styled.div`
-  background: ${Colors.white};
-  border: 1px solid rgba(4, 30, 66, 0.12);
-  border-radius: 16px;
-  padding: 1.8rem 1.6rem;
-`;
-
-const StyledForm = styled(Form)`
-  .ant-form-item-label > label {
-    font-weight: 600;
-    color: ${Colors.etsuBlue};
-  }
-
-  .ant-form-item-explain-error {
-    font-weight: 600;
-  }
-`;
-
-const TwoCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  @media ${media.tablet} {
-    flex-direction: row;
-
-    > * {
-      flex: 1;
-    }
-  }
-`;
-
-const StyledInput = styled(Input)`
-  border-radius: 12px !important;
-  padding: 0.85rem 0.95rem !important;
-  border: 1px solid rgba(4, 30, 66, 0.18) !important;
-`;
-
-const StyledTextArea = styled(TextArea)`
-  border-radius: 12px !important;
-  padding: 0.85rem 0.95rem !important;
-  border: 1px solid rgba(4, 30, 66, 0.18) !important;
-`;
-
-const ButtonRow = styled.div`
-  margin-top: 0.4rem;
-`;
-
-const SubmitBtn = styled(Button)`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-
-  padding: 1rem 1.6rem !important;
-  cursor: pointer;
-  @media ${media.mobileXS} {
-    padding: 0.5rem 1rem !important;
-  }
-  background: ${Colors.etsuGold} !important;
-  color: ${Colors.etsuBlue} !important;
-
-  font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
-
-  border: none !important;
-  border-radius: 10px !important;
-  box-shadow: ${Shadows.medium} !important;
-
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease !important;
-
-  &:hover {
-    transform: translateY(-0.02px) !important;
-    box-shadow: ${Shadows.heavy} !important;
-  }
-
-  &:active {
-    transform: translateY(0) !important;
-    box-shadow: ${Shadows.medium} !important;
-  }
-
-  svg {
-    transition: transform 160ms ease !important;
-  }
-
-  &:hover svg {
-    transform: translateX(4px) !important;
-  }
-`;
-
 /* RIGHT SIDE INFO */
 const InfoCol = styled.div`
   display: flex;
@@ -249,21 +114,32 @@ const InfoCol = styled.div`
 
 const InfoCard = styled.div`
   display: flex;
+  /* ✅ Align children vertically in the middle */
+  align-items: center;
   gap: 0.9rem;
   padding: 1.2rem 1.1rem;
 
   background: ${Colors.white};
   border-radius: 14px;
   border: 1px solid rgba(4, 30, 66, 0.12);
+
+  min-height: 70px;
 `;
 
 const Icon = styled.div`
   color: ${Colors.etsuGold};
   font-size: 1.25rem;
-  margin-top: 0.2rem;
+
+  margin-top: 0;
+
+  display: flex;
+  align-items: center;
 `;
 
-const InfoText = styled.div``;
+const InfoText = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const InfoValue = styled.div`
   color: rgba(0, 0, 0, 0.65);

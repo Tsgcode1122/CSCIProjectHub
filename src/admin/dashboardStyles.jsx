@@ -64,12 +64,23 @@ export const Panel = styled.div`
 
 export const Toolbar = styled.div`
   display: grid;
-  grid-template-columns: 1fr 170px 140px;
+
+  grid-template-columns: ${(props) => {
+    if (props.variant === "user") {
+      return "1fr 200px 200px";
+    }
+    if (props.variant === "supervisor") {
+      return "1fr 160px";
+    }
+
+    return "1fr 170px 170px 140px";
+  }};
+
   gap: 12px;
   align-items: center;
 
   @media (max-width: 980px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 `;
 

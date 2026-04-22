@@ -125,56 +125,50 @@ export default function AdminEntryEdit() {
     }
   }
 
-    if (loading || entry === undefined) {
-        return (
-            <Page>
-            <LoadingScreen
-                title="Loading entry detail"
-                compact
-            />
-            </Page>
-        );
-        }
-        if (loadError) {
-        return (
-            <Page>
-            <StateCard>
-                <ErrorText>{loadError}</ErrorText>
-                <BackButton type="button" onClick={() => navigate("/admin/projects")}>
-                Back
-                </BackButton>
-            </StateCard>
-            </Page>
-        );
-        }
+  // 1. First, check if we are still fetching
+  if (loading) {
+    return (
+      <Page>
+        <StateCard>Loading editor...</StateCard>
+      </Page>
+    );
+  }
+  if (loading || (!entry && !loadError)) {
+    return (
+      <LoadingScreen
+        title="Loading Editor"
+        subtitle="Fetching the latest details from the repository..."
+        compact
+      />
+    );
+  }
+  // 2. Second, check if there was an actual error during fetch
+  if (loadError) {
+    return (
+      <Page>
+        <StateCard>
+          <ErrorText>{loadError}</ErrorText>
+          <BackButton type="button" onClick={() => navigate("/admin/projects")}>
+            Back to Projects
+          </BackButton>
+        </StateCard>
+      </Page>
+    );
+  }
 
-        if (entry === null) {
-        return (
-            <Page>
-            <StateCard>Entry not found.</StateCard>
-            </Page>
-        );
-    }
-//   if (loading) {
-//     return (
-//       <Page>
-//         <StateCard>Loading editor...</StateCard>
-//       </Page>
-//     );
-//   }
-
-//   if (loadError || !entry) {
-//     return (
-//       <Page>
-//         <StateCard>
-//           <ErrorText>{loadError || "Entry not found."}</ErrorText>
-//           <BackButton type="button" onClick={() => navigate("/admin/projects")}>
-//             Back
-//           </BackButton>
-//         </StateCard>
-//       </Page>
-//     );
-//   }
+  // 3. Finally, check if the entry is missing after loading finished without error
+  // if (!entry) {
+  //   return (
+  //     <Page>
+  //       <StateCard>
+  //         <ErrorText>Entry not found.</ErrorText>
+  //         <BackButton type="button" onClick={() => navigate(-1)}>
+  //           Back
+  //         </BackButton>
+  //       </StateCard>
+  //     </Page>
+  //   );
+  // }
 
   return (
     <Page>
@@ -194,10 +188,7 @@ export default function AdminEntryEdit() {
               </div>
             </HeaderLeft>
 
-            <BackButton
-              type="button"
-              onClick={() => navigate(`/admin/entries/${kind}/${id}`)}
-            >
+            <BackButton type="button" onClick={() => navigate(-1)}>
               <FaArrowLeft />
               <span>Back</span>
             </BackButton>

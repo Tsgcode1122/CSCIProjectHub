@@ -24,13 +24,6 @@ function safeArray(value) {
   return Array.isArray(value) ? value : [];
 }
 
-// function formatTimeline(start, end) {
-//   if (start && end) return `${start} – ${end}`;
-//   if (start) return start;
-//   if (end) return end;
-//   return "No timeline provided";
-// }
-
 export default function AdminEntryView() {
   const { kind, id } = useParams();
   const navigate = useNavigate();
@@ -190,21 +183,6 @@ export default function AdminEntryView() {
       </Page>
     );
   }
-
-  // if (error || !entry) {
-  //   return (
-  //     <Page>
-  //       <StateCard>
-  //         <div style={{ fontWeight: 800, color: "#b91c1c", marginBottom: 10 }}>
-  //           {error || "Entry not found."}
-  //         </div>
-  //         <BackButton type="button" onClick={() => navigate("/admin/projects")}>
-  //           Back to Projects
-  //         </BackButton>
-  //       </StateCard>
-  //     </Page>
-  //   );
-  // }
 
   if (error) {
     return (

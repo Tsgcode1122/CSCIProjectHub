@@ -199,12 +199,12 @@ export default function EditThesisForm({
 
           <Grid2>
             <Field>
-              <Label>Department *</Label>
+              <Label> Discipline *</Label>
               <FormSelect
                 options={departmentOptions}
                 value={form.department}
                 onChange={(val) => updateField("department", val)}
-                placeholder="Select Department..."
+                placeholder="Select Discipline..."
               />
             </Field>
 

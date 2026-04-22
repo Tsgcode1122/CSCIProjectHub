@@ -15,6 +15,7 @@ import {
   FaUserGraduate,
 } from "react-icons/fa";
 import NoResultsState from "../../components/NoResultsState";
+import { authFetch } from "../../components/Session";
 
 const API_BASE = "https://csciprojecthub.etsu.edu/api";
 const STORAGE_KEY = "capstone_admin_session";
@@ -52,23 +53,10 @@ export default function EditSupervisors() {
       setError("");
       setRows(null);
 
-      const storedSession = sessionStorage.getItem(STORAGE_KEY);
-      const session = storedSession ? JSON.parse(storedSession) : null;
-      const token = session?.access_token;
-
-      if (!token) {
-        throw new Error("No access token found in session storage");
-      }
-
-      const headers = {
-        Authorization: `Bearer ${token.trim()}`,
-        Accept: "application/json",
-      };
-
       const [supRes, projRes, researchRes] = await Promise.all([
-        fetch(`${API_BASE}/supervisors/`, { signal, headers }),
-        fetch(`${API_BASE}/projects/`, { signal, headers }),
-        fetch(`${API_BASE}/research/`, { signal, headers }),
+        authFetch("/supervisors/", { signal }),
+        authFetch("/projects/", { signal }),
+        authFetch("/research/", { signal }),
       ]);
 
       if (!supRes.ok) {
@@ -263,12 +251,7 @@ export default function EditSupervisors() {
         onQueryChange={setQuery}
         addLabel="Add Supervisor"
         onAdd={() => setOpenModal(true)}
-        // columns={[
-        //   { key: "name", header: "Name" },
-        //   { key: "speciality", header: "Speciality" },
-        //   { key: "supervisee", header: "Total Project Supervised" },
-        //   { key: "createdAt", header: "Created" },
-        // ]}
+        variant="supervisor"
         columns={tableColumns}
         rows={displayRows}
         renderCell={(row, key) => {

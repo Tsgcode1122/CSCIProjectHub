@@ -6,7 +6,7 @@ import { Colors } from "../theme/Colors";
 import { media } from "../theme/Breakpoints";
 import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import SectionDiv from "./SectionDiv";
-import etsuLogo from "../images/etsuE.png";
+import computinglogo from "../images/computinglogo.png";
 const Footer = () => {
   return (
     <FooterWrap>
@@ -15,13 +15,7 @@ const Footer = () => {
           <Top>
             {/* Brand */}
             <BrandCol>
-              <BrandRow>
-                <LogoBox src={etsuLogo}></LogoBox>
-                <BrandText>
-                  <BrandTitle>ETSU</BrandTitle>
-                  <BrandSub>Project Hub</BrandSub>
-                </BrandText>
-              </BrandRow>
+              <LogoBox src={computinglogo}></LogoBox>
 
               <BrandDesc>
                 ETSU Department of Computing&apos;s central hub for research
@@ -117,9 +111,7 @@ const Footer = () => {
 
           <Bottom>
             <Copyright>
-              <AdminTrigger to="/admin/login">
-                ©
-              </AdminTrigger>{" "}
+              <AdminTrigger to="/admin/login">©</AdminTrigger>{" "}
               {new Date().getFullYear()} East Tennessee State University. All
               rights reserved.
             </Copyright>
@@ -206,38 +198,15 @@ const Heading = styled.h5`
   color: ${Colors.white};
 `;
 
-const BrandRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-`;
-
 const LogoBox = styled.img`
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: ${Colors.etsuGold};
-  color: ${Colors.etsuBlue};
+  max-width: 100%;
+  height: auto;
+  width: 200px;
+  /* color: ${Colors.etsuBlue}; */
   display: grid;
   place-items: center;
   font-weight: 900;
   font-size: 1.6rem;
-`;
-
-const BrandText = styled.div``;
-
-const BrandTitle = styled.div`
-  font-weight: 800;
-  font-size: 1.2rem;
-  line-height: 1.2rem;
-  color: ${Colors.white};
-`;
-
-const BrandSub = styled.div`
-  margin-top: 0.35rem;
-  font-size: 0.75rem;
-
-  opacity: 0.85;
 `;
 
 const BrandDesc = styled.p`

@@ -124,7 +124,7 @@ export default function EditProjectForm({
     control: (provided) => ({
       ...provided,
       borderRadius: "12px",
-      borderColor: "#e2e8f0", // Matches your standard BORDER color
+      borderColor: "#e2e8f0", // Matches  standard BORDER color
       padding: "2px",
       boxShadow: "none",
       "&:hover": {
@@ -325,10 +325,10 @@ export default function EditProjectForm({
             </Field>
 
             <Field>
-              <Label>Department *</Label>
+              <Label>Discipline *</Label>
               <ReactSelect
                 options={departmentOptions}
-                styles={customSelectStyles} // Keeps it perfectly matching!
+                styles={customSelectStyles}
                 onChange={(selectedOption) => {
                   updateField(
                     "department",
@@ -340,7 +340,7 @@ export default function EditProjectForm({
                     (opt) => opt.value === form.department,
                   ) || null
                 }
-                placeholder="Select a department..."
+                placeholder="Select a discipline..."
                 isClearable={true}
               />
             </Field>

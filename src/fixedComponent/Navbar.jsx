@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence, color } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
 import { IoIosArrowDropright } from "react-icons/io";
-import etsuLogo from "../images/etsuE.png";
+import computinglogo from "../images/computinglogo1.png";
 import { Colors, Gradients, Shadows } from "../theme/Colors";
 import { breakpoints, media } from "../theme/Breakpoints";
 import { Col } from "antd";
@@ -21,7 +21,7 @@ const Navbar = () => {
     { label: "Projects", to: "/projects" },
     { label: "Theses", to: "/theses" },
     { label: "About", to: "/about" },
-    { label: "Contact", to: "/contact" }
+    { label: "Contact", to: "/contact" },
     // { label: "Login", to: "/admin/login"}
   ];
 
@@ -30,11 +30,7 @@ const Navbar = () => {
       <NavContainer>
         <Wrapper>
           <LogoContainer to="/">
-            <LogoBox src={etsuLogo}></LogoBox>
-            <LogoText>
-              <h1>ETSU</h1>
-              <p>Project Hub</p>
-            </LogoText>
+            <LogoBox src={computinglogo}></LogoBox>
           </LogoContainer>
 
           {/* Desktop Navigation */}
@@ -107,27 +103,21 @@ const NavContainer = styled(motion.header)`
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: #f9f9f9;
+
+  box-shadow: 0 4px 2000px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #ececec;
   z-index: 1000;
-
-  border-bottom: 1px solid rgba(4, 30, 66, 0.12);
-  box-shadow: 0 4px 18px rgba(4, 30, 66, 0.04);
-
-  transition:
-    background 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+  /* border-bottom: 1.5px solid ${Colors.lightGray}; */
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  /* padding: 0 1.5rem; */
   height: 70px;
 
   @media ${media.mobileXS} {
@@ -167,10 +157,6 @@ const Wrapper = styled.div`
     max-width: 1600px;
     padding: 0rem 8rem;
   }
-
-  @media ${media.desktopXL} {
-    max-width: 1400px;
-  }
 `;
 
 const LogoContainer = styled(NavLink)`
@@ -181,36 +167,14 @@ const LogoContainer = styled(NavLink)`
 `;
 
 const LogoBox = styled.img`
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: ${Colors.etsuGold};
-  color: ${Colors.etsuBlue};
+  max-width: 100%;
+  height: auto;
+  width: 200px;
+  /* color: ${Colors.etsuBlue}; */
   display: grid;
   place-items: center;
   font-weight: 900;
   font-size: 1.6rem;
-`;
-
-const LogoText = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  h1 {
-    font-family: "Philosopher", sans-serif;
-    color: ${Colors.brightBlue};
-    font-size: 1.2rem;
-    line-height: 1.1;
-    margin: 0;
-    padding: 0;
-  }
-
-  p {
-    color: ${Colors.darkGray};
-    margin: 0;
-    font-size: 0.6rem;
-    line-height: 1.2;
-  }
 `;
 
 const NavLinks = styled.nav`
@@ -223,7 +187,21 @@ const NavLinks = styled.nav`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  font-size: 1rem;
+  font-size: 16px;
+  @media ${media.tablet} {
+    font-size: 16px;
+  }
+
+  /* Small laptops (1024px and above) */
+  @media ${media.laptop} {
+    font-size: 18px;
+  }
+
+  /* Desktops (1440px and above) */
+  @media ${media.desktop} {
+    font-size: 19px;
+  }
+
   font-weight: 500;
   color: ${Colors.darkGray};
   text-decoration: none;

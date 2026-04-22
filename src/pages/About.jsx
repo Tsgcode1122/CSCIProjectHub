@@ -132,8 +132,7 @@ export default About;
 
 const PageWrap = styled.div`
   padding: 1rem 0 4rem 0;
-  max-width: 1200px;
-  margin: 0 auto;
+
   display: grid;
   gap: 3.5rem;
 `;
