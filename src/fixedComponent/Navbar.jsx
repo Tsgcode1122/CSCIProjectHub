@@ -89,15 +89,36 @@ const Navbar = () => {
 };
 
 // styling
+// const NavContainer = styled(motion.header)`
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   // background: #eae9e9;
+//     background: white;
+//   /* box-shadow: ${Shadows.light}; */
+//   z-index: 1000;
+//   // border-bottom: 1.5px solid ${Colors.lightGray};
+//   border-bottom: 1.5px solid ${Colors.etsuBlue};
+// `;
+
 const NavContainer = styled(motion.header)`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: #eae9e9;
-  /* box-shadow: ${Shadows.light}; */
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
-  border-bottom: 1.5px solid ${Colors.lightGray};
+
+  border-bottom: 1px solid rgba(4, 30, 66, 0.12);
+  box-shadow: 0 4px 18px rgba(4, 30, 66, 0.04);
+
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
 `;
 
 const Wrapper = styled.div`
