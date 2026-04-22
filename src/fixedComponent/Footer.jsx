@@ -73,7 +73,7 @@ const Footer = () => {
                   </Icon>
                   <ContactText>
                     <ContactValue>
-                      1276 Gilbreath Dr., Box 70300, Johnson City, TN
+                      2001 Millennium Pl, Johnson City, TN 37604
                     </ContactValue>
                   </ContactText>
                 </ContactItem>

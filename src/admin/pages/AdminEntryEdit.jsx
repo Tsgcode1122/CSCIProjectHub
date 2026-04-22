@@ -31,6 +31,7 @@ export default function AdminEntryEdit() {
       try {
         setLoading(true);
         setLoadError("");
+        setEntry(undefined);
         const storedSession = sessionStorage.getItem("capstone_admin_session");
         const session = storedSession ? JSON.parse(storedSession) : null;
         const token = session?.access_token;
@@ -56,6 +57,11 @@ export default function AdminEntryEdit() {
             Accept: "application/json",
           },
         });
+
+        if (res.status === 404) {
+            setEntry(null);
+            return;
+        }
 
         if (!res.ok) {
           throw new Error(`Failed to load entry (${res.status})`);
