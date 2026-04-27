@@ -105,7 +105,7 @@ const ProjectFilters = ({
         <Divider />
 
         <Group>
-          <GroupTitle>Department</GroupTitle>
+          <GroupTitle>Discipline</GroupTitle>
           <RadioList>
             <RadioItem>
               <input
@@ -313,6 +313,7 @@ const PanelFooter = styled.div`
 
 const PanelTitle = styled.h5`
   margin: 0;
+  padding-top: 1rem;
   color: ${Colors.etsuBlue};
   font-size: 1.1rem;
 `;

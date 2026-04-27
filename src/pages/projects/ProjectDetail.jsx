@@ -307,13 +307,6 @@ const StatusBadge = styled.span`
       }
     }};
 `;
-const HeaderDesc = styled.p`
-  margin: 0;
-  max-width: 980px;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.5;
-`;
 
 const TagRow = styled.div`
   display: flex;
@@ -353,9 +346,8 @@ const Card = styled.section`
 const CardTitle = styled.h5`
   margin: 0 0 1rem 0;
   color: ${Colors.brightBlue};
-  font-weight: 500;
+
   @media ${media.laptop} {
-    font-weight: 500;
   }
 `;
 

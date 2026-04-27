@@ -84,20 +84,6 @@ const Navbar = () => {
   );
 };
 
-// styling
-// const NavContainer = styled(motion.header)`
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   // background: #eae9e9;
-//     background: white;
-//   /* box-shadow: ${Shadows.light}; */
-//   z-index: 1000;
-//   // border-bottom: 1.5px solid ${Colors.lightGray};
-//   border-bottom: 1.5px solid ${Colors.etsuBlue};
-// `;
-
 const NavContainer = styled(motion.header)`
   position: fixed;
   top: 0;

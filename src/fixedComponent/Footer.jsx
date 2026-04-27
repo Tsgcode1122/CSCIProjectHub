@@ -19,7 +19,7 @@ const Footer = () => {
 
               <BrandDesc>
                 ETSU Department of Computing&apos;s central hub for research
-                projects and thesis work.
+                projects and theses work.
               </BrandDesc>
             </BrandCol>
 
@@ -84,8 +84,8 @@ const Footer = () => {
                   </Icon>
                   <ContactText>
                     <ContactValue>
-                      <PlainLink href="tel:+14234391000">
-                        (423) 439-1000
+                      <PlainLink href="tel:+14234395328">
+                        (423) 439-5328
                       </PlainLink>
                     </ContactValue>
                   </ContactText>
@@ -97,8 +97,8 @@ const Footer = () => {
                   </Icon>
                   <ContactText>
                     <ContactValue>
-                      <PlainLink href="mailto:research@etsu.edu">
-                        research@etsu.edu
+                      <PlainLink href="mailto:computing@etsu.edu">
+                        computing@etsu.edu
                       </PlainLink>
                     </ContactValue>
                   </ContactText>
@@ -117,9 +117,9 @@ const Footer = () => {
             </Copyright>
 
             <BottomLinks>
-              <PlainLink to="/policy">Privacy Policy</PlainLink>
-              <PlainLink to="/termsofuse">Terms of Use</PlainLink>
-              <PlainLink to="/accessibility">Accessibility</PlainLink>
+              <PlainLink to="/">Privacy Policy</PlainLink>
+              <PlainLink to="/">Terms of Use</PlainLink>
+              <PlainLink to="/">Accessibility</PlainLink>
             </BottomLinks>
           </Bottom>
         </Inner>
@@ -205,11 +205,11 @@ const LogoBox = styled.img`
   /* color: ${Colors.etsuBlue}; */
   display: grid;
   place-items: center;
-  font-weight: 900;
-  font-size: 1.6rem;
+  padding-bottom: 10px;
 `;
 
 const BrandDesc = styled.p`
+  padding-bottom: 0;
   @media ${media.tablet} {
     max-width: 360px;
   }
@@ -262,12 +262,6 @@ const Icon = styled.div`
 `;
 
 const ContactText = styled.div``;
-
-const ContactLabel = styled.div`
-  font-weight: 700;
-  color: ${Colors.white};
-  margin-bottom: 0.2rem;
-`;
 
 const ContactValue = styled.div`
   opacity: 0.85;

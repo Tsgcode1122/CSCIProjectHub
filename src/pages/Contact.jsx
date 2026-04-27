@@ -12,7 +12,7 @@ const Contact = () => {
         backLabel="back"
       />
 
-      {/* Wrap the component to apply page-specific spacing */}
+     
       <SpacingWrapper>
         <ContactUs hideHeader={true} />
       </SpacingWrapper>
@@ -25,10 +25,10 @@ export default Contact;
 // ---------------- styles ----------------
 
 const SpacingWrapper = styled.div`
-  /* 4rem top and bottom, 0 on the sides. Adjust the 4rem as needed! */
+  
   margin: 0 0 4rem 0;
 
-  /* Optional: If you want it a bit tighter on mobile screens */
+  
   @media (max-width: 768px) {
     margin: 0 0 2rem 0;
   }

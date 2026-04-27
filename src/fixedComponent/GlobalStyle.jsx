@@ -192,7 +192,34 @@ const GlobalStyle = createGlobalStyle`
       line-height: 1.9rem;
     }
   }
+ul{
+ 
+    font-size: 1rem;
+    line-height: 1.7rem;
+    font-weight: 400;
+    color: white;
 
+    @media ${media.mobileS} {
+      font-size: 1.02rem;
+      line-height: 1.75rem;
+    }
+
+    @media ${media.tablet} {
+      font-size: 1.05rem;
+      line-height: 1.8rem;
+    }
+
+    @media ${media.laptop} {
+      font-size: 1.1rem;
+      line-height: 1.8rem;
+    }
+
+    @media ${media.desktopXL} {
+      font-size: 1.2rem;
+      line-height: 1.9rem;
+    }
+  
+}
   small {
     font-size: 0.8rem;
     line-height: 1.2rem;

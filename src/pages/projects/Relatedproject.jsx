@@ -207,21 +207,40 @@ const StatusBadge = styled.span`
   background: ${({ $status }) => {
     switch ($status) {
       case "Accepting Members":
-        return "rgba(255, 184, 28, 0.22)";
-      case "Completed":
-        return "rgba(4, 30, 66, 0.10)";
+        return "#ffb71c8b";
+
+      case "In Progress":
+        return "rgba(62, 66, 4, 0.08)";
       default:
-        return "rgba(4, 30, 66, 0.08)";
+        return "#FFB81C";
     }
   }};
 
-  color: ${Colors.etsuBlue};
+  color: ${({ $status }) => {
+    switch ($status) {
+      case "Completed":
+        return "#003b7f";
+
+      case "In Progress":
+        return "rgba(4, 30, 66, 0.85)";
+
+      case "Accepting Members":
+        return Colors.etsuBlue;
+
+      default:
+        return "rgba(4, 30, 66, 0.85)";
+    }
+  }};
 
   border: 1px solid
     ${({ $status }) => {
       switch ($status) {
+        case "Completed":
+          return "rgba(4, 30, 66, 0.12)";
+
         case "Accepting Members":
           return "rgba(255, 184, 28, 0.45)";
+
         default:
           return "rgba(4, 30, 66, 0.12)";
       }

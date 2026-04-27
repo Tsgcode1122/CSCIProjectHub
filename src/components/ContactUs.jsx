@@ -48,7 +48,7 @@ const ContactUs = ({ hideHeader = false }) => {
               </Icon>
               <InfoText>
                 <InfoValue>
-                  <a href="mailto:research@etsu.edu">research@etsu.edu</a>
+                  <a href="mailto:computing@etsu.edu">computing@etsu.edu</a>
                 </InfoValue>
               </InfoText>
             </InfoCard>
@@ -59,7 +59,7 @@ const ContactUs = ({ hideHeader = false }) => {
               </Icon>
               <InfoText>
                 <InfoValue>
-                  <a href="tel:+14234391000">(423) 439-1000</a>
+                  <a href="tel:+14234395328">(423) 439-5328</a>
                 </InfoValue>
               </InfoText>
             </InfoCard>
@@ -70,7 +70,7 @@ const ContactUs = ({ hideHeader = false }) => {
               </Icon>
               <InfoText>
                 <InfoValue>
-                  Nicks Hall, 365 Stout Dr #132 Johnson City, TN 37604
+                  2001 Millennium Pl, Johnson City, TN 37604
                 </InfoValue>
               </InfoText>
             </InfoCard>

@@ -159,23 +159,21 @@ const StatusBadge = styled.span`
   font-size: 0.78rem;
   display: inline-block;
   position: relative !important;
-
   @media ${media.mobileS} {
     display: none;
   }
   @media ${media.mobileXS} {
     display: none;
   }
-
-  /* Adjusted for typical Thesis statuses */
   background: ${({ $status }) => {
     switch ($status) {
-      case "Completed":
-        return "rgba(4, 30, 66, 0.08)"; // Light blue/gray
+      case "Accepting Members":
+        return "#ffb71c8b";
+
       case "In Progress":
-        return "#FFB81C"; // Gold for active
+        return "rgba(62, 66, 4, 0.08)";
       default:
-        return "rgba(4, 30, 66, 0.08)";
+        return "#FFB81C";
     }
   }};
 
@@ -183,8 +181,13 @@ const StatusBadge = styled.span`
     switch ($status) {
       case "Completed":
         return "#003b7f";
+
       case "In Progress":
+        return "rgba(4, 30, 66, 0.85)";
+
+      case "Accepting Members":
         return Colors.etsuBlue;
+
       default:
         return "rgba(4, 30, 66, 0.85)";
     }
@@ -195,8 +198,10 @@ const StatusBadge = styled.span`
       switch ($status) {
         case "Completed":
           return "rgba(4, 30, 66, 0.12)";
-        case "In Progress":
+
+        case "Accepting Members":
           return "rgba(255, 184, 28, 0.45)";
+
         default:
           return "rgba(4, 30, 66, 0.12)";
       }
