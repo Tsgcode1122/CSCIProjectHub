@@ -18,7 +18,8 @@ import {
   FaUserGraduate,
 } from "react-icons/fa";
 import { authFetch } from "../../components/Session";
-
+const STORAGE_KEY = "capstone_admin_session";
+const API_BASE = "https://csciprojecthub.etsu.edu/api";
 function safeLower(x) {
   return String(x ?? "").toLowerCase();
 }
