@@ -258,7 +258,7 @@ export default function AddProject() {
 
               <FormBlock>
                 <Field>
-                  <Label>Department *</Label>
+                  <Label>Discipline *</Label>
                   <Input
                     placeholder="Computer Science"
                     value={form.department}

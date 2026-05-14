@@ -272,19 +272,12 @@ export default function AdminEntryView() {
 
                 <InfoBlock>
                   <InfoLabel>
-                    {isProject ? "Department" : "Supervisor"}
+                    {isProject ? "Discipline" : "Supervisor"}
                   </InfoLabel>
                   <InfoValue>
                     {isProject
                       ? entry.department || "—"
                       : entry.supervisor || "—"}
-                  </InfoValue>
-                </InfoBlock>
-
-                <InfoBlock>
-                  <InfoLabel>{isProject ? "Status" : "Department"}</InfoLabel>
-                  <InfoValue>
-                    {isProject ? entry.status || "—" : entry.department || "—"}
                   </InfoValue>
                 </InfoBlock>
 
@@ -297,6 +290,10 @@ export default function AdminEntryView() {
                       ? entry.project_status || "—"
                       : entry.status || "—"}
                   </InfoValue>
+                </InfoBlock>
+                <InfoBlock>
+                  <InfoLabel>{isThesis ? "Discipline" : ""}</InfoLabel>
+                  <InfoValue>{isThesis ? entry.department : ""}</InfoValue>
                 </InfoBlock>
               </InfoGrid>
 
