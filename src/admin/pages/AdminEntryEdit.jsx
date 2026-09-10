@@ -8,7 +8,7 @@ import EditProjectForm from "./EditProjectForm";
 import EditThesisForm from "./EditThesisForm";
 import LoadingScreen from "../components/LoadingScreen";
 
-const API_BASE = "https://csciprojecthub.etsu.edu/api";
+const API_BASE = "https://crpp-project.onrender.com";
 
 export default function AdminEntryEdit() {
   const { kind, id } = useParams();
@@ -59,8 +59,8 @@ export default function AdminEntryEdit() {
         });
 
         if (res.status === 404) {
-            setEntry(null);
-            return;
+          setEntry(null);
+          return;
         }
 
         if (!res.ok) {

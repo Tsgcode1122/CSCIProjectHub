@@ -17,7 +17,7 @@ import {
 import NoResultsState from "../../components/NoResultsState";
 import { authFetch } from "../../components/Session";
 
-const API_BASE = "https://csciprojecthub.etsu.edu/api";
+const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
 
 function safeLower(x) {

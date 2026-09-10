@@ -18,7 +18,7 @@ import { useAdminAuth } from "../AdminAuthContext";
 import { ETSU_NAVY, BORDER, MUTED } from "../dashboardStyles";
 import LoadingScreen from "../components/LoadingScreen";
 
-const API_BASE = "https://csciprojecthub.etsu.edu/api";
+const API_BASE = "https://crpp-project.onrender.com";
 
 function safeArray(value) {
   return Array.isArray(value) ? value : [];

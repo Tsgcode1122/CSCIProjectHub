@@ -3,7 +3,7 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 const AdminAuthContext = createContext(null);
 
 const STORAGE_KEY = "capstone_admin_session";
-const API_BASE = "https://csciprojecthub.etsu.edu/api";
+const API_BASE = "https://crpp-project.onrender.com";
 
 export function AdminAuthProvider({ children }) {
   const [adminUser, setAdminUser] = useState(() => {

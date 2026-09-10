@@ -16,7 +16,7 @@ export const ProjectProvider = ({ children }) => {
 
       try {
         const res = await axios.get(
-          "https://csciprojecthub.etsu.edu/api/projects/",
+          "https://crpp-project.onrender.com/projects/",
         );
         const data = res.data ?? [];
         console.log(res.data);

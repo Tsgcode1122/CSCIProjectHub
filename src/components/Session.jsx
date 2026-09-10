@@ -1,4 +1,4 @@
-const API_BASE = "https://csciprojecthub.etsu.edu/api";
+const API_BASE = "https://crpp-project.onrender.com";
 const STORAGE_KEY = "capstone_admin_session";
 
 export async function authFetch(endpoint, options = {}) {
