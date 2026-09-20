@@ -1,3 +1,4 @@
+// Shared corner-radius scale.
 export const BorderRadius = {
   small: "4px",
   medium: "8px",

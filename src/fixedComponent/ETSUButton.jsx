@@ -51,10 +51,11 @@ const Button = styled.button`
 export default function ETSUButton({ text, to }) {
   const navigate = useNavigate();
 
+  // Use client-side navigation for internal calls to action.
   return (
-    <Button onClick={() => navigate(to)}>
+    <Button type="button" onClick={() => navigate(to)}>
       {text}
-      <FiArrowRight size={18} />
+      <FiArrowRight size={18} aria-hidden="true" />
     </Button>
   );
 }

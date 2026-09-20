@@ -1,7 +1,7 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FiArrowUpRight, FiCalendar, FiUsers } from "react-icons/fi";
+import { FiArrowUpRight } from "react-icons/fi";
 import { useProjectContext } from "../../context/ProjectContext";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
@@ -9,8 +9,6 @@ import { media } from "../../theme/Breakpoints";
 const RelatedProject = ({ currentProject }) => {
   const { projects } = useProjectContext();
   const navigate = useNavigate();
-  const rowRef = useRef(null);
-
   const currentId = currentProject?.id || currentProject?._id;
 
   const related = useMemo(() => {
@@ -19,7 +17,7 @@ const RelatedProject = ({ currentProject }) => {
     const dept = currentProject.department;
     const tags = currentProject.tags || [];
 
-    // prioritize: shared tags + same dept
+    // Rank candidates by shared tags, then by department.
     const scored = projects
       .filter((p) => {
         const pid = p.id || p._id;
@@ -51,9 +49,6 @@ const RelatedProject = ({ currentProject }) => {
     navigate(`/projects/${id}`);
   };
 
-  const isOngoing = (status) =>
-    status === "In Progress" || status === "Accepting Members";
-
   return (
     <Wrap>
       <HeaderRow>
@@ -61,44 +56,30 @@ const RelatedProject = ({ currentProject }) => {
         <SubTitle>More projects you may be interested in.</SubTitle>
       </HeaderRow>
 
-      <Row ref={rowRef}>
+      <Row role="region" aria-label="Related projects">
         {related.map((p) => (
-          <Card key={p.id || p._id} onClick={() => openProject(p)}>
+          <Card
+            key={p.id || p._id}
+            type="button"
+            onClick={() => openProject(p)}
+            aria-label={`Open related project: ${p.title}`}
+          >
             <Top>
               <StatusBadge $status={p.project_status}>
                 {p.project_status}
               </StatusBadge>
               <CornerIcon aria-hidden="true">
-                <FiArrowUpRight />
+                <FiArrowUpRight aria-hidden="true" />
               </CornerIcon>
             </Top>
 
             <CardTitle title={p.title}>{p.title}</CardTitle>
-
-            {/* <Desc>{p.short_description}</Desc> */}
 
             <Tags>
               {(p.tags || []).slice(0, 2).map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
               ))}
             </Tags>
-
-            {/* <MetaRow>
-              <MetaItem>
-                <FiUsers />
-                <span>{(p.team_members || []).length} members</span>
-              </MetaItem>
-
-              <MetaItem>
-                <FiCalendar />
-                <span>
-                  {p.duration_start || "—"} –{" "}
-                  {isOngoing(p.project_status)
-                    ? "Ongoing"
-                    : p.duration_end || "—"}
-                </span>
-              </MetaItem>
-            </MetaRow> */}
           </Card>
         ))}
       </Row>
@@ -107,8 +88,6 @@ const RelatedProject = ({ currentProject }) => {
 };
 
 export default RelatedProject;
-
-/* ---------------- styles ---------------- */
 
 const Wrap = styled.div`
   margin-top: 1.6rem;
@@ -131,7 +110,6 @@ const HeaderRow = styled.div`
 const Title = styled.h5`
   margin: 0;
   color: ${Colors.brightBlue};
-  /* font-weight: 600; */
 `;
 
 const SubTitle = styled.small`
@@ -150,14 +128,13 @@ const Row = styled.div`
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 
-  /* hide scrollbar indicator */
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const Card = styled.div`
+const Card = styled.button`
   flex: 0 0 auto;
   width: 280px;
 
@@ -165,6 +142,9 @@ const Card = styled.div`
   border: 1px solid rgba(4, 30, 66, 0.12);
   border-radius: 16px;
   padding: 1rem;
+  font: inherit;
+  text-align: left;
+  color: inherit;
 
   cursor: pointer;
   scroll-snap-align: start;

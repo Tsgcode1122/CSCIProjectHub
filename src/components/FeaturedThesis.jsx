@@ -7,6 +7,7 @@ import FeaturedCarousel from "../fixedComponent/FeaturedCarousel";
 import styled from "styled-components";
 
 const FeaturedThesis = () => {
+  // Configure the shared carousel for thesis records.
   const { theses, loading } = useThesesContext();
 
   return (

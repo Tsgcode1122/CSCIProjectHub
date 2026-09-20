@@ -1,4 +1,4 @@
-// ETSU official colors + basic colors
+// Shared brand and interface colors.
 export const Colors = {
   etsuBlue: "#041E42", // ETSU Blue
   blue: "#003f87",

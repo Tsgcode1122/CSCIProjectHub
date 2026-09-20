@@ -11,9 +11,10 @@ import projectsData from "../../projects.json";
 import BackButton from "../../fixedComponent/BackButton";
 import { useProjectContext } from "../../context/ProjectContext";
 
+// Legacy project-list draft; ProjectGrid is the active routed page.
 const ProjectGrid = () => {
   const navigate = useNavigate();
-  const { projects, loading, error } = useProjectContext();
+  const { projects } = useProjectContext();
   // Search is in the header
 
   const [search, setSearch] = useState("");

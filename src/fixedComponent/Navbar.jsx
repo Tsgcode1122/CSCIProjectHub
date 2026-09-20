@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { motion, AnimatePresence, color } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
 import { IoIosArrowDropright } from "react-icons/io";
 import computinglogo from "../images/computinglogo1.png";
-import { Colors, Gradients, Shadows } from "../theme/Colors";
-import { breakpoints, media } from "../theme/Breakpoints";
-import { Col } from "antd";
+import { Colors, Shadows } from "../theme/Colors";
+import { media } from "../theme/Breakpoints";
 import { BorderRadius } from "../theme/BorderRadius";
-import SectionDiv from "./SectionDiv";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   const navLinks = [
     { label: "Home", to: "/" },
@@ -22,19 +18,27 @@ const Navbar = () => {
     { label: "Theses", to: "/theses" },
     { label: "About", to: "/about" },
     { label: "Contact", to: "/contact" },
-    // { label: "Login", to: "/admin/login"}
   ];
+
+  useEffect(() => {
+    // Allow keyboard users to close the mobile menu with Escape.
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, []);
 
   return (
     <>
       <NavContainer>
         <Wrapper>
-          <LogoContainer to="/">
-            <LogoBox src={computinglogo}></LogoBox>
+          <LogoContainer to="/" aria-label="ETSU Computing Project Hub home">
+            <LogoBox src={computinglogo} alt="ETSU Department of Computing" />
           </LogoContainer>
 
-          {/* Desktop Navigation */}
-          <NavLinks>
+          <NavLinks aria-label="Primary navigation">
             {navLinks.map((link) => (
               <StyledNavLink key={link.to} to={link.to}>
                 {link.label}
@@ -42,25 +46,28 @@ const Navbar = () => {
             ))}
           </NavLinks>
 
-          {/* Mobile Navigation Icon */}
           <MobileMenuIcon>
             <Hamburger
               toggled={isOpen}
               toggle={setIsOpen}
               color="#041E42"
               size={24}
+              label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-controls="mobile-navigation"
+              aria-expanded={isOpen}
             />
           </MobileMenuIcon>
         </Wrapper>
       </NavContainer>
 
-      {/* Spacer to prevent content from jumping under the fixed navbar */}
       <NavSpacer />
 
-      {/* Mobile Menu Dropdown with Animation */}
       <AnimatePresence>
         {isOpen && (
           <MobileMenu
+            id="mobile-navigation"
+            as="nav"
+            aria-label="Mobile navigation"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
@@ -79,7 +86,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {isOpen && <Overlay onClick={() => setIsOpen(false)} />}
+      {isOpen && <Overlay aria-hidden="true" onClick={() => setIsOpen(false)} />}
     </>
   );
 };
@@ -94,7 +101,6 @@ const NavContainer = styled(motion.header)`
   box-shadow: 0 4px 2000px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid #ececec;
   z-index: 1000;
-  /* border-bottom: 1.5px solid ${Colors.lightGray}; */
 `;
 
 const Wrapper = styled.div`
@@ -103,7 +109,6 @@ const Wrapper = styled.div`
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  /* padding: 0 1.5rem; */
   height: 70px;
 
   @media ${media.mobileXS} {
@@ -112,7 +117,6 @@ const Wrapper = styled.div`
   @media ${media.mobileS} {
     padding: 0 0.7rem;
   }
-  /* Medium phones (576px and above) */
   @media ${media.mobileM} {
     padding: 0rem 1.5rem;
   }
@@ -121,24 +125,20 @@ const Wrapper = styled.div`
     padding: 0 3rem;
   }
 
-  /* Tablets (768px and above) */
   @media ${media.tablet} {
     padding: 0rem 4rem;
   }
 
-  /* Small laptops (1024px and above) */
   @media ${media.laptop} {
     max-width: 1200px;
     padding: 0rem 4rem;
   }
 
-  /* Desktops (1440px and above) */
   @media ${media.desktop} {
     max-width: 1200px;
     padding: 0rem 6rem;
   }
 
-  /* Extra large desktops / 4K screens (1920px) */
   @media ${media.desktopXL} {
     max-width: 1600px;
     padding: 0rem 8rem;
@@ -156,7 +156,6 @@ const LogoBox = styled.img`
   max-width: 100%;
   height: auto;
   width: 200px;
-  /* color: ${Colors.etsuBlue}; */
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -178,12 +177,10 @@ const StyledNavLink = styled(NavLink)`
     font-size: 16px;
   }
 
-  /* Small laptops (1024px and above) */
   @media ${media.laptop} {
     font-size: 18px;
   }
 
-  /* Desktops (1440px and above) */
   @media ${media.desktop} {
     font-size: 19px;
   }
@@ -224,7 +221,7 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const MobileMenuIcon = styled.div`
-  display: block; /* Show on tablet and smaller */
+  display: block;
   @media ${media.tablet} {
     display: none;
   }
@@ -246,7 +243,6 @@ const MobileMenu = styled(motion.div)`
 
   ${StyledNavLink} {
     text-align: left;
-    /* width: 100%; */
     padding: 10px;
 
     border-radius: ${BorderRadius.medium};

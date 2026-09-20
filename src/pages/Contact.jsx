@@ -4,6 +4,7 @@ import ContactUs from "../components/ContactUs";
 import PageHeader from "../fixedComponent/PageHeader";
 
 const Contact = () => {
+  // Reuse the contact block with its heading hidden on this route.
   return (
     <>
       <PageHeader
@@ -21,8 +22,6 @@ const Contact = () => {
 };
 
 export default Contact;
-
-// ---------------- styles ----------------
 
 const SpacingWrapper = styled.div`
   

@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { media } from "../theme/Breakpoints";
 import { Colors } from "../theme/Colors";
 
+// Global typography, focus states, and motion preferences.
 const GlobalStyle = createGlobalStyle`
   html,
   body {
@@ -27,6 +28,26 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+  }
+
+  :focus-visible {
+    outline: 3px solid ${Colors.etsuGold};
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   h1, h2, h3, h4, h5, p, small {

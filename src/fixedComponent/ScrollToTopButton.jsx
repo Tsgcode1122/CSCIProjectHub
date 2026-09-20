@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { RiArrowUpSLine } from "react-icons/ri";
 
 import styled from "styled-components";
-import { Colors, Gradients, Shadows } from "../theme/Colors";
+import { Colors, Shadows } from "../theme/Colors";
 
-const ScrollToTop = styled.div`
+const ScrollToTop = styled.button`
   position: fixed;
   bottom: 20px;
   height: 40px;
   right: 20px;
   width: 40px;
+  padding: 0;
+  border: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,17 +57,6 @@ const ScrollToTop = styled.div`
 `;
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const location = useLocation(); // Get the current route
-
-  const handleScroll = () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    const windowHeight = window.innerHeight;
-    const scrollPercentage = (scrollTop / (scrollHeight - windowHeight)) * 100;
-    setIsVisible(scrollPercentage > 10);
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -75,7 +65,21 @@ const ScrollToTopButton = () => {
   };
 
   useEffect(() => {
+    // Show the control after the user has moved through the page.
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollableHeight = scrollHeight - window.innerHeight;
+      const scrollPercentage = scrollableHeight
+        ? (scrollTop / scrollableHeight) * 100
+        : 0;
+
+      setIsVisible(scrollPercentage > 10);
+    };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -83,8 +87,8 @@ const ScrollToTopButton = () => {
 
   return (
     isVisible && (
-      <ScrollToTop onClick={scrollToTop}>
-        <RiArrowUpSLine />
+      <ScrollToTop type="button" onClick={scrollToTop} aria-label="Scroll to top">
+        <RiArrowUpSLine aria-hidden="true" />
       </ScrollToTop>
     )
   );

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useCallback, useMemo, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FiArrowUpRight, FiChevronLeft, FiChevronRight } from "react-icons/fi";
@@ -13,35 +13,34 @@ const FeaturedCarousel = ({
   subtitle,
   data = [],
   loading,
+  error,
   viewAllLink,
   viewAllText,
-  basePath, // e.g., "/projects" or "/theses"
+  basePath,
 }) => {
   const navigate = useNavigate();
   const rowRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
 
-  // Sorting Logic (Shared)
+  // Use the newest five records as the featured set.
   const sortedData = useMemo(() => {
     if (!data?.length) return [];
 
     return (
       [...data]
         .sort((a, b) => {
-          // We use created_at (or item.created_at) for recency
           const dateA = new Date(a.created_at || 0).getTime();
           const dateB = new Date(b.created_at || 0).getTime();
 
-          // Sort descending (Newest first)
           return dateB - dateA;
         })
-        // Limit to exactly 5 items
         .slice(0, 5)
     );
   }, [data]);
 
   const getCardStep = () => {
+    // Measure the rendered card so scrolling works at every breakpoint.
     const el = rowRef.current;
     if (!el) return 320;
     const firstCard = el.querySelector("[data-card='carousel-item']");
@@ -49,7 +48,7 @@ const FeaturedCarousel = ({
     return cardWidth + 16;
   };
 
-  const updateProgress = () => {
+  const updateProgress = useCallback(() => {
     const el = rowRef.current;
     if (!el) return;
     const step = getCardStep();
@@ -60,9 +59,10 @@ const FeaturedCarousel = ({
       Math.round((el.scrollWidth - el.clientWidth) / step),
     );
     setMaxIndex(max);
-  };
+  }, []);
 
   useEffect(() => {
+    // Keep navigation state aligned with manual scroll and window resize.
     updateProgress();
     const el = rowRef.current;
     if (!el) return;
@@ -74,9 +74,10 @@ const FeaturedCarousel = ({
       el.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, [sortedData.length]);
+  }, [sortedData.length, updateProgress]);
 
   const scrollToIndex = (idx) => {
+    // Move one measured card step with smooth scrolling.
     const el = rowRef.current;
     if (!el) return;
     const step = getCardStep();
@@ -92,20 +93,31 @@ const FeaturedCarousel = ({
 
         {loading ? (
           <LoadingRow>Loading items...</LoadingRow>
+        ) : error ? (
+          <LoadingRow role="alert">Unable to load featured projects.</LoadingRow>
+        ) : sortedData.length === 0 ? (
+          <LoadingRow>No featured projects are available.</LoadingRow>
         ) : (
-          <Row ref={rowRef}>
+          <Row
+            ref={rowRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Featured projects"
+          >
             {sortedData.map((item) => (
               <Card
                 data-card="carousel-item"
                 key={item.id || item._id}
                 onClick={() => navigate(`${basePath}/${item.id || item._id}`)}
+                type="button"
+                aria-label={`Open project: ${item.title}`}
               >
                 <Top>
                   <StatusBadge $status={item.project_status || item.status}>
                     {item.project_status || item.status}
                   </StatusBadge>
-                  <CornerIcon>
-                    <FiArrowUpRight />
+                  <CornerIcon aria-hidden="true">
+                    <FiArrowUpRight aria-hidden="true" />
                   </CornerIcon>
                 </Top>
                 <Title>{item.title}</Title>
@@ -122,25 +134,36 @@ const FeaturedCarousel = ({
           </Row>
         )}
 
-        <Controls>
+        {sortedData.length > 1 && (
+          <Controls role="group" aria-label="Featured project controls">
           <NavBtn
             onClick={() => scrollToIndex(activeIndex - 1)}
             disabled={activeIndex === 0}
+            aria-label="Previous featured projects"
           >
-            <FiChevronLeft />
+            <FiChevronLeft aria-hidden="true" />
           </NavBtn>
           <Dots>
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <Dot key={i} $active={i === activeIndex} />
+              <Dot
+                key={i}
+                type="button"
+                $active={i === activeIndex}
+                aria-label={`Go to featured project group ${i + 1}`}
+                aria-current={i === activeIndex ? "true" : undefined}
+                onClick={() => scrollToIndex(i)}
+              />
             ))}
           </Dots>
           <NavBtn
             onClick={() => scrollToIndex(activeIndex + 1)}
             disabled={activeIndex === maxIndex}
+            aria-label="Next featured projects"
           >
-            <FiChevronRight />
+            <FiChevronRight aria-hidden="true" />
           </NavBtn>
-        </Controls>
+          </Controls>
+        )}
         <ButtonWrap>
           <ETSUButton text={viewAllText} to={viewAllLink} />
         </ButtonWrap>
@@ -151,7 +174,6 @@ const FeaturedCarousel = ({
 
 export default FeaturedCarousel;
 
-/* Use your existing styles here (Wrap, Row, Card, Title, etc.) */
 const Wrap = styled.div`
   padding: 2.2rem 0;
 `;
@@ -171,13 +193,15 @@ const Row = styled.div`
     flex: 0 0 2rem;
   }
 `;
-const Card = styled.div`
+const Card = styled.button`
   flex: 0 0 auto;
   width: 320px;
   background: ${Colors.white};
   border: 1px solid rgba(4, 30, 66, 0.12);
   border-radius: 16px;
   padding: 1.2rem;
+  text-align: left;
+  font: inherit;
   cursor: pointer;
   scroll-snap-align: start;
   transition: all 160ms ease;
@@ -196,7 +220,6 @@ const Title = styled.h5`
   line-height: 1.5rem;
   min-height: 4.35rem;
 `;
-// ... (Add StatusBadge, Tags, Tag, Controls, NavBtn, Dots, Dot styles from your code)
 const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
@@ -337,10 +360,13 @@ const Dots = styled.div`
   display: flex;
   gap: 0.5rem;
 `;
-const Dot = styled.div`
+const Dot = styled.button`
   width: ${({ $active }) => ($active ? "18px" : "8px")};
   height: 8px;
+  padding: 0;
+  border: 0;
   border-radius: 4px;
+  cursor: pointer;
   background: ${({ $active }) => ($active ? Colors.etsuGold : "#ccc")};
   transition: all 0.2s;
 `;

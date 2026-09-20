@@ -10,7 +10,7 @@ export const breakpoints = {
   desktopXL: "1920px", // Extra large screens
 };
 
-// media query
+// Convert breakpoint values into reusable media queries.
 export const media = {
   mobileXS: `(max-width: ${breakpoints.mobileXS})`,
   mobileS: `(min-width: 321px) and (max-width: ${breakpoints.mobileS})`,

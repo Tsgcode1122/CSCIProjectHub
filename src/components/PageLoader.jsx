@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Spin } from "antd";
 
 export default function PageLoader({ text = "Loading..." }) {
+  // Shared loading state for async public pages.
   return (
     <Wrap>
       <Spin size="large" />

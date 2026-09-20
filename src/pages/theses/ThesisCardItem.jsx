@@ -5,11 +5,16 @@ import { media } from "../../theme/Breakpoints";
 import { FiUser, FiCalendar, FiArrowUpRight } from "react-icons/fi";
 
 const ThesisCardItem = ({ thesis, onOpen, variant }) => {
-  const id = thesis?.id || thesis?._id || thesis?.title; // Fallback to title if no ID is present
+  const id = thesis?.id || thesis?._id || thesis?.title;
 
   return (
     <>
-      <ThesisCard $variant={variant} onClick={() => onOpen?.(id)}>
+      <ThesisCard
+        type="button"
+        $variant={variant}
+        onClick={() => onOpen?.(id)}
+        aria-label={`Open thesis: ${thesis.title}`}
+      >
         <TitleRow>
           <CardTitle $variant={variant}>{thesis.title}</CardTitle>
           <StatusBadge $status={thesis.status}>{thesis.status}</StatusBadge>
@@ -23,17 +28,16 @@ const ThesisCardItem = ({ thesis, onOpen, variant }) => {
               ))}
             </Tags>
 
-            {/* Fallback to overview if short_description is missing */}
             <MiniDesc>{thesis.short_description || thesis.overview}</MiniDesc>
 
             <MetaRow>
               <MetaItem>
-                <FiUser />
+                <FiUser aria-hidden="true" />
                 <span>{thesis.student || "Student"}</span>
               </MetaItem>
 
               <MetaItem>
-                <FiCalendar />
+                <FiCalendar aria-hidden="true" />
                 <span>
                   {thesis.duration_start || "—"} –{" "}
                   {thesis.status === "In Progress"
@@ -44,7 +48,7 @@ const ThesisCardItem = ({ thesis, onOpen, variant }) => {
 
               <MetaRight>
                 <CornerIcon aria-hidden="true">
-                  <FiArrowUpRight />
+                  <FiArrowUpRight aria-hidden="true" />
                 </CornerIcon>
               </MetaRight>
             </MetaRow>
@@ -57,8 +61,6 @@ const ThesisCardItem = ({ thesis, onOpen, variant }) => {
 
 export default ThesisCardItem;
 
-// ---------------- styles ----------------
-
 const ThesisCard = styled.button`
   width: 100%;
   border: none;
@@ -69,6 +71,7 @@ const ThesisCard = styled.button`
   margin: 0;
   padding: 0;
   background: ${Colors.white};
+  font: inherit;
   border-radius: 16px;
   border: 1px solid rgba(132, 172, 227, 0.306);
 

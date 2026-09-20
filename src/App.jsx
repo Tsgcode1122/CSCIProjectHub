@@ -1,6 +1,6 @@
 import React from "react";
 
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -46,7 +46,6 @@ const StyledResult = styled(Result)`
   }
 `;
 
-// Component for handling invalid paths
 const InvalidPath = () => {
   const navigate = useNavigate();
 
@@ -72,7 +71,7 @@ const InvalidPath = () => {
   );
 };
 
-//routes
+// Public and protected routes are defined in one router tree.
 const routes = [
   {
     element: (
@@ -102,15 +101,13 @@ const routes = [
 
   {
     path: "/admin",
-    element: <RequireAdmin />, // if authed -> Outlet, else redirect to /admin/login
+    element: <RequireAdmin />,
     children: [
       {
-        element: <AdminLayout />, // sidebar + topbar layout
+        element: <AdminLayout />,
         children: [
-          // /admin -> redirect to /admin/projects
           { index: true, element: <Navigate to="/admin/projects" replace /> },
 
-          // /admin/projects
           { path: "projects", element: <AdminProjects /> },
           { path: "editsupervisors", element: <EditSupervisors /> },
           { path: "projects/new", element: <AddProject /> },
@@ -119,7 +116,6 @@ const routes = [
           { path: "entries/:kind/:id/edit", element: <AdminEntryEdit /> },
           { path: "create/:kind", element: <AdminEntryCreate /> },
 
-          // /admin/users
           { path: "users", element: <AdminUsers /> },
         ],
       },
@@ -139,7 +135,6 @@ const App = () => (
       </AdminAuthProvider>
     </AntApp>
 
-    {/* <RouterProvider router={router} /> */}
   </>
 );
 

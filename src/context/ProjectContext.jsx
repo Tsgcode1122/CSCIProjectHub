@@ -4,12 +4,13 @@ import axios from "axios";
 const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
+  // Shared server data used by the home, listing, and detail views.
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Fetch the collection once when the provider mounts.
     const fetchProjects = async () => {
       setLoading(true);
       setError("");
@@ -21,7 +22,8 @@ export const ProjectProvider = ({ children }) => {
         const data = res.data ?? [];
         console.log(res.data);
 
-        setProjects(Array.isArray(data) ? data.reverse() : []);
+        // Keep consumers safe if the API returns a non-array response.
+        setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching projects:", err);
         setError(
@@ -38,6 +40,7 @@ export const ProjectProvider = ({ children }) => {
   }, []);
 
   return (
+    // Expose data and request state through one shared hook.
     <ProjectContext.Provider value={{ projects, loading, error, setProjects }}>
       {children}
     </ProjectContext.Provider>

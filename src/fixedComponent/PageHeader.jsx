@@ -7,11 +7,11 @@ import { media } from "../theme/Breakpoints";
 import { Colors } from "../theme/Colors";
 
 const PageHeader = ({ title, subtitle, backLabel = "Back" }) => {
+  // Shared banner used by collection and content pages.
   return (
     <HeaderWrap>
       <SectionDiv>
         <HeaderInner>
-          {/* Render BackButton if a label is passed. Set to false/null to hide it. */}
           {backLabel && <BackButton label={backLabel} />}
           <HeaderText>
             <HeaderTitle>{title}</HeaderTitle>
@@ -24,8 +24,6 @@ const PageHeader = ({ title, subtitle, backLabel = "Back" }) => {
 };
 
 export default PageHeader;
-
-// ---------------- styles ----------------
 
 const HeaderWrap = styled.div`
   background: ${Colors.brightBlue};

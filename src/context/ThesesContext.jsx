@@ -9,18 +9,18 @@ export const ThesesProvider = ({ children }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Fetch the collection once when the provider mounts.
     const fetchTheses = async () => {
       setLoading(true);
       setError("");
 
       try {
-        // NOTE: Update this URL if your thesis endpoint is different
         const res = await axios.get(
           "https://crpp-project.onrender.com/research/",
         );
         const data = res.data ?? [];
         console.log(res.data);
-
+        // Keep consumers safe if the API returns a non-array response.
         setTheses(Array.isArray(data) ? data.reverse() : []);
       } catch (err) {
         console.error("Error fetching theses:", err);
@@ -38,6 +38,7 @@ export const ThesesProvider = ({ children }) => {
   }, []);
 
   return (
+    // Expose data and request state through one shared hook.
     <ThesesContext.Provider value={{ theses, loading, error, setTheses }}>
       {children}
     </ThesesContext.Provider>

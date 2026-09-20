@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
+import { useNavigate, useLocation } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Colors } from "../theme/Colors";
 
@@ -11,25 +11,23 @@ const BackButton = ({ label }) => {
   const handleBack = () => {
     const path = location.pathname;
 
-    // 1. Check if we are on a Thesis details page (e.g., /theses/id)
+    // Detail pages return to their matching collection page.
     if (path.startsWith("/theses/") && path !== "/theses") {
       navigate("/theses");
     }
 
-    // 2. Check if we are on a Project details page (e.g., /projects/id)
     else if (path.startsWith("/projects/") && path !== "/projects") {
       navigate("/projects");
     }
 
-    // 3. Default behavior for main listing pages or other screens
     else {
       navigate(-1);
     }
   };
 
   return (
-    <Wrapper onClick={handleBack}>
-      <FiArrowLeft />
+    <Wrapper type="button" onClick={handleBack} aria-label={label}>
+      <FiArrowLeft aria-hidden="true" />
       <span>{label}</span>
     </Wrapper>
   );

@@ -19,11 +19,11 @@ import RelatedThesis from "./RelatedThesis";
 
 const ThesisDetail = () => {
   const navigate = useNavigate();
-  const { thesisId } = useParams(); // Updated param name
+  const { thesisId } = useParams();
   const { theses, loading, error } = useThesesContext();
 
+  // Resolve the route parameter from the shared thesis collection.
   const thesis = useMemo(() => {
-    // Falls back to checking title if id is not available (based on our JSON)
     return theses?.find(
       (t) =>
         String(t.id || t._id) === String(thesisId) ||
@@ -51,14 +51,13 @@ const ThesisDetail = () => {
 
   return (
     <>
-      {/* HEADER (BLUE BANNER) */}
-      <HeaderWrap>
+      <HeaderWrap aria-labelledby="thesis-title">
         <SectionDiv>
           <HeaderInner>
             <BackButton label="Back to Theses" />
 
             <TitleRow>
-              <HeaderTitle>{thesis.title}</HeaderTitle>
+              <HeaderTitle id="thesis-title">{thesis.title}</HeaderTitle>
             </TitleRow>
 
             {(thesis.tags || []).length > 0 && (
@@ -72,13 +71,11 @@ const ThesisDetail = () => {
         </SectionDiv>
       </HeaderWrap>
 
-      {/* BODY */}
       <SectionDiv>
         <Body>
-          {/* OVERVIEW CARD */}
-          <Card>
+          <Card aria-labelledby="thesis-overview-title">
             <TitleRow>
-              <CardTitle>Abstract / Overview</CardTitle>
+              <CardTitle id="thesis-overview-title">Abstract / Overview</CardTitle>
               <StatusBadge $status={thesis.status}>{thesis.status}</StatusBadge>
             </TitleRow>
             <CardText>{thesis.overview || "—"}</CardText>
@@ -86,10 +83,9 @@ const ThesisDetail = () => {
             <CardDivider />
 
             <MiniGrid>
-              {/* STUDENT */}
               <MiniItem>
-                <MiniIcon>
-                  <FiUser />
+                <MiniIcon aria-hidden="true">
+                  <FiUser aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Student</MiniLabel>
@@ -97,10 +93,9 @@ const ThesisDetail = () => {
                 </MiniText>
               </MiniItem>
 
-              {/* SUPERVISOR */}
               <MiniItem>
-                <MiniIcon>
-                  <FiUsers />
+                <MiniIcon aria-hidden="true">
+                  <FiUsers aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Supervisor</MiniLabel>
@@ -108,10 +103,9 @@ const ThesisDetail = () => {
                 </MiniText>
               </MiniItem>
 
-              {/* TIMELINE */}
               <MiniItem>
-                <MiniIcon>
-                  <FiCalendar />
+                <MiniIcon aria-hidden="true">
+                  <FiCalendar aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Timeline</MiniLabel>
@@ -124,10 +118,9 @@ const ThesisDetail = () => {
                 </MiniText>
               </MiniItem>
 
-              {/* DEPARTMENT */}
               <MiniItem>
-                <MiniIcon>
-                  <FiBookOpen />
+                <MiniIcon aria-hidden="true">
+                  <FiBookOpen aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Department</MiniLabel>
@@ -136,7 +129,6 @@ const ThesisDetail = () => {
               </MiniItem>
             </MiniGrid>
 
-            {/* PUBLICATIONS (Buttons) */}
             {(thesis.publications || []).length > 0 && (
               <BtnRow>
                 {thesis.publications.map((pub, idx) => (
@@ -147,7 +139,7 @@ const ThesisDetail = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <FiExternalLink />
+                    <FiExternalLink aria-hidden="true" />
                     View Publication{" "}
                     {thesis.publications.length > 1 ? idx + 1 : ""}
                   </OutlineBtn>
@@ -156,26 +148,23 @@ const ThesisDetail = () => {
             )}
           </Card>
 
-          {/* METHODOLOGY */}
           {thesis.methodology && (
-            <Card>
-              <CardTitle>Methodology</CardTitle>
+            <Card aria-labelledby="thesis-methodology-title">
+              <CardTitle id="thesis-methodology-title">Methodology</CardTitle>
               <CardText>{thesis.methodology}</CardText>
             </Card>
           )}
 
-          {/* KEY FINDINGS */}
           {thesis.key_findings && (
-            <Card>
-              <CardTitle>Key Findings</CardTitle>
+            <Card aria-labelledby="thesis-findings-title">
+              <CardTitle id="thesis-findings-title">Key Findings</CardTitle>
               <CardText>{thesis.key_findings}</CardText>
             </Card>
           )}
 
-          {/* FUTURE WORK */}
           {thesis.future_work && (
-            <Card>
-              <CardTitle>Future Work</CardTitle>
+            <Card aria-labelledby="thesis-future-title">
+              <CardTitle id="thesis-future-title">Future Work</CardTitle>
               <CardText>{thesis.future_work}</CardText>
             </Card>
           )}
@@ -188,8 +177,6 @@ const ThesisDetail = () => {
 };
 
 export default ThesisDetail;
-
-/* ---------------- styles ---------------- */
 
 const HeaderWrap = styled.header`
   background: ${Colors.brightBlue};

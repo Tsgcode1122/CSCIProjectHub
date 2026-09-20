@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import styled from "styled-components";
-import { Colors, Shadows } from "../../theme/Colors";
+import { Colors } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 
 const ProjectFilters = ({
@@ -21,7 +21,7 @@ const ProjectFilters = ({
   } = options;
   const CHUNK = 5;
 
-  // sort years (newest -> oldest)
+  // Keep long year lists compact until the user expands them.
   const sortedYears = useMemo(() => {
     return [...years].sort((a, b) => Number(b) - Number(a));
   }, [years]);
@@ -42,25 +42,30 @@ const ProjectFilters = ({
   };
 
   return (
+    // Inputs are controlled by ProjectGrid through value and callbacks.
     <>
-      <Overlay $show={show} onClick={onClose} />
-      <Panel $show={show}>
+      <Overlay $show={show} aria-hidden="true" onClick={onClose} />
+      <Panel
+        id="project-filters"
+        $show={show}
+        aria-labelledby="project-filters-title"
+      >
         <PanelHeader>
-          {/* Row 1: Title and X */}
           <TopHeaderRow>
-            <PanelTitle>Filters</PanelTitle>
-            <MobileCloseBtn type="button" onClick={onClose}>
+            <PanelTitle id="project-filters-title">Filters</PanelTitle>
+            <MobileCloseBtn
+              type="button"
+              onClick={onClose}
+              aria-label="Close project filters"
+            >
               ✕
             </MobileCloseBtn>
           </TopHeaderRow>
-
-          {/* Row 2: Result count and Clear */}
         </PanelHeader>
         <Divider />
         <Group>
           <GroupTitle>Year</GroupTitle>
 
-          {/* Always show "All" as radio */}
           <RadioList>
             <RadioItem>
               <input
@@ -163,9 +168,11 @@ const ProjectFilters = ({
         <Divider />
 
         <Group>
-          <GroupTitle>Faculty Advisor</GroupTitle>
+          <GroupTitle id="project-advisor-label">Faculty Advisor</GroupTitle>
           <Select
+            id="project-advisor-filter"
             value={value.facultyAdvisor}
+            aria-labelledby="project-advisor-label"
             onChange={(e) => onChange({ facultyAdvisor: e.target.value })}
           >
             <option value="">All</option>
@@ -191,7 +198,6 @@ const ProjectFilters = ({
 
 export default ProjectFilters;
 const Overlay = styled.div`
-  /* Show only if the panel is open */
   display: ${({ $show }) => ($show ? "block" : "none")};
 
   position: fixed;
@@ -200,15 +206,13 @@ const Overlay = styled.div`
   width: 100vw;
   height: 100vh;
 
-  /* Dim the background slightly and apply the blur */
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  -webkit-backdrop-filter: blur(4px);
 
   z-index: 999;
   cursor: pointer;
 
-  /* Completely hide the overlay on desktop where the panel is just a sidebar */
   @media ${media.laptop} {
     display: none;
   }
@@ -222,12 +226,10 @@ const Panel = styled.aside`
   @media ${media.laptop} {
     border-radius: 16px;
   }
-  /* --- MOBILE / TABLET VIEW --- */
-
   display: ${({ $show }) => ($show ? "block" : "none")};
 
   position: fixed;
-  top: 70px; /* Distance from top of screen */
+  top: 70px;
   right: 0px;
   z-index: 1000;
 
@@ -236,7 +238,6 @@ const Panel = styled.aside`
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
 
-  /* --- DESKTOP / LAPTOP VIEW --- */
   @media ${media.laptop} {
     display: block !important;
     position: sticky;
@@ -259,7 +260,6 @@ const PanelHeader = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 
-  /* Make it stick to the top of the Panel */
   position: sticky;
   top: 0;
   z-index: 10;
@@ -271,7 +271,6 @@ const PanelHeader = styled.div`
 
   border-bottom: 1px solid rgba(4, 30, 66, 0.08);
 
-  /*  */
   @media ${media.laptop} {
     position: static;
     margin: 0 0 0.9rem 0;
@@ -322,9 +321,6 @@ const MobileCloseBtn = styled.button`
   align-items: center;
   justify-content: center;
   padding: 0;
-  /* position: absolute;
-  left: 0; */
-
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -333,24 +329,20 @@ const MobileCloseBtn = styled.button`
   border: 1px solid rgba(4, 30, 66, 0.05);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 
-  /* Typography */
   font-size: 1.1rem;
   font-weight: bold;
   color: ${Colors.etsuBlue};
   cursor: pointer;
 
-  /* Smooth transitions for hover effects */
   transition: all 0.2s ease-in-out;
 
-  /* Interactive hover effect */
   &:hover {
     background: ${Colors.brightBlue};
     color: ${Colors.white};
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
-    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
   }
 
-  /* Hide on desktop/laptop where the panel acts as a permanent sidebar */
   @media ${media.laptop} {
     display: none;
   }
@@ -381,11 +373,15 @@ const ClearBtn = styled.button`
     color: ${Colors.etsuBlue};
   }
 `;
-const Group = styled.div`
+const Group = styled.fieldset`
+  border: 0;
+  padding: 0;
+  min-width: 0;
   margin-top: 0.9rem;
 `;
 
-const GroupTitle = styled.div`
+const GroupTitle = styled.legend`
+  padding: 0;
   font-weight: 700;
   color: ${Colors.etsuBlue};
   margin-bottom: 0.6rem;
@@ -425,6 +421,11 @@ const Select = styled.select`
   &:focus {
     border-color: ${Colors.etsuGold};
     box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25);
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${Colors.etsuGold};
+    outline-offset: 2px;
   }
 `;
 

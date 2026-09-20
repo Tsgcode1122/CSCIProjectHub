@@ -1,4 +1,3 @@
-// src/components/NoResultsState.jsx
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { FaSearch } from "react-icons/fa";
@@ -8,6 +7,7 @@ export default function NoResultsState({
   title = "No results found",
   subtitle,
 }) {
+  // Shared empty state for searches and filtered lists.
   return (
     <Wrap>
       <IconBubble>

@@ -6,6 +6,7 @@ import FeaturedProject from "../components/FeaturedProject";
 import FeaturedThesis from "../components/FeaturedThesis";
 
 const Home = () => {
+  // Keep the landing page sections in their reading order.
   return (
     <>
       <Hero />

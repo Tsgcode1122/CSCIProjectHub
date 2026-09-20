@@ -5,11 +5,11 @@ import { Colors, Shadows } from "../theme/Colors";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import { FiArrowUpRight } from "react-icons/fi";
 
-import { HiOutlineDesktopComputer } from "react-icons/hi"; // CS
-import { LuComputer } from "react-icons/lu"; // IT
-import { FaComputer } from "react-icons/fa6"; // IS
-import { RiShieldKeyholeLine } from "react-icons/ri"; // Cybersecurity
-import { IoBarChartOutline } from "react-icons/io5"; // Data Science
+import { HiOutlineDesktopComputer } from "react-icons/hi";
+import { LuComputer } from "react-icons/lu";
+import { FaComputer } from "react-icons/fa6";
+import { RiShieldKeyholeLine } from "react-icons/ri";
+import { IoBarChartOutline } from "react-icons/io5";
 import { media } from "../theme/Breakpoints";
 
 const ProgramEntryPoints = () => {
@@ -49,6 +49,7 @@ const ProgramEntryPoints = () => {
   ];
 
   const handleNavigate = (program) => {
+    // Preserve the selected discipline for the destination filter.
     navigate(`${program.path}?department=${encodeURIComponent(program.label)}`);
   };
 
@@ -57,13 +58,18 @@ const ProgramEntryPoints = () => {
       <SectionDiv>
         <Wrapper>
           <ScrollRow>
+            {/* Each card links to a pre-filtered project or thesis list. */}
             {programs.map((program) => (
-              <Card key={program.key} onClick={() => handleNavigate(program)}>
-                <Arrow>
-                  <FiArrowUpRight />
+              <Card
+                key={program.key}
+                type="button"
+                onClick={() => handleNavigate(program)}
+                aria-label={`Browse ${program.label}`}
+              >
+                <Arrow aria-hidden="true">
+                  <FiArrowUpRight aria-hidden="true" />
                 </Arrow>
-                {/* 3. Render the icon component directly */}
-                <Icon>{program.icon}</Icon>
+                <Icon aria-hidden="true">{program.icon}</Icon>
                 <Label>{program.label}</Label>
               </Card>
             ))}

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import SectionDiv from "../fixedComponent/SectionDiv";
-import HeroCountdown from "./HeroCountdown";
 import { Colors } from "../theme/Colors";
 import ETSUButton from "../fixedComponent/ETSUButton";
-import { breakpoints, media } from "../theme/Breakpoints";
+import { media } from "../theme/Breakpoints";
 const Hero = () => {
+  // Introduce the portal and provide its two primary entry routes.
   return (
     <HeroWrap>
       <SectionDiv>
@@ -30,8 +30,6 @@ const Hero = () => {
 };
 
 export default Hero;
-
-// Styling
 
 const HeroWrap = styled.div`
   background-color: white !important;
@@ -66,7 +64,6 @@ const Description = styled.p`
   margin: 0 auto;
   max-width: 980px;
   color: ${Colors.lightBlack};
-  /* font-weight: 500; */
 `;
 const CTAWrap = styled.div`
   display: flex;

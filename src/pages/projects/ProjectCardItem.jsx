@@ -1,24 +1,20 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import SectionDiv from "../../fixedComponent/SectionDiv";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
-import {
-  FiSearch,
-  FiUsers,
-  FiCalendar,
-  FiArrowUpRight,
-  FiFilter,
-} from "react-icons/fi";
-
-import { useProjectContext } from "../../context/ProjectContext";
+import { FiUsers, FiCalendar, FiArrowUpRight } from "react-icons/fi";
 
 const ProjectCardItem = ({ project, onOpen, variant }) => {
+  // Support either identifier shape returned by the API.
   const id = project?.id || project?._id;
   return (
     <>
-      <ProjectCard $variant={variant} onClick={() => onOpen?.(id)}>
+      <ProjectCard
+        type="button"
+        $variant={variant}
+        onClick={() => onOpen?.(id)}
+        aria-label={`Open project: ${project.title}`}
+      >
         <TitleRow>
           <CardTitle $variant={variant}>{project.title}</CardTitle>
           <StatusBadge $status={project.project_status}>
@@ -38,12 +34,12 @@ const ProjectCardItem = ({ project, onOpen, variant }) => {
 
             <MetaRow>
               <MetaItem>
-                <FiUsers />
+                <FiUsers aria-hidden="true" />
                 <span>{project.team_members?.length ?? 0} members</span>
               </MetaItem>
 
               <MetaItem>
-                <FiCalendar />
+                <FiCalendar aria-hidden="true" />
                 <span>
                   {project.duration_start || "—"} –{" "}
                   {project.project_status === "In Progress" ||
@@ -55,7 +51,7 @@ const ProjectCardItem = ({ project, onOpen, variant }) => {
 
               <MetaRight>
                 <CornerIcon aria-hidden="true">
-                  <FiArrowUpRight />
+                  <FiArrowUpRight aria-hidden="true" />
                 </CornerIcon>
               </MetaRight>
             </MetaRow>
@@ -77,11 +73,10 @@ const ProjectCard = styled.button`
   gap: 1rem;
   margin: 0;
   padding: 0;
+  font: inherit;
   background: ${Colors.white};
   border-radius: 16px;
   border: 1px solid rgba(132, 172, 227, 0.306);
-  /* border: 1px solid rgba(4, 30, 66, 0.12); */
-  /* box-shadow: ${Shadows.light}; */
 
   transition:
     transform 160ms ease,
@@ -116,16 +111,12 @@ const Thumb = styled.div`
     height: 100%;
     display: block;
     object-fit: cover;
-    /* aspect-ratio: 1 / 1; */
   }
 `;
 
 const CardContent = styled.div`
-  /* min-width: 0; */
-
   display: grid;
   gap: 12px;
-  /* grid-template-columns: 140px 1fr; */
   padding: 1rem;
   @media ${media.tablet} {
     padding: 1.1rem;
@@ -179,9 +170,6 @@ const CardTitle = styled.h5`
     max-width: 90%;
   }
 
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; */
 `;
 
 const StatusBadge = styled.span`
@@ -252,7 +240,6 @@ const CornerIcon = styled.div`
 `;
 
 const Tags = styled.div`
-  /* margin-top: 0.6rem; */
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -309,7 +296,6 @@ const MetaRight = styled.div`
   margin-left: auto;
   color: rgba(0, 0, 0, 0.5);
   @media ${media.mobileXS} {
-    /* display: none; */
     position: absolute;
     top: -10px;
     right: 10px;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Colors } from "../theme/Colors";
 
 const SectionHeader = ({ title, subtitle }) => {
+  // Shared heading treatment for homepage sections.
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -35,6 +36,5 @@ const Subtitle = styled.small`
   display: block;
   max-width: 620px;
   margin: 0 auto;
-  /* opacity: 0.95; */
   line-height: 1.3rem;
 `;

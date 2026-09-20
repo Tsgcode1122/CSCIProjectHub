@@ -10,6 +10,7 @@ const Layout = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Start each route at the top of the page.
     window.scrollTo({
       top: 0,
       left: 0,
@@ -18,6 +19,7 @@ const Layout = () => {
   }, [location.pathname]);
 
   return (
+    // Shared public shell: navigation, route content, utility, and footer.
     <>
       <Navbar />
       <Outlet />

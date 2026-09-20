@@ -2,20 +2,13 @@ import React, { useMemo, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
-import { Colors, Shadows } from "../../theme/Colors";
+import { Colors } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
-import {
-  FiSearch,
-  FiUsers,
-  FiCalendar,
-  FiArrowUpRight,
-  FiFilter,
-} from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import { BiSliderAlt } from "react-icons/bi";
 
 import PageHeader from "../../fixedComponent/PageHeader";
 import ThesisCardItem from "./ThesisCardItem";
-import BackButton from "../../fixedComponent/BackButton";
 
 import ThesesFilters from "./ThesesFilter";
 import { useThesesContext } from "../../context/ThesesContext";
@@ -27,6 +20,7 @@ const ThesesGrid = () => {
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   useEffect(() => {
+    // Program entry links can preselect a department from the URL.
     const departmentFromUrl = searchParams.get("department");
     if (departmentFromUrl) {
       setFilters((prev) => ({
@@ -35,7 +29,6 @@ const ThesesGrid = () => {
       }));
     }
   }, [searchParams]);
-  // Sidebar filter state mapping to the JSON attributes
   const [filters, setFilters] = useState({
     year: "",
     department: "",
@@ -43,6 +36,7 @@ const ThesesGrid = () => {
     supervisor: "",
   });
 
+  // Derive available filter values from the loaded thesis data.
   const filterOptions = useMemo(() => {
     const uniq = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
@@ -61,7 +55,7 @@ const ThesesGrid = () => {
     return { years, departments, statuses, advisors };
   }, [theses]);
 
-  // Filters + search
+  // Search and filters are combined with AND logic.
   const filteredTheses = useMemo(() => {
     const q = search.trim().toLowerCase();
 
@@ -108,13 +102,12 @@ const ThesesGrid = () => {
     });
   };
 
-  const HandleShowFilter = () => {
+  const handleShowFilter = () => {
     setShowFilters(!showFilters);
   };
 
   return (
     <>
-      {/* PAGE HEADER */}
       <HeaderWrap>
         <SectionDiv>
           <HeaderInner>
@@ -131,42 +124,45 @@ const ThesesGrid = () => {
       </HeaderWrap>
 
       <GridContainer>
-        {/* Sticky search/filter bar OUTSIDE HeaderWrap */}
         <StickyBar>
           <SectionContainer>
             <Filter>
               <SearchWrap>
-                <FiSearch />
+                <FiSearch aria-hidden="true" />
                 <SearchInput
+                  id="thesis-search"
+                  name="thesis-search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search theses by title, tag, or keyword..."
+                  aria-label="Search theses by title, tag, or keyword"
+                  aria-controls="thesis-results"
                 />
               </SearchWrap>
-              <FilterBtn type="button" onClick={HandleShowFilter}>
-                <BiSliderAlt />
+              <FilterBtn
+                type="button"
+                onClick={handleShowFilter}
+                aria-label="Open thesis filters"
+                aria-controls="thesis-filters"
+                aria-expanded={showFilters}
+              >
+                <BiSliderAlt aria-hidden="true" />
               </FilterBtn>
             </Filter>
           </SectionContainer>
         </StickyBar>
 
-        {/* BODY */}
         <SectionDiv>
           <BodyGrid>
-            {/* LEFT SIDEBAR FILTER */}
-            <>
-              <ThesesFilters
-                options={filterOptions}
-                value={filters}
-                onChange={handleFilterChange}
-                onClear={clearFilters}
-                show={showFilters}
-                onClose={() => setShowFilters(false)}
-                resultCount={filteredTheses.length}
-              />
-            </>
-
-            {/* RIGHT LIST */}
+            <ThesesFilters
+              options={filterOptions}
+              value={filters}
+              onChange={handleFilterChange}
+              onClear={clearFilters}
+              show={showFilters}
+              onClose={() => setShowFilters(false)}
+              resultCount={filteredTheses.length}
+            />
             <ListCol>
               <ResultRow>
                 <ResultCount>
@@ -175,6 +171,7 @@ const ThesesGrid = () => {
                 </ResultCount>
               </ResultRow>
 
+              <div id="thesis-results" aria-live="polite" aria-atomic="true">
               {loading ? (
                 <EmptyState>
                   <h4>Loading theses...</h4>
@@ -201,6 +198,7 @@ const ThesesGrid = () => {
                   ))}
                 </List>
               )}
+              </div>
             </ListCol>
           </BodyGrid>
         </SectionDiv>
@@ -211,7 +209,6 @@ const ThesesGrid = () => {
 
 export default ThesesGrid;
 
-// ---------------- styles ----------------
 const GridContainer = styled.div`
   position: relative;
 `;
@@ -353,6 +350,11 @@ const SearchInput = styled.input`
   outline: none;
   background: transparent;
   color: ${Colors.black};
+
+  &:focus-visible {
+    outline: 3px solid ${Colors.etsuGold};
+    outline-offset: 2px;
+  }
 
   &::placeholder {
     color: rgba(3, 3, 3, 0.626);

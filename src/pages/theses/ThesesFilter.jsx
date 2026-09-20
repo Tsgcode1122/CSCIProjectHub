@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import { Colors } from "../../theme/Colors"; // Removed unused Shadows
+import { Colors } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 
 const ThesesFilters = ({
@@ -16,11 +16,10 @@ const ThesesFilters = ({
     years = [],
     departments = [],
     statuses = [],
-    advisors = [], // We map this to supervisor
+    advisors = [],
   } = options;
   const CHUNK = 5;
 
-  // sort years (newest -> oldest)
   const sortedYears = useMemo(() => {
     return [...years].sort((a, b) => Number(b) - Number(a));
   }, [years]);
@@ -42,12 +41,20 @@ const ThesesFilters = ({
 
   return (
     <>
-      <Overlay $show={show} onClick={onClose} />
-      <Panel $show={show}>
+      <Overlay $show={show} aria-hidden="true" onClick={onClose} />
+      <Panel
+        id="thesis-filters"
+        $show={show}
+        aria-labelledby="thesis-filters-title"
+      >
         <PanelHeader>
           <TopHeaderRow>
-            <PanelTitle>Filters</PanelTitle>
-            <MobileCloseBtn type="button" onClick={onClose}>
+            <PanelTitle id="thesis-filters-title">Filters</PanelTitle>
+            <MobileCloseBtn
+              type="button"
+              onClick={onClose}
+              aria-label="Close thesis filters"
+            >
               ✕
             </MobileCloseBtn>
           </TopHeaderRow>
@@ -127,7 +134,6 @@ const ThesesFilters = ({
         <Divider />
 
         <Group>
-          {/* Changed to Status */}
           <GroupTitle>Status</GroupTitle>
           <RadioList>
             <RadioItem>
@@ -157,10 +163,11 @@ const ThesesFilters = ({
         <Divider />
 
         <Group>
-          {/* Changed to Supervisor */}
-          <GroupTitle>Supervisor</GroupTitle>
+          <GroupTitle id="thesis-supervisor-label">Supervisor</GroupTitle>
           <Select
+            id="thesis-supervisor-filter"
             value={value.supervisor}
+            aria-labelledby="thesis-supervisor-label"
             onChange={(e) => onChange({ supervisor: e.target.value })}
           >
             <option value="">All</option>
@@ -186,8 +193,6 @@ const ThesesFilters = ({
 };
 
 export default ThesesFilters;
-
-// ---------------- styles ----------------
 
 const Overlay = styled.div`
   display: ${({ $show }) => ($show ? "block" : "none")};
@@ -217,7 +222,6 @@ const Panel = styled.aside`
     border-radius: 16px;
   }
 
-  /* --- MOBILE / TABLET VIEW --- */
   display: ${({ $show }) => ($show ? "block" : "none")};
   position: fixed;
   top: 70px;
@@ -228,7 +232,6 @@ const Panel = styled.aside`
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
 
-  /* --- DESKTOP / LAPTOP VIEW --- */
   @media ${media.laptop} {
     display: block !important;
     position: sticky;
@@ -356,11 +359,15 @@ const ClearBtn = styled.button`
   }
 `;
 
-const Group = styled.div`
+const Group = styled.fieldset`
+  border: 0;
+  padding: 0;
+  min-width: 0;
   margin-top: 0.9rem;
 `;
 
-const GroupTitle = styled.div`
+const GroupTitle = styled.legend`
+  padding: 0;
   font-weight: 700;
   color: ${Colors.etsuBlue};
   margin-bottom: 0.6rem;
@@ -400,6 +407,11 @@ const Select = styled.select`
   &:focus {
     border-color: ${Colors.etsuGold};
     box-shadow: 0 0 0 4px rgba(255, 184, 28, 0.25);
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${Colors.etsuGold};
+    outline-offset: 2px;
   }
 `;
 

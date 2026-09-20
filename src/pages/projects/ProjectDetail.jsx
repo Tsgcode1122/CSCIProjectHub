@@ -2,12 +2,11 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
-import BackButton from "../../fixedComponent/BackButton"; // optional if you already have it
+import BackButton from "../../fixedComponent/BackButton";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 import { useProjectContext } from "../../context/ProjectContext";
 import {
-  FiArrowLeft,
   FiExternalLink,
   FiGithub,
   FiUsers,
@@ -21,7 +20,9 @@ const ProjectDetail = () => {
   const { projectId } = useParams();
   const { projects, loading, error } = useProjectContext();
 
+  // Detail views reuse the collection already loaded by ProjectProvider.
   const project = useMemo(() => {
+    // URL parameters are strings, while API IDs may be numbers.
     return projects?.find((p) => String(p.id || p._id) === String(projectId));
   }, [projects, projectId]);
 
@@ -45,22 +46,14 @@ const ProjectDetail = () => {
 
   return (
     <>
-      {/* HEADER (BLUE BANNER) */}
-      <HeaderWrap>
+      <HeaderWrap aria-labelledby="project-title">
         <SectionDiv>
           <HeaderInner>
             <BackButton label="Back to Projects" />
 
             <TitleRow>
-              <HeaderTitle>{project.title}</HeaderTitle>
-              {/* <StatusBadge $status={project.project_status}>
-                {project.project_status}
-              </StatusBadge> */}
+              <HeaderTitle id="project-title">{project.title}</HeaderTitle>
             </TitleRow>
-
-            {/* {project.short_description && (
-              <HeaderDesc>{project.short_description}</HeaderDesc>
-            )} */}
 
             {(project.tags || []).length > 0 && (
               <TagRow>
@@ -73,13 +66,11 @@ const ProjectDetail = () => {
         </SectionDiv>
       </HeaderWrap>
 
-      {/* BODY */}
       <SectionDiv>
         <Body>
-          {/* OVERVIEW CARD */}
-          <Card>
+          <Card aria-labelledby="project-overview-title">
             <TitleRow>
-              <CardTitle>Project Overview</CardTitle>
+              <CardTitle id="project-overview-title">Project Overview</CardTitle>
               <StatusBadge $status={project.project_status}>
                 {project.project_status}
               </StatusBadge>
@@ -90,8 +81,8 @@ const ProjectDetail = () => {
 
             <MiniGrid>
               <MiniItem>
-                <MiniIcon>
-                  <FiUsers />
+                <MiniIcon aria-hidden="true">
+                  <FiUsers aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Team Members</MiniLabel>
@@ -103,8 +94,8 @@ const ProjectDetail = () => {
                 </MiniText>
               </MiniItem>
               <MiniItem>
-                <MiniIcon>
-                  <FiUsers />
+                <MiniIcon aria-hidden="true">
+                  <FiUsers aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Supervisor</MiniLabel>
@@ -112,8 +103,8 @@ const ProjectDetail = () => {
                 </MiniText>
               </MiniItem>
               <MiniItem>
-                <MiniIcon>
-                  <FiCalendar />
+                <MiniIcon aria-hidden="true">
+                  <FiCalendar aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Timeline</MiniLabel>
@@ -127,12 +118,9 @@ const ProjectDetail = () => {
                 </MiniText>
               </MiniItem>
 
-              {/* NEW: Supervisor */}
-
-              {/* NEW: Tech Stack */}
               <MiniItem>
-                <MiniIcon>
-                  <GoStack />
+                <MiniIcon aria-hidden="true">
+                  <GoStack aria-hidden="true" />
                 </MiniIcon>
                 <MiniText>
                   <MiniLabel>Tech Stack</MiniLabel>
@@ -154,7 +142,7 @@ const ProjectDetail = () => {
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FiExternalLink />
+                  <FiExternalLink aria-hidden="true" />
                   View Live Project
                 </OutlineBtn>
               )}
@@ -167,17 +155,17 @@ const ProjectDetail = () => {
                   rel="noreferrer"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <FiGithub />
+                  <FiGithub aria-hidden="true" />
                   View Source Code
                 </OutlineBtn>
               )}
             </BtnRow>
           </Card>
 
-          {/* KEY FEATURES */}
+          {/* Optional sections stay hidden when the API has no content. */}
           {(project.key_features || []).length > 0 && (
-            <Card>
-              <CardTitle>Key Features</CardTitle>
+            <Card aria-labelledby="project-features-title">
+              <CardTitle id="project-features-title">Key Features</CardTitle>
               <BulletList>
                 {project.key_features.map((f, idx) => (
                   <BulletItem key={idx}>{f}</BulletItem>
@@ -186,10 +174,11 @@ const ProjectDetail = () => {
             </Card>
           )}
 
-          {/* CHALLENGES & SOLUTIONS */}
           {(project.challenges_solutions || []).length > 0 && (
-            <Card>
-              <CardTitle>Challenges & Solutions</CardTitle>
+            <Card aria-labelledby="project-challenges-title">
+              <CardTitle id="project-challenges-title">
+                Challenges & Solutions
+              </CardTitle>
               <BulletList>
                 {project.challenges_solutions.map((cs, idx) => (
                   <BulletItem key={idx}>
@@ -202,10 +191,9 @@ const ProjectDetail = () => {
             </Card>
           )}
 
-          {/* ACHIEVEMENTS */}
           {(project.achievements || []).length > 0 && (
-            <Card>
-              <CardTitle>Achievements</CardTitle>
+            <Card aria-labelledby="project-achievements-title">
+              <CardTitle id="project-achievements-title">Achievements</CardTitle>
               <BulletList>
                 {project.achievements.map((a, idx) => (
                   <BulletItem key={idx}>{a}</BulletItem>
@@ -222,14 +210,11 @@ const ProjectDetail = () => {
 
 export default ProjectDetail;
 
-/* ---------------- styles ---------------- */
-
 const HeaderWrap = styled.header`
   background: ${Colors.brightBlue};
   color: ${Colors.white};
   padding: 0.2rem 0;
   @media ${media.tablet} {
-    /* padding: 2.6rem 0 3rem 0; */
   }
 `;
 
@@ -248,8 +233,6 @@ const TitleRow = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  /* gap: 1rem; */
-  /* align-items: center; */
   flex-wrap: wrap;
   position: relative;
 `;
@@ -414,7 +397,6 @@ const OutlineBtn = styled.a`
   cursor: pointer;
   text-decoration: none;
 
-  /* font-weight: 700; */
   font-size: 0.9rem;
 
   color: ${Colors.brightBlue};

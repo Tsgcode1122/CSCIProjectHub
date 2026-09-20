@@ -1,38 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import SectionDiv from "../fixedComponent/SectionDiv";
 import SectionHeader from "../fixedComponent/SectionHeader";
 import { FiArrowRight, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { Colors, Shadows } from "../theme/Colors";
 import { media } from "../theme/Breakpoints";
-import { Form, Input, Button, message } from "antd";
 
-// 1. Pass hideHeader as a prop, defaulting to false
 const ContactUs = ({ hideHeader = false }) => {
-  const [form] = Form.useForm();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const onFinish = async (values) => {
-    try {
-      setIsSubmitting(true);
-
-      // await axios.post("/api/contact", values);
-
-      console.log("Contact form payload:", values);
-
-      message.success("Message sent. We’ll get back to you soon.");
-      form.resetFields();
-    } catch (err) {
-      message.error("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+  // Public contact details shared by the home and contact pages.
   return (
     <SectionDiv>
       <Wrap>
-        {/* 2. Conditionally render the header based on the prop */}
         {!hideHeader && (
           <SectionHeader
             title="Contact Us"
@@ -83,8 +61,6 @@ const ContactUs = ({ hideHeader = false }) => {
 
 export default ContactUs;
 
-// ---------------- styles ----------------
-
 const Wrap = styled.div`
   padding: 3rem 0;
   max-width: 1400px;
@@ -98,12 +74,9 @@ const Grid = styled.div`
   justify-content: center;
   align-items: center;
   @media ${media.tablet} {
-    /* grid-template-columns: 1.35fr 0.65fr;
-    align-items: start; */
   }
 `;
 
-/* RIGHT SIDE INFO */
 const InfoCol = styled.div`
   display: flex;
   align-items: center;
@@ -114,7 +87,6 @@ const InfoCol = styled.div`
 
 const InfoCard = styled.div`
   display: flex;
-  /* ✅ Align children vertically in the middle */
   align-items: center;
   gap: 0.9rem;
   padding: 1.2rem 1.1rem;

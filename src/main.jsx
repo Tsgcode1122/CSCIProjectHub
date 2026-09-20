@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { ProjectProvider } from "./context/ProjectContext.jsx";
 import { ThesesProvider } from "./context/ThesesContext.jsx";
 
+// Providers load shared content for all public routes.
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ProjectProvider>

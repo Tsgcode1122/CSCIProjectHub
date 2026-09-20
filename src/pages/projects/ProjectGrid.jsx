@@ -2,19 +2,12 @@ import React, { useMemo, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SectionDiv from "../../fixedComponent/SectionDiv";
-import { Colors, Shadows } from "../../theme/Colors";
+import { Colors } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
-import {
-  FiSearch,
-  FiUsers,
-  FiCalendar,
-  FiArrowUpRight,
-  FiFilter,
-} from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import { BiSliderAlt } from "react-icons/bi";
 import ProjectFilters from "./ProjectFilters";
 import PageHeader from "../../fixedComponent/PageHeader";
-import BackButton from "../../fixedComponent/BackButton";
 import { useProjectContext } from "../../context/ProjectContext";
 import ProjectCartItem from "./ProjectCardItem";
 
@@ -25,7 +18,7 @@ const ProjectGrid = () => {
 
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
-  // Sidebar filter state
+  // These controls are local UI state; the project collection stays in context.
   const [filters, setFilters] = useState({
     year: "",
     department: "",
@@ -33,6 +26,7 @@ const ProjectGrid = () => {
     facultyAdvisor: "",
   });
 
+  // Build filter choices from the current API data.
   const filterOptions = useMemo(() => {
     const uniq = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
@@ -46,15 +40,13 @@ const ProjectGrid = () => {
     ).sort((a, b) => b - a);
 
     const departments = uniq(projects.map((p) => p.department)).sort();
-    const statuses = uniq(
-      projects.map((p) => p.project_status || p.project_status),
-    ).sort();
+    const statuses = uniq(projects.map((p) => p.project_status)).sort();
     const advisors = uniq(projects.map((p) => p.supervisor)).sort();
 
     return { years, departments, statuses, advisors };
   }, [projects]);
-  // useEffect to read URL and update filters on load
   useEffect(() => {
+    // Program cards can open this page with a department query parameter.
     const departmentFromUrl = searchParams.get("department");
     if (departmentFromUrl) {
       setFilters((prev) => ({
@@ -63,7 +55,7 @@ const ProjectGrid = () => {
       }));
     }
   }, [searchParams]);
-  //  filters + search
+  // Apply search and every active filter without changing the source array.
   const filteredProjects = useMemo(() => {
     const q = search.trim().toLowerCase();
 
@@ -109,7 +101,7 @@ const ProjectGrid = () => {
     });
   };
 
-  const HandleShowFilter = () => {
+  const handleShowFilter = () => {
     setShowFilters(!showFilters);
   };
 
@@ -124,46 +116,51 @@ const ProjectGrid = () => {
       />
 
       <GridContainer>
-        {/* Sticky search/filter bar OUTSIDE HeaderWrap */}
         <StickyBar>
           <SectionContainer>
             <Filter>
               <SearchWrap>
-                <FiSearch />
+                <FiSearch aria-hidden="true" />
                 <SearchInput
+                  id="project-search"
+                  name="project-search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search projects by title, tag, or keyword..."
+                  aria-label="Search projects by title, tag, or keyword"
+                  aria-controls="project-results"
                 />
               </SearchWrap>
-              <FilterBtn type="button" onClick={() => HandleShowFilter()}>
-                <BiSliderAlt />
+              <FilterBtn
+                type="button"
+                onClick={handleShowFilter}
+                aria-label="Open project filters"
+                aria-controls="project-filters"
+                aria-expanded={showFilters}
+              >
+                <BiSliderAlt aria-hidden="true" />
               </FilterBtn>
             </Filter>
           </SectionContainer>
         </StickyBar>
-        {/* BODY */}
         <SectionDiv>
           <BodyGrid>
-            {/* LEFT SIDEBAR FILTER */}
-            <>
-              <ProjectFilters
-                options={filterOptions}
-                value={filters}
-                onChange={handleFilterChange}
-                onClear={clearFilters}
-                show={showFilters}
-                onClose={() => setShowFilters(false)}
-                resultCount={filteredProjects.length}
-              />
-            </>
-            {/* RIGHT LIST */}
+            <ProjectFilters
+              options={filterOptions}
+              value={filters}
+              onChange={handleFilterChange}
+              onClear={clearFilters}
+              show={showFilters}
+              onClose={() => setShowFilters(false)}
+              resultCount={filteredProjects.length}
+            />
             <ListCol>
               <ResultRow>
                 <ResultCount>
                   Showing <b>{filteredProjects.length}</b> project(s)
                 </ResultCount>
               </ResultRow>
+              <div id="project-results" aria-live="polite" aria-atomic="true">
               {loading ? (
                 <EmptyState>
                   <h4>Loading projects...</h4>
@@ -190,6 +187,7 @@ const ProjectGrid = () => {
                   ))}
                 </List>
               )}
+              </div>
             </ListCol>
           </BodyGrid>
         </SectionDiv>
@@ -200,17 +198,12 @@ const ProjectGrid = () => {
 
 export default ProjectGrid;
 
-// ---------------- styles ----------------
 const GridContainer = styled.div`
   position: relative;
-  /* This container defines the "track" the sticky bar can slide on. 
-     Once the bottom of this div is reached, the bar stops sticking. */
 `;
 const HeaderWrap = styled.div`
   background: ${Colors.brightBlue};
-  /* padding: 0.2rem 0; */
   position: relative;
-  /* height: 40vh; */
 `;
 
 const HeaderInner = styled.div`
@@ -242,7 +235,6 @@ const SectionContainer = styled.div`
   padding: 0rem 1.5rem;
   margin: 0 auto;
 
-  /* Extra small screens  */
   @media ${media.mobileXS} {
     padding: 0rem 0.8rem;
   }
@@ -251,34 +243,28 @@ const SectionContainer = styled.div`
     padding: 0rem 1rem;
   }
 
-  /* Medium phones (576px and above) */
   @media ${media.mobileM} {
     padding: 0rem 1.5rem;
   }
 
-  /* Large phones (679px and above) */
   @media ${media.mobileL} {
     padding: 0rem 3rem;
   }
 
-  /* Tablets (768px and above) */
   @media ${media.tablet} {
     padding: 0rem 4rem;
   }
 
-  /* Small laptops (1024px and above) */
   @media ${media.laptop} {
     max-width: 1200px;
     padding: 0rem 4rem 1rem 4rem;
   }
 
-  /* Desktops (1440px and above) */
   @media ${media.desktop} {
     max-width: 1200px;
     padding: 0rem 6rem 1rem 6rem;
   }
 
-  /* Extra large desktops / 4K screens (1920px) */
   @media ${media.desktopXL} {
     max-width: 1600px;
     padding: 0rem 8rem 1rem 8rem;
@@ -313,9 +299,7 @@ const SearchWrap = styled.div`
   }
 `;
 const Filter = styled.div`
-  /* MOBILE: search + filter button in grid */
   position: sticky;
-  /* background-color: white; */
   top: 202px;
   display: grid;
   grid-template-columns: 1fr 44px;
@@ -325,7 +309,6 @@ const Filter = styled.div`
 
   padding: 0.7rem 0 0 0;
 
-  /* TABLET+ : no grid, normal */
   @media ${media.laptop} {
     position: static;
     padding: 0;
@@ -352,7 +335,6 @@ const FilterBtn = styled.button`
     color: ${Colors.etsuGold};
   }
 
-  /* hide again on tablet and up */
   @media ${media.laptop} {
     display: none;
   }
@@ -364,7 +346,11 @@ const SearchInput = styled.input`
   outline: none;
   background: transparent;
   color: ${Colors.black};
-  /* font-weight: 200; */
+
+  &:focus-visible {
+    outline: 3px solid ${Colors.etsuGold};
+    outline-offset: 2px;
+  }
 
   &::placeholder {
     color: rgba(3, 3, 3, 0.626);

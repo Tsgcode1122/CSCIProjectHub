@@ -8,6 +8,7 @@ import { FiTarget, FiMonitor, FiUsers, FiAward } from "react-icons/fi";
 import SectionHeader from "../fixedComponent/SectionHeader";
 
 const About = () => {
+  // Static project and team information for the public About page.
   return (
     <>
       <PageHeader
@@ -18,7 +19,7 @@ const About = () => {
 
       <SectionDiv>
         <PageWrap>
-          {/* TOP SECTION: Project Overview */}
+          {/* Overview content and project metadata. */}
           <OverviewSection>
             <TextCol>
               <LeadText>
@@ -37,7 +38,7 @@ const About = () => {
               </Paragraph>
             </TextCol>
 
-            {/* QUICK STATS / INFO BOX */}
+            {/* Quick facts about the platform. */}
             <InfoBox>
               <InfoTitle>Project Details</InfoTitle>
               <InfoList>
@@ -66,7 +67,7 @@ const About = () => {
             </InfoBox>
           </OverviewSection>
 
-          {/* BOTTOM SECTION: The Team */}
+          {/* Team roles and responsibilities. */}
           <Divider />
 
           <TeamSection>

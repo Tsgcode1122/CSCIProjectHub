@@ -1,4 +1,3 @@
-// src/fixedComponent/Footer.jsx
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -8,14 +7,14 @@ import { FiMapPin, FiPhone, FiMail } from "react-icons/fi";
 import SectionDiv from "./SectionDiv";
 import computinglogo from "../images/computinglogo.png";
 const Footer = () => {
+  // Shared navigation, resource links, and contact information.
   return (
     <FooterWrap>
       <SectionDiv>
         <Inner>
           <Top>
-            {/* Brand */}
             <BrandCol>
-              <LogoBox src={computinglogo}></LogoBox>
+              <LogoBox src={computinglogo} alt="ETSU Department of Computing" />
 
               <BrandDesc>
                 ETSU Department of Computing&apos;s central hub for research
@@ -23,8 +22,7 @@ const Footer = () => {
               </BrandDesc>
             </BrandCol>
 
-            {/* Quick Links */}
-            <QuickCol>
+            <QuickCol as="nav" aria-label="Footer quick links">
               <Heading>Quick Links</Heading>
               <List>
                 <li>
@@ -42,8 +40,7 @@ const Footer = () => {
               </List>
             </QuickCol>
 
-            {/* Resources */}
-            <ResourcesCol>
+            <ResourcesCol as="nav" aria-label="Footer resources">
               <Heading>Resources</Heading>
               <List>
                 <li>
@@ -63,13 +60,12 @@ const Footer = () => {
               </List>
             </ResourcesCol>
 
-            {/* Contact */}
-            <ContactCol>
-              <Heading>Contact</Heading>
+            <ContactCol as="section" aria-labelledby="footer-contact-title">
+              <Heading id="footer-contact-title">Contact</Heading>
               <ContactList>
                 <ContactItem>
                   <Icon>
-                    <FiMapPin />
+                    <FiMapPin aria-hidden="true" />
                   </Icon>
                   <ContactText>
                     <ContactValue>
@@ -80,7 +76,7 @@ const Footer = () => {
 
                 <ContactItem>
                   <Icon>
-                    <FiPhone />
+                    <FiPhone aria-hidden="true" />
                   </Icon>
                   <ContactText>
                     <ContactValue>
@@ -93,7 +89,7 @@ const Footer = () => {
 
                 <ContactItem>
                   <Icon>
-                    <FiMail />
+                    <FiMail aria-hidden="true" />
                   </Icon>
                   <ContactText>
                     <ContactValue>
@@ -130,8 +126,6 @@ const Footer = () => {
 
 export default Footer;
 
-/* styling*/
-
 const FooterWrap = styled.footer`
   background: ${Colors.blue};
 
@@ -148,9 +142,6 @@ const Top = styled.div`
   display: grid;
   gap: 2.2rem;
 
-  /* Small screen layout:
-     
-  */
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     "brand brand"
@@ -158,18 +149,12 @@ const Top = styled.div`
     "contact contact";
 
   @media ${media.tablet} {
-    /* Medium layout:
-     
-    */
     grid-template-areas:
       "brand quick"
       "resources contact";
   }
 
   @media ${media.laptop} {
-    /* Large layout:
-      
-    */
     grid-template-columns: 1.2fr 0.9fr 0.9fr 1.2fr;
     grid-template-areas: "brand quick resources contact";
     align-items: start;
@@ -202,7 +187,6 @@ const LogoBox = styled.img`
   max-width: 100%;
   height: auto;
   width: 200px;
-  /* color: ${Colors.etsuBlue}; */
   display: grid;
   place-items: center;
   padding-bottom: 10px;
