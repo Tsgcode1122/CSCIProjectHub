@@ -86,7 +86,9 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {isOpen && <Overlay aria-hidden="true" onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <Overlay aria-hidden="true" onClick={() => setIsOpen(false)} />
+      )}
     </>
   );
 };

@@ -8,6 +8,7 @@ import { FiSearch } from "react-icons/fi";
 import { BiSliderAlt } from "react-icons/bi";
 
 import PageHeader from "../../fixedComponent/PageHeader";
+import BackButton from "../../fixedComponent/BackButton";
 import ThesisCardItem from "./ThesisCardItem";
 
 import ThesesFilters from "./ThesesFilter";
@@ -172,32 +173,34 @@ const ThesesGrid = () => {
               </ResultRow>
 
               <div id="thesis-results" aria-live="polite" aria-atomic="true">
-              {loading ? (
-                <EmptyState>
-                  <h4>Loading theses...</h4>
-                  <p>Please wait.</p>
-                </EmptyState>
-              ) : error ? (
-                <EmptyState>
-                  <h4>Could not load theses.</h4>
-                  <p>{error}</p>
-                </EmptyState>
-              ) : filteredTheses.length === 0 ? (
-                <EmptyState>
-                  <h4>No theses match your filters.</h4>
-                  <p>Try clearing filters or searching a different keyword.</p>
-                </EmptyState>
-              ) : (
-                <List>
-                  {filteredTheses.map((t) => (
-                    <ThesisCardItem
-                      key={t.id || t._id || t.title}
-                      thesis={t}
-                      onOpen={(id) => navigate(`/theses/${id}`)}
-                    />
-                  ))}
-                </List>
-              )}
+                {loading ? (
+                  <EmptyState>
+                    <h4>Loading theses...</h4>
+                    <p>Please wait.</p>
+                  </EmptyState>
+                ) : error ? (
+                  <EmptyState>
+                    <h4>Could not load theses.</h4>
+                    <p>{error}</p>
+                  </EmptyState>
+                ) : filteredTheses.length === 0 ? (
+                  <EmptyState>
+                    <h4>No theses match your filters.</h4>
+                    <p>
+                      Try clearing filters or searching a different keyword.
+                    </p>
+                  </EmptyState>
+                ) : (
+                  <List>
+                    {filteredTheses.map((t) => (
+                      <ThesisCardItem
+                        key={t.id || t._id || t.title}
+                        thesis={t}
+                        onOpen={(id) => navigate(`/theses/${id}`)}
+                      />
+                    ))}
+                  </List>
+                )}
               </div>
             </ListCol>
           </BodyGrid>
