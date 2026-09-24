@@ -25,7 +25,7 @@ export const ProjectProvider = ({ children }) => {
         // Keep user safe if the API returns a non-array response.
         setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error("Error fetching projects:", err);
+        // console.error("Error fetching projects:", err);
         setError(
           err?.response?.data?.message ||
             err?.message ||

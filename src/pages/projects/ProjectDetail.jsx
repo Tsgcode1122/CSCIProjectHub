@@ -6,29 +6,27 @@ import BackButton from "../../fixedComponent/BackButton";
 import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 import { useProjectContext } from "../../context/ProjectContext";
-import {
-  FiExternalLink,
-  FiGithub,
-  FiUsers,
-  FiCalendar,
-} from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiUsers, FiCalendar } from "react-icons/fi";
 import { GoStack } from "react-icons/go";
 import RelatedProject from "./Relatedproject";
 
+// Full project details page. It reads the project ID from the URL
 const ProjectDetail = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { projects, loading, error } = useProjectContext();
 
-  // Detail views reuse the collection already loaded by ProjectProvider.
+  // Detail views reuse the collection already loaded by ProjectProvider
   const project = useMemo(() => {
     // URL parameters are strings, while API IDs may be numbers.
     return projects?.find((p) => String(p.id || p._id) === String(projectId));
   }, [projects, projectId]);
 
+  // These early returns keep the main JSX focused on the successful detail view.
   if (loading) return <SectionDiv>Loading project...</SectionDiv>;
   if (error) return <SectionDiv>Failed to load project: {error}</SectionDiv>;
 
+  // A missing ID or stale link gets a friendly fallback instead of a broken page.
   if (!project) {
     return (
       <SectionDiv>
@@ -46,6 +44,7 @@ const ProjectDetail = () => {
 
   return (
     <>
+      {/* The header establishes the project identity and provides navigation back to the list. */}
       <HeaderWrap aria-labelledby="project-title">
         <SectionDiv>
           <HeaderInner>
@@ -55,6 +54,7 @@ const ProjectDetail = () => {
               <HeaderTitle id="project-title">{project.title}</HeaderTitle>
             </TitleRow>
 
+            {/* Tags are optional because older project records may not contain them. */}
             {(project.tags || []).length > 0 && (
               <TagRow>
                 {project.tags.slice(0, 3).map((t) => (
@@ -68,9 +68,12 @@ const ProjectDetail = () => {
 
       <SectionDiv>
         <Body>
+          {/* Overview and core metadata are always grouped into the main card. */}
           <Card aria-labelledby="project-overview-title">
             <TitleRow>
-              <CardTitle id="project-overview-title">Project Overview</CardTitle>
+              <CardTitle id="project-overview-title">
+                Project Overview
+              </CardTitle>
               <StatusBadge $status={project.project_status}>
                 {project.project_status}
               </StatusBadge>
@@ -133,6 +136,7 @@ const ProjectDetail = () => {
               </MiniItem>
             </MiniGrid>
 
+            {/* External links render only when the API supplies a non-empty URL. */}
             <BtnRow>
               {project.project_link?.trim() && (
                 <OutlineBtn
@@ -162,7 +166,7 @@ const ProjectDetail = () => {
             </BtnRow>
           </Card>
 
-          {/* Optional sections stay hidden when the API has no content. */}
+          {/* Optional sections stay hidden when the API has no content, avoiding empty headings. */}
           {(project.key_features || []).length > 0 && (
             <Card aria-labelledby="project-features-title">
               <CardTitle id="project-features-title">Key Features</CardTitle>
@@ -193,7 +197,9 @@ const ProjectDetail = () => {
 
           {(project.achievements || []).length > 0 && (
             <Card aria-labelledby="project-achievements-title">
-              <CardTitle id="project-achievements-title">Achievements</CardTitle>
+              <CardTitle id="project-achievements-title">
+                Achievements
+              </CardTitle>
               <BulletList>
                 {project.achievements.map((a, idx) => (
                   <BulletItem key={idx}>{a}</BulletItem>
@@ -202,6 +208,7 @@ const ProjectDetail = () => {
             </Card>
           )}
         </Body>
+        {/* RelatedProject receives the current record so it can exclude it from recommendations. */}
         <RelatedProject currentProject={project} />
       </SectionDiv>
     </>

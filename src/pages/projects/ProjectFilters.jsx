@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Colors } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 
+// Filter sidebar/drawer for the projects list. It does not own the selected
+// values; ProjectGrid owns that state and passes it in through props.
 const ProjectFilters = ({
   options,
   value,
@@ -13,12 +15,15 @@ const ProjectFilters = ({
   onClose,
   resultCount,
 }) => {
+  // Default empty arrays make the component safe while filter options are
+  // still being built or if a category has no available values.
   const {
     years = [],
     departments = [],
     statuses = [],
     advisors = [],
   } = options;
+  // Display years in groups of five so a long list does not overwhelm the panel.
   const CHUNK = 5;
 
   // Keep long year lists compact until the user expands them.
@@ -26,6 +31,7 @@ const ProjectFilters = ({
     return [...years].sort((a, b) => Number(b) - Number(a));
   }, [years]);
 
+  // This is presentation state only; it does not change the selected year.
   const [visibleCount, setVisibleCount] = useState(CHUNK);
 
   const canShowMore = visibleCount < sortedYears.length;
@@ -34,15 +40,18 @@ const ProjectFilters = ({
   const visibleYears = sortedYears.slice(0, visibleCount);
 
   const handleShowMoreYears = () => {
+    // Reveal the next group without exceeding the number of available years.
     setVisibleCount((prev) => Math.min(prev + CHUNK, sortedYears.length));
   };
 
   const handleShowLessYears = () => {
+    // Collapse the list back to its initial five-year view.
     setVisibleCount(CHUNK);
   };
 
   return (
-    // Inputs are controlled by ProjectGrid through value and callbacks.
+    // Inputs are controlled by ProjectGrid through value and callbacks. This
+    // keeps filtering logic in one place while this component focuses on UI.
     <>
       <Overlay $show={show} aria-hidden="true" onClick={onClose} />
       <Panel
@@ -64,6 +73,7 @@ const ProjectFilters = ({
         </PanelHeader>
         <Divider />
         <Group>
+          {/* Each radio group maps to one field in the shared filter object. */}
           <GroupTitle>Year</GroupTitle>
 
           <RadioList>
@@ -109,6 +119,7 @@ const ProjectFilters = ({
 
         <Divider />
 
+        {/* Departments and statuses use the same controlled-radio pattern. */}
         <Group>
           <GroupTitle>Discipline</GroupTitle>
           <RadioList>
@@ -167,6 +178,7 @@ const ProjectFilters = ({
 
         <Divider />
 
+        {/* The advisor list uses a select because names can be longer than a radio list. */}
         <Group>
           <GroupTitle id="project-advisor-label">Faculty Advisor</GroupTitle>
           <Select
@@ -183,6 +195,7 @@ const ProjectFilters = ({
             ))}
           </Select>
         </Group>
+        {/* The count updates as ProjectGrid recalculates filteredProjects. */}
         <PanelFooter>
           <ResultCountText>
             Showing <b>{resultCount}</b> result{resultCount !== 1 ? "s" : ""}

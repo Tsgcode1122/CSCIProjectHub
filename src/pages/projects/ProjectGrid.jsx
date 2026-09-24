@@ -9,16 +9,22 @@ import { BiSliderAlt } from "react-icons/bi";
 import ProjectFilters from "./ProjectFilters";
 import PageHeader from "../../fixedComponent/PageHeader";
 import { useProjectContext } from "../../context/ProjectContext";
-import ProjectCartItem from "./ProjectCardItem";
+import ProjectCardItem from "./ProjectCardItem";
+
+// Main projects listing page. It connects the API data from ProjectContext
 
 const ProjectGrid = () => {
   const navigate = useNavigate();
   const { projects, loading, error } = useProjectContext();
+
+  // showFilters controls the mobile filter drawer. Search and filters are
+
   const [showFilters, setShowFilters] = useState(false);
 
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   // These controls are local UI state; the project collection stays in context.
+
   const [filters, setFilters] = useState({
     year: "",
     department: "",
@@ -26,7 +32,6 @@ const ProjectGrid = () => {
     facultyAdvisor: "",
   });
 
-  // Build filter choices from the current API data.
   const filterOptions = useMemo(() => {
     const uniq = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
@@ -56,6 +61,7 @@ const ProjectGrid = () => {
     }
   }, [searchParams]);
   // Apply search and every active filter without changing the source array.
+
   const filteredProjects = useMemo(() => {
     const q = search.trim().toLowerCase();
 
@@ -77,7 +83,7 @@ const ProjectGrid = () => {
 
       const matchesAdvisor =
         !filters.facultyAdvisor || p.supervisor === filters.facultyAdvisor;
-
+      // Each condition uses AND logic, so a project must match every selected
       return (
         matchesSearch &&
         matchesYear &&
@@ -89,10 +95,13 @@ const ProjectGrid = () => {
   }, [search, filters, projects]);
 
   const handleFilterChange = (patch) => {
+    // The filter panel sends only the field that changed; merge it with the
+    // existing state so selecting one filter does not reset the others.
     setFilters((prev) => ({ ...prev, ...patch }));
   };
 
   const clearFilters = () => {
+    // Reset all filter fields while leaving the user's search text unchanged.
     setFilters({
       year: "",
       department: "",
@@ -102,11 +111,13 @@ const ProjectGrid = () => {
   };
 
   const handleShowFilter = () => {
+    // On smaller screens this opens or closes the filter drawer.
     setShowFilters(!showFilters);
   };
 
   return (
     <>
+      {/* Shared page header keeps the projects page consistent with other lists. */}
       <PageHeader
         title="All Projects"
         subtitle="  Browse and filter student and faculty-led projects in the
@@ -116,6 +127,7 @@ const ProjectGrid = () => {
       />
 
       <GridContainer>
+        {/* Search and filter controls remain visible while the user scrolls. */}
         <StickyBar>
           <SectionContainer>
             <Filter>
@@ -145,6 +157,7 @@ const ProjectGrid = () => {
         </StickyBar>
         <SectionDiv>
           <BodyGrid>
+            {/* ProjectFilters is controlled by this page through props. */}
             <ProjectFilters
               options={filterOptions}
               value={filters}
@@ -161,32 +174,36 @@ const ProjectGrid = () => {
                 </ResultCount>
               </ResultRow>
               <div id="project-results" aria-live="polite" aria-atomic="true">
-              {loading ? (
-                <EmptyState>
-                  <h4>Loading projects...</h4>
-                  <p>Please wait.</p>
-                </EmptyState>
-              ) : error ? (
-                <EmptyState>
-                  <h4>Could not load projects.</h4>
-                  <p>{error}</p>
-                </EmptyState>
-              ) : filteredProjects.length === 0 ? (
-                <EmptyState>
-                  <h4>No projects match your filters.</h4>
-                  <p>Try clearing filters or searching a different keyword.</p>
-                </EmptyState>
-              ) : (
-                <List>
-                  {filteredProjects.map((p) => (
-                    <ProjectCartItem
-                      key={p.id || p._id}
-                      project={p}
-                      onOpen={(id) => navigate(`/projects/${id}`)}
-                    />
-                  ))}
-                </List>
-              )}
+                {/* Render one clear state at a time: loading, error, empty, or data. */}
+                {loading ? (
+                  <EmptyState>
+                    <h4>Loading projects...</h4>
+                    <p>Please wait.</p>
+                  </EmptyState>
+                ) : error ? (
+                  <EmptyState>
+                    <h4>Could not load projects.</h4>
+                    <p>{error}</p>
+                  </EmptyState>
+                ) : filteredProjects.length === 0 ? (
+                  <EmptyState>
+                    <h4>No projects match your filters.</h4>
+                    <p>
+                      Try clearing filters or searching a different keyword.
+                    </p>
+                  </EmptyState>
+                ) : (
+                  <List>
+                    {/* this page only supplies data and navigation. */}
+                    {filteredProjects.map((p) => (
+                      <ProjectCardItem
+                        key={p.id || p._id}
+                        project={p}
+                        onOpen={(id) => navigate(`/projects/${id}`)}
+                      />
+                    ))}
+                  </List>
+                )}
               </div>
             </ListCol>
           </BodyGrid>

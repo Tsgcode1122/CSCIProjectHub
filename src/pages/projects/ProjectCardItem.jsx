@@ -4,17 +4,20 @@ import { Colors, Shadows } from "../../theme/Colors";
 import { media } from "../../theme/Breakpoints";
 import { FiUsers, FiCalendar, FiArrowUpRight } from "react-icons/fi";
 
+// Reusable summary card for one project. ProjectGrid uses it for the main
+
 const ProjectCardItem = ({ project, onOpen, variant }) => {
-  // Support either identifier shape returned by the API.
   const id = project?.id || project?._id;
   return (
     <>
+      {/* A button makes the entire card keyboard-accessible and clickable. */}
       <ProjectCard
         type="button"
         $variant={variant}
         onClick={() => onOpen?.(id)}
         aria-label={`Open project: ${project.title}`}
       >
+        {/* The title and status give the user the most important project summary. */}
         <TitleRow>
           <CardTitle $variant={variant}>{project.title}</CardTitle>
           <StatusBadge $status={project.project_status}>
@@ -24,6 +27,7 @@ const ProjectCardItem = ({ project, onOpen, variant }) => {
 
         <CardContent>
           <TopRow>
+            {/* Show only a few tags so cards stay compact and scannable. */}
             <Tags>
               {(project.tags || []).slice(0, 4).map((tag) => (
                 <Tag key={tag}>{tag}</Tag>
@@ -32,6 +36,7 @@ const ProjectCardItem = ({ project, onOpen, variant }) => {
 
             <MiniDesc>{project.short_description}</MiniDesc>
 
+            {/* Metadata is derived from the project object rather than stored separately. */}
             <MetaRow>
               <MetaItem>
                 <FiUsers aria-hidden="true" />
@@ -42,6 +47,7 @@ const ProjectCardItem = ({ project, onOpen, variant }) => {
                 <FiCalendar aria-hidden="true" />
                 <span>
                   {project.duration_start || "—"} –{" "}
+                  {/* Active projects do not have a final date yet. */}
                   {project.project_status === "In Progress" ||
                   project.project_status === "Accepting Members"
                     ? "Ongoing"
@@ -169,7 +175,6 @@ const CardTitle = styled.h5`
   @media ${media.tablet} {
     max-width: 90%;
   }
-
 `;
 
 const StatusBadge = styled.span`
