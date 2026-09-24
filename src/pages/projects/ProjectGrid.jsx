@@ -95,8 +95,7 @@ const ProjectGrid = () => {
   }, [search, filters, projects]);
 
   const handleFilterChange = (patch) => {
-    // The filter panel sends only the field that changed; merge it with the
-    // existing state so selecting one filter does not reset the others.
+    // The filter panel sends only the field that changed; merge it with the existing state
     setFilters((prev) => ({ ...prev, ...patch }));
   };
 
